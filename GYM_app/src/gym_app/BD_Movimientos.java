@@ -5,10 +5,12 @@
 package gym_app;
 
 import com.mysql.cj.jdbc.CallableStatement;
+
 import com.mysql.cj.xdevapi.Statement;
 import java.awt.Image;
 import java.io.File;
 import java.io.FileInputStream;
+import java.sql.PreparedStatement;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -21,6 +23,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import java.sql.ResultSet;
+import javax.swing.JPasswordField;
 
 /**
  *
@@ -124,6 +127,44 @@ public class BD_Movimientos {
     
     return nuevoID;
 }
+    
+    public boolean Login(JTextField ID, JPasswordField Pass){
+            char[] P= Pass.getPassword();
+            String Password = new String(P);
+        try {
+            
+            
+            conectar ObjetoConexion = new conectar();
+            
+            String ver = "SELECT * FROM cliente WHERE id_Cliente = ? AND contrasena = ?;";
+            
+            
+            PreparedStatement ps = ObjetoConexion.prepareStatement(ver);
+            ps.setString(1, ID.getText());
+            ps.setString(2, Password);
+            
+            try {
+                ResultSet resultado = ps.executeQuery();
+                if (resultado.next()) {
+                    return true;
+                } else {
+                     return false;
+                }
+                
+            } catch (Exception e) {
+                
+                System.out.println(e.getMessage());
+            }
+            
+            
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
+        
+        
+    }
     
 
 }

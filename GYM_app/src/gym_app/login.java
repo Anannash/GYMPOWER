@@ -8,6 +8,7 @@ import java.awt.Image;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -63,8 +64,8 @@ public class login extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        ID = new javax.swing.JTextField();
+        Password = new javax.swing.JPasswordField();
         jButton1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -85,11 +86,11 @@ public class login extends javax.swing.JFrame {
         jLabel1.setText("Login");
 
         jLabel2.setFont(new java.awt.Font("Dubai Medium", 0, 18)); // NOI18N
-        jLabel2.setText("Correo:");
+        jLabel2.setText("ID:");
 
         jLabel3.setFont(new java.awt.Font("Dubai Medium", 0, 18)); // NOI18N
 
-        jPasswordField1.setText("jPasswordField1");
+        Password.setText("jPasswordField1");
 
         jButton1.setText("Iniciar Sesion");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -118,8 +119,8 @@ public class login extends javax.swing.JFrame {
                             .addComponent(jLabel2)
                             .addComponent(jLabel4)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jPasswordField1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE))))
+                                .addComponent(ID, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(Password, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -137,11 +138,11 @@ public class login extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(ID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(27, 27, 27)
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(Password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(43, 43, 43))
                             .addComponent(jLabel3)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -235,11 +236,36 @@ public class login extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        BD_Movimientos BD = new BD_Movimientos();
+        //Checar si exite o si puso la contrasena correctamente
+        String id =ID.getText();
+        char[] digitos = id.toCharArray();
+        String TipoUsuario=  new String(digitos, 0, 1);
         
-        Registro_Cliente ee= new  Registro_Cliente ();
+        if (BD.Login(ID, Password)==true) {
+            
+            switch (digitos[0]) {
+                case "C":
+                    
+                    break;
+                default:
+                    throw new AssertionError();
+            }
+            
+            
+            Registro_Cliente ee= new  Registro_Cliente ();
         
-        ee.setVisible(true);
-        this.setVisible(false);
+            ee.setVisible(true);
+            this.setVisible(false);
+        } else {
+            JOptionPane.showMessageDialog(null, "Lo sentimos, pero usted no esta registrado o ingreso mal sus datos");
+        }
+        
+        
+        
+        
+        
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -283,6 +309,8 @@ public class login extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField ID;
+    private javax.swing.JPasswordField Password;
     private javax.swing.JLabel Plantilla;
     private javax.swing.JButton Salir;
     private javax.swing.JButton jButton1;
@@ -294,7 +322,5 @@ public class login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
