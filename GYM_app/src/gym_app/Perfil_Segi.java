@@ -155,7 +155,7 @@ public class Perfil_Segi extends javax.swing.JFrame {
         jLabel5.setText("Id del Cliente");
 
         ID.setEditable(false);
-        ID.setText("C202454");
+        ID.setText("C202451");
         ID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 IDActionPerformed(evt);
@@ -209,7 +209,7 @@ public class Perfil_Segi extends javax.swing.JFrame {
         FondoLayout.setVerticalGroup(
             FondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FondoLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(32, Short.MAX_VALUE)
                 .addComponent(Jlabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BtnEntrevistaR, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -358,7 +358,7 @@ public class Perfil_Segi extends javax.swing.JFrame {
 
         jTabbedPane2.addTab("Segimiento del cliente?", jScrollPane3);
 
-        getContentPane().add(jTabbedPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 900, 280));
+        getContentPane().add(jTabbedPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 900, 320));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
