@@ -32,8 +32,10 @@ import javax.swing.JPasswordField;
 public class BD_Movimientos {
 
     public BD_Movimientos() {
-
     }
+  
+   
+
 
     public void AgregarCliente(JTextField nombre, JTextField apellidoP, JTextField apellidoM, JTextField idCliente,
             JComboBox Membresia, JTextField correo, JTextField celular, double peso, double estatura, double imc,

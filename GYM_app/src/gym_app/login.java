@@ -90,7 +90,9 @@ public class login extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Dubai Medium", 0, 18)); // NOI18N
 
-        Password.setText("jPasswordField1");
+        ID.setText("C202450");
+
+        Password.setText("PowerGYM123");
 
         jButton1.setText("Iniciar Sesion");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -236,27 +238,42 @@ public class login extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+
         BD_Movimientos BD = new BD_Movimientos();
+      
+        
+        
         //Checar si exite o si puso la contrasena correctamente
         String id =ID.getText();
+            Login_Variables.setIDU(id);
+            
+           
+           System.out.println("Login: "+Login_Variables.getIDU());
+        
         char[] digitos = id.toCharArray();
         String TipoUsuario=  new String(digitos, 0, 1);
         
         if (BD.Login(ID, Password)==true) {
+            Perfil_Segi c= new  Perfil_Segi ();
+        Perfil_Empleado e= new  Perfil_Empleado ();
             
-            switch (digitos[0]) {
-                case "C":
+            switch (TipoUsuario) {
+                case "C" -> {
+                    c.setVisible(true);
+                    this.setVisible(false);
+                }
                     
-                    break;
-                default:
-                    throw new AssertionError();
+                case "E", "G","S","I" -> {
+                    e.setVisible(true);
+                    this.setVisible(false);
+                }
+                
+                    
+                default -> JOptionPane.showMessageDialog(null, "Lo sentimos, pero el ID es incorrecto");
             }
             
             
-            Registro_Cliente ee= new  Registro_Cliente ();
-        
-            ee.setVisible(true);
-            this.setVisible(false);
+            
         } else {
             JOptionPane.showMessageDialog(null, "Lo sentimos, pero usted no esta registrado o ingreso mal sus datos");
         }

@@ -18,21 +18,26 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Jesus
  */
-public class Perfil_Segi extends javax.swing.JFrame {
+public final class Perfil_Segi extends javax.swing.JFrame {
 
     private JPanelConFondo fondo;
-
+    
     public Perfil_Segi() {
         setUndecorated(true);
         initComponents();
         
         this.setLocationRelativeTo(this);
-        
+        System.out.println(Login_Variables.IDU);
+       
         // Establece la imagen de fondo del JPanel FUNCIONA
         fondo = new JPanelConFondo("src/Image/perfilF.png");
         Fondo.setLayout(new BorderLayout());
         Fondo.add(fondo);
 
+        //colocar id
+         ID.setText(Login_Variables.getIDU());
+         System.out.println("Perfil : "+Login_Variables.getIDU());
+        
         SetImageButton("src/Image/X.png", Salir);
         
         GenerarRutinas(ID);
@@ -155,7 +160,6 @@ public class Perfil_Segi extends javax.swing.JFrame {
         jLabel5.setText("Id del Cliente");
 
         ID.setEditable(false);
-        ID.setText("C202451");
         ID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 IDActionPerformed(evt);
