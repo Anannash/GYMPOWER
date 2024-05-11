@@ -6,6 +6,7 @@ package gym_app;
 
 import static java.awt.Frame.MAXIMIZED_BOTH;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.text.DecimalFormat;
@@ -32,6 +33,7 @@ public class entrevista_rutina extends javax.swing.JFrame {
     private String lesiones;
     private String condiciones;
     private String nivel;
+    private Point mPoint;
 
     public entrevista_rutina() {
         setUndecorated(true);
@@ -121,7 +123,7 @@ public class entrevista_rutina extends javax.swing.JFrame {
                 }
             }
         });
-
+         ID.setText(Variables.getIDU());
         Buscardatos(ID);
     }
 
@@ -188,6 +190,16 @@ public class entrevista_rutina extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(244, 238, 238));
         jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jPanel1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jPanel1MouseDragged(evt);
+            }
+        });
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jPanel1MousePressed(evt);
+            }
+        });
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel6.setFont(new java.awt.Font("Eras Demi ITC", 0, 36)); // NOI18N
@@ -505,7 +517,6 @@ public class entrevista_rutina extends javax.swing.JFrame {
         ID.setEditable(false);
         ID.setBackground(new java.awt.Color(204, 204, 204));
         ID.setForeground(new java.awt.Color(0, 0, 0));
-        ID.setText("C202453");
         ID.setCaretColor(new java.awt.Color(153, 153, 153));
         ID.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         ID.addActionListener(new java.awt.event.ActionListener() {
@@ -978,7 +989,7 @@ public class entrevista_rutina extends javax.swing.JFrame {
         // 0 Aceptar
         //2 cancelar
 
-        int R = JOptionPane.showConfirmDialog(null, "Estas Seguro de finalizarlo, sin antes guardar?", "Salir", JOptionPane.OK_CANCEL_OPTION,
+        int R = JOptionPane.showConfirmDialog(null, "Estas Seguro de SALIR?", "Salir", JOptionPane.OK_CANCEL_OPTION,
                 JOptionPane.INFORMATION_MESSAGE);
 
         if (R == 0) {
@@ -999,6 +1010,7 @@ public class entrevista_rutina extends javax.swing.JFrame {
             Perfil.setVisible(true);
             this.setVisible(false);
         }
+        
     }//GEN-LAST:event_RegresarbtnActionPerformed
 
     private void completarbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_completarbtnActionPerformed
@@ -1047,12 +1059,40 @@ public class entrevista_rutina extends javax.swing.JFrame {
             ActualizarDatos4(ID, pesotxt, alturatxt, imctxt, NivelConFisBOX, Ob5);
             generarRutina(ID, NivelConFisBOX, Ob5);
         }
+        
+        Perfil_Segi Perfil = new Perfil_Segi();
+            Perfil.setVisible(true);
+            this.setVisible(false);
 
+            
     }//GEN-LAST:event_completarbtnActionPerformed
 
     private void IDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IDActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_IDActionPerformed
+
+    private void jPanel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MousePressed
+        // TODO add your handling code here:
+        mPoint=evt.getPoint(); 
+        getComponentAt(mPoint);
+    }//GEN-LAST:event_jPanel1MousePressed
+
+    private void jPanel1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseDragged
+        // TODO add your handling code here:
+        int  CX = this.getLocation().x;
+        int  CY = this.getLocation().y;
+        
+        
+        int MoveX =((CX+evt.getX()) - (CX+mPoint.x));
+        int MoveY =((CY+evt.getY()) - (CY+mPoint.y));
+
+        
+        int x = CX+MoveX;
+        int y = CY+MoveY;
+        
+        
+        this.setLocation(x, y);
+    }//GEN-LAST:event_jPanel1MouseDragged
 
     public void GuardarLesiones(JTextField ID, JCheckBox tipoLes) {
         try {

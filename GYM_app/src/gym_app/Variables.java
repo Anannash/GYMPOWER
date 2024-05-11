@@ -8,11 +8,11 @@ package gym_app;
  *
  * @author ANDY
  */
-public class Login_Variables {
+public class Variables {
     
     public static String IDU;
 
-    public Login_Variables() {
+    public Variables() {
         
     }
 
@@ -21,7 +21,7 @@ public class Login_Variables {
     }
 
     public static void setIDU(String ID) {
-        Login_Variables.IDU = ID;
+        Variables.IDU = ID;
     }
 
     

@@ -1,12 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
+        <file>
+            <url>src/gym_app/Perfil_Segi.java</url>
+            <bookmark id="1">
+                <name/>
+                <line>57</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/aome2/OneDrive/Music/Documentos/GitHub/GYMPOWER/GYM_app/src/gym_app/Login_Variables.java</file>
             <file>file:/C:/Users/aome2/OneDrive/Music/Documentos/GitHub/GYMPOWER/GYM_app/src/gym_app/Perfil_Segi.java</file>
             <file>file:/C:/Users/aome2/OneDrive/Music/Documentos/GitHub/GYMPOWER/GYM_app/src/gym_app/BD_Movimientos.java</file>
+            <file>file:/C:/Users/aome2/OneDrive/Music/Documentos/GitHub/GYMPOWER/GYM_app/src/gym_app/Variables.java</file>
+            <file>file:/C:/Users/aome2/OneDrive/Music/Documentos/GitHub/GYMPOWER/GYM_app/src/gym_app/Registro_Cliente.java</file>
             <file>file:/C:/Users/aome2/OneDrive/Music/Documentos/GitHub/GYMPOWER/GYM_app/src/gym_app/login.java</file>
+            <file>file:/C:/Users/aome2/OneDrive/Music/Documentos/GitHub/GYMPOWER/GYM_app/src/gym_app/entrevista_rutina.java</file>
         </group>
     </open-files>
 </project-private>
