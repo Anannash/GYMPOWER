@@ -7,10 +7,11 @@ package gym_app;
 import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Point;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 /**
  *
@@ -23,6 +24,7 @@ public class Perfil_Empleado extends javax.swing.JFrame {
      */
     ImageIcon icon;
     ImageIcon imagen;
+    private Point mPoint;
     
   private JPanelConFondo fondo;
 
@@ -48,6 +50,7 @@ public class Perfil_Empleado extends javax.swing.JFrame {
         SetImageButton("src/Image/Empleado.png",AltaEm);
         SetImageButton("src/Image/SeguiEntre.png",SeguiEn);
         SetImageButton("src/Image/Grupal.png",Grupalbtn);
+         ID.setText(Variables.getIDU());
         
         
 
@@ -111,7 +114,7 @@ public class Perfil_Empleado extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        ID = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
         jTextField4 = new javax.swing.JTextField();
@@ -128,7 +131,6 @@ public class Perfil_Empleado extends javax.swing.JFrame {
 
         AltaCl.setBackground(new java.awt.Color(255, 255, 255));
         AltaCl.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        AltaCl.setText("Alta de Clientes");
         AltaCl.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AltaClActionPerformed(evt);
@@ -138,7 +140,6 @@ public class Perfil_Empleado extends javax.swing.JFrame {
 
         Comprabtn.setBackground(new java.awt.Color(255, 255, 255));
         Comprabtn.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        Comprabtn.setText("Compra de Productos");
         Comprabtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ComprabtnActionPerformed(evt);
@@ -148,7 +149,6 @@ public class Perfil_Empleado extends javax.swing.JFrame {
 
         AltaEm.setBackground(new java.awt.Color(255, 255, 255));
         AltaEm.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        AltaEm.setText("Altas de Empleados");
         AltaEm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 AltaEmActionPerformed(evt);
@@ -158,8 +158,7 @@ public class Perfil_Empleado extends javax.swing.JFrame {
 
         Ventabtn.setBackground(new java.awt.Color(255, 255, 255));
         Ventabtn.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        Ventabtn.setText("Venta de Productos");
-        jPanel2.add(Ventabtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 220, 210, 160));
+        jPanel2.add(Ventabtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 220, 210, 160));
 
         Grupalbtn.setBackground(new java.awt.Color(255, 255, 255));
         Grupalbtn.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
@@ -172,7 +171,6 @@ public class Perfil_Empleado extends javax.swing.JFrame {
 
         SeguiEn.setBackground(new java.awt.Color(255, 255, 255));
         SeguiEn.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        SeguiEn.setText("Seguimiento del entrenador");
         jPanel2.add(SeguiEn, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 220, 220, 160));
 
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -188,22 +186,22 @@ public class Perfil_Empleado extends javax.swing.JFrame {
         jLabel11.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(251, 153, 93));
         jLabel11.setText("Segimiento del Entrenador");
-        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 380, -1, -1));
+        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 380, 190, -1));
 
         jLabel12.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(251, 153, 93));
-        jLabel12.setText("Alta de Empelados");
-        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 190, -1, -1));
+        jLabel12.setText("Empelados");
+        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 190, -1, -1));
 
         jLabel13.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(251, 153, 93));
         jLabel13.setText("Venta de Productos");
-        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 380, -1, -1));
+        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 380, -1, -1));
 
         jLabel14.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(251, 153, 93));
-        jLabel14.setText("Alta de CLientes");
-        jPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 190, -1, -1));
+        jLabel14.setText("Clientes");
+        jPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 190, -1, -1));
 
         jLabel15.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(251, 153, 93));
@@ -213,6 +211,16 @@ public class Perfil_Empleado extends javax.swing.JFrame {
         FondoP.setMaximumSize(new java.awt.Dimension(600, 282));
         FondoP.setMinimumSize(new java.awt.Dimension(600, 282));
         FondoP.setPreferredSize(new java.awt.Dimension(600, 282));
+        FondoP.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                FondoPMouseDragged(evt);
+            }
+        });
+        FondoP.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                FondoPMousePressed(evt);
+            }
+        });
         FondoP.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("Foto de perfil del Empelado\\");
@@ -232,17 +240,9 @@ public class Perfil_Empleado extends javax.swing.JFrame {
             jLabel4.setForeground(new java.awt.Color(255, 255, 255));
             jLabel4.setText("Puesto:");
             FondoP.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 80, -1, -1));
-
-            jTextField1.setText("56546");
-            FondoP.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 100, 139, -1));
-
-            jTextField2.setText("kjbhj");
+            FondoP.add(ID, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 100, 139, -1));
             FondoP.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 160, 370, -1));
-
-            jTextField3.setText("jj");
             FondoP.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 220, 370, -1));
-
-            jTextField4.setText("sss");
             FondoP.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 100, 159, -1));
 
             Jlabel2.setBackground(new java.awt.Color(204, 255, 204));
@@ -327,6 +327,29 @@ public class Perfil_Empleado extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_AltaClActionPerformed
 
+    private void FondoPMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FondoPMousePressed
+        // TODO add your handling code here:
+        mPoint=evt.getPoint(); 
+        getComponentAt(mPoint);
+    }//GEN-LAST:event_FondoPMousePressed
+
+    private void FondoPMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FondoPMouseDragged
+        // TODO add your handling code here:
+        int  CX = this.getLocation().x;
+        int  CY = this.getLocation().y;
+        
+        
+        int MoveX =((CX+evt.getX()) - (CX+mPoint.x));
+        int MoveY =((CY+evt.getY()) - (CY+mPoint.y));
+
+        
+        int x = CX+MoveX;
+        int y = CY+MoveY;
+        
+        
+        this.setLocation(x, y);
+    }//GEN-LAST:event_FondoPMouseDragged
+
     /**
      * @param args the command line arguments
      */
@@ -391,6 +414,7 @@ public class Perfil_Empleado extends javax.swing.JFrame {
     private javax.swing.JButton Comprabtn;
     private javax.swing.JPanel FondoP;
     private javax.swing.JButton Grupalbtn;
+    private javax.swing.JTextField ID;
     private javax.swing.JLabel Jlabel2;
     private javax.swing.JButton Salir;
     private javax.swing.JButton SeguiEn;
@@ -410,7 +434,6 @@ public class Perfil_Empleado extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;

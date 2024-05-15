@@ -19,6 +19,8 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.Document;
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -34,6 +36,12 @@ public class entrevista_rutina extends javax.swing.JFrame {
     private String condiciones;
     private String nivel;
     private Point mPoint;
+    // Obtener la fecha actual
+    LocalDate fechaActual = LocalDate.now();
+
+    // Formatear la fecha como una cadena en el formato deseado (YYYY-MM-DD)
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    String fechaFormateada = fechaActual.format(formatter);
 
     public entrevista_rutina() {
         setUndecorated(true);
@@ -1047,16 +1055,16 @@ public class entrevista_rutina extends javax.swing.JFrame {
         }
 
         if (Ob1.isSelected()) {
-            ActualizarDatos4(ID, pesotxt, alturatxt, imctxt, NivelConFisBOX, Ob1);
+            ActualizarDatos4(ID, pesotxt, alturatxt, imctxt, NivelConFisBOX, Ob1,java.sql.Date.valueOf(fechaActual));
             generarRutina(ID, NivelConFisBOX, Ob1);
         } else if (Ob2.isSelected()) {
-            ActualizarDatos4(ID, pesotxt, alturatxt, imctxt, NivelConFisBOX, Ob2);
+            ActualizarDatos4(ID, pesotxt, alturatxt, imctxt, NivelConFisBOX, Ob2,java.sql.Date.valueOf(fechaActual));
             generarRutina(ID, NivelConFisBOX, Ob2);
         } else if (Ob3.isSelected()) {
-            ActualizarDatos4(ID, pesotxt, alturatxt, imctxt, NivelConFisBOX, Ob3);
+            ActualizarDatos4(ID, pesotxt, alturatxt, imctxt, NivelConFisBOX, Ob3,java.sql.Date.valueOf(fechaActual));
             generarRutina(ID, NivelConFisBOX, Ob3);
         } else if (Ob5.isSelected()) {
-            ActualizarDatos4(ID, pesotxt, alturatxt, imctxt, NivelConFisBOX, Ob5);
+            ActualizarDatos4(ID, pesotxt, alturatxt, imctxt, NivelConFisBOX, Ob5,java.sql.Date.valueOf(fechaActual));
             generarRutina(ID, NivelConFisBOX, Ob5);
         }
         
@@ -1158,16 +1166,19 @@ public class entrevista_rutina extends javax.swing.JFrame {
         }
 
     }
-
-    public void ActualizarDatos4(JTextField ID, JTextField peso, JTextField altura, JTextField imc, JComboBox nivel, JRadioButton motivo) {
+    
+    public void ActualizarDatos4(JTextField ID, JTextField peso, JTextField altura, JTextField imc, JComboBox nivel, JRadioButton motivo, Date fecha) {
 
         try {
             conectar ObjetoConexion = new conectar();
-
+                //ACTUALIZAR DATOS DEL CLIENTE
             String actualizar = "update cliente set peso_inicial =?,estatura = ?,imc = ?,motivo_entre= ?"
                     + ",NivelCondicionFisica = ? where id_cliente= ?;";
+            //INSERTARLOS EN LA SEMANA  0 DE SEGUIMIENTO
+             String insertSeCl = "INSERT INTO seguimientoCl (id_Cliente, fecha, semana, pesoActual,imcActual) VALUES (?,?,?,?,?);";
 
             PreparedStatement ps = ObjetoConexion.prepareStatement(actualizar);
+            PreparedStatement ps2 = ObjetoConexion.prepareStatement(insertSeCl);
 
             ps.setDouble(1, Double.parseDouble(peso.getText()));
             ps.setDouble(2, Double.parseDouble(altura.getText()));
@@ -1175,6 +1186,15 @@ public class entrevista_rutina extends javax.swing.JFrame {
             ps.setString(4, motivo.getText());
             ps.setString(5, nivel.getSelectedItem().toString());
             ps.setString(6, ID.getText());
+            
+            ps2.setString(1, ID.getText());
+            ps2.setDate(2, fecha);
+            ps2.setInt(3, 0);
+            ps2.setDouble(4, Double.parseDouble(peso.getText()));
+            ps2.setDouble(5, Double.parseDouble(imc.getText()));
+            
+            ps2.execute();
+            
 
             // Ejecutar la sentencia SQL de actualización
             int filasActualizadas = ps.executeUpdate();

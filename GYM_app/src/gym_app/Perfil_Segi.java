@@ -4,17 +4,25 @@
  */
 package gym_app;
 
+import com.google.zxing.*;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import javax.imageio.ImageIO;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.sql.*;
 import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
 import java.io.File;
 import java.io.FileInputStream;
+import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,6 +32,13 @@ import java.util.logging.Logger;
  */
 public final class Perfil_Segi extends javax.swing.JFrame {
 
+    // Obtener la fecha actual
+    LocalDate fechaActual = LocalDate.now();
+
+    // Formatear la fecha como una cadena en el formato deseado (YYYY-MM-DD)
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    String fechaFormateada = fechaActual.format(formatter);
+        
     private JPanelConFondo fondo;
     public File archivoSeleccionado;
     private Point mPoint;
@@ -60,6 +75,10 @@ public final class Perfil_Segi extends javax.swing.JFrame {
         } else {
             BtnEntrevistaR.show(true);
         }
+        //fecha del dispositivo
+        fecha.setText(fechaFormateada);
+        TablaSegimineto(ID);
+        
     }
 
     private void imagenBtn_EoR(String url, JButton boton) {
@@ -125,8 +144,15 @@ public final class Perfil_Segi extends javax.swing.JFrame {
         Mtxt = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         ID = new javax.swing.JTextField();
-        Jlabel2 = new javax.swing.JLabel();
+        QRID = new javax.swing.JLabel();
         Salir = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jLabel22 = new javax.swing.JLabel();
+        pesotxt = new javax.swing.JTextField();
+        jLabel23 = new javax.swing.JLabel();
+        imctxt = new javax.swing.JTextField();
+        alturatxt = new javax.swing.JTextField();
+        jLabel24 = new javax.swing.JLabel();
         jTabbedPane2 = new javax.swing.JTabbedPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel2 = new javax.swing.JPanel();
@@ -160,6 +186,16 @@ public final class Perfil_Segi extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jPanel7 = new javax.swing.JPanel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        fecha = new javax.swing.JTextField();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        pesoSe = new javax.swing.JTextField();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        SegimientoTabla = new javax.swing.JTable();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -235,10 +271,9 @@ public final class Perfil_Segi extends javax.swing.JFrame {
             }
         });
 
-        Jlabel2.setBackground(new java.awt.Color(204, 255, 204));
-        Jlabel2.setForeground(new java.awt.Color(204, 102, 0));
-        Jlabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/IMAGENES JESUS/Commons_QR_code.png"))); // NOI18N
-        Jlabel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        QRID.setBackground(new java.awt.Color(204, 255, 204));
+        QRID.setForeground(new java.awt.Color(204, 102, 0));
+        QRID.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         Salir.setBackground(new java.awt.Color(193, 86, 14));
         Salir.setFont(new java.awt.Font("Consolas", 1, 36)); // NOI18N
@@ -250,63 +285,139 @@ public final class Perfil_Segi extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jLabel22.setBackground(new java.awt.Color(67, 16, 0));
+        jLabel22.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel22.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel22.setText("Peso Actual:");
+
+        pesotxt.setEditable(false);
+        pesotxt.setBackground(new java.awt.Color(240, 239, 239));
+        pesotxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pesotxtActionPerformed(evt);
+            }
+        });
+
+        jLabel23.setBackground(new java.awt.Color(67, 16, 0));
+        jLabel23.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel23.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel23.setText("IMC Actual:");
+
+        imctxt.setEditable(false);
+        imctxt.setBackground(new java.awt.Color(240, 239, 239));
+        imctxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                imctxtActionPerformed(evt);
+            }
+        });
+
+        alturatxt.setEditable(false);
+        alturatxt.setBackground(new java.awt.Color(240, 239, 239));
+        alturatxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                alturatxtActionPerformed(evt);
+            }
+        });
+
+        jLabel24.setBackground(new java.awt.Color(67, 16, 0));
+        jLabel24.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel24.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel24.setText("Altura:");
+
         javax.swing.GroupLayout FondoLayout = new javax.swing.GroupLayout(Fondo);
         Fondo.setLayout(FondoLayout);
         FondoLayout.setHorizontalGroup(
             FondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(FondoLayout.createSequentialGroup()
-                .addGap(46, 46, 46)
-                .addComponent(FOTOP, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FondoLayout.createSequentialGroup()
                 .addGroup(FondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(FondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(NomUsetxt, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(ID, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel5)
-                    .addComponent(Mtxt, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                    .addGroup(FondoLayout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addComponent(FOTOP, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(FondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(NomUsetxt)
+                            .addComponent(jLabel2)
+                            .addGroup(FondoLayout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(ID, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(FondoLayout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Mtxt, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(FondoLayout.createSequentialGroup()
+                                .addComponent(jLabel22)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(pesotxt, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(FondoLayout.createSequentialGroup()
+                                .addComponent(jLabel24)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(alturatxt, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel23)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(imctxt, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(FondoLayout.createSequentialGroup()
+                        .addGap(94, 94, 94)
+                        .addComponent(BtnEntrevistaR, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(FondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FondoLayout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(31, 31, 31)
                         .addComponent(Salir, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FondoLayout.createSequentialGroup()
-                        .addComponent(Jlabel2)
-                        .addGap(67, 67, 67))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FondoLayout.createSequentialGroup()
-                .addGap(94, 94, 94)
-                .addComponent(BtnEntrevistaR, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(QRID, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31))))
         );
         FondoLayout.setVerticalGroup(
             FondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FondoLayout.createSequentialGroup()
-                .addContainerGap(32, Short.MAX_VALUE)
-                .addComponent(FOTOP, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(FondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(FOTOP, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FondoLayout.createSequentialGroup()
+                        .addGroup(FondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(ID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(NomUsetxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(FondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(Mtxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(FondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel22)
+                            .addComponent(pesotxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(FondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel24)
+                            .addComponent(alturatxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(imctxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel23))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BtnEntrevistaR, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22))
             .addGroup(FondoLayout.createSequentialGroup()
                 .addGroup(FondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Salir, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(FondoLayout.createSequentialGroup()
-                        .addGap(63, 63, 63)
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(NomUsetxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3)
-                        .addGap(4, 4, 4)
-                        .addComponent(Mtxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(FondoLayout.createSequentialGroup()
-                        .addComponent(Salir, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Jlabel2)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addComponent(jButton1)))
+                .addGap(5, 5, 5)
+                .addComponent(QRID, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         getContentPane().add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 320));
@@ -564,18 +675,15 @@ public final class Perfil_Segi extends javax.swing.JFrame {
                             .addComponent(Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(38, 38, 38))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(Editarbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel9)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(130, 130, 130)
-                                .addComponent(Guardarbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(Editarbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(130, 130, 130)
+                        .addComponent(Guardarbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(68, 68, 68)
@@ -654,15 +762,124 @@ public final class Perfil_Segi extends javax.swing.JFrame {
         jPanel7.setMaximumSize(new java.awt.Dimension(863, 90));
         jPanel7.setMinimumSize(new java.awt.Dimension(863, 90));
 
+        jLabel17.setFont(new java.awt.Font("Eras Demi ITC", 0, 48)); // NOI18N
+        jLabel17.setText("Seguimiento");
+
+        jLabel18.setFont(new java.awt.Font("Eras Demi ITC", 0, 48)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(255, 145, 77));
+        jLabel18.setText("Cliente");
+
+        jLabel19.setFont(new java.awt.Font("Eras Demi ITC", 0, 48)); // NOI18N
+        jLabel19.setForeground(new java.awt.Color(237, 166, 122));
+        jLabel19.setText("del");
+
+        fecha.setEditable(false);
+        fecha.setBackground(new java.awt.Color(240, 239, 239));
+        fecha.setToolTipText("");
+        fecha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fechaActionPerformed(evt);
+            }
+        });
+
+        jLabel21.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel21.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel21.setText("Fecha: ");
+
+        jLabel20.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel20.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel20.setText("Peso Actual:");
+
+        pesoSe.setBackground(new java.awt.Color(255, 255, 255));
+        pesoSe.setToolTipText("");
+        pesoSe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pesoSeActionPerformed(evt);
+            }
+        });
+
+        SegimientoTabla.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Semana", "Fecha", "Peso Actual", "IMC Actual"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        SegimientoTabla.setSelectionBackground(new java.awt.Color(255, 145, 77));
+        jScrollPane5.setViewportView(SegimientoTabla);
+        if (SegimientoTabla.getColumnModel().getColumnCount() > 0) {
+            SegimientoTabla.getColumnModel().getColumn(0).setResizable(false);
+            SegimientoTabla.getColumnModel().getColumn(1).setResizable(false);
+            SegimientoTabla.getColumnModel().getColumn(2).setResizable(false);
+            SegimientoTabla.getColumnModel().getColumn(3).setResizable(false);
+        }
+
+        jButton2.setText("Guardar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 895, Short.MAX_VALUE)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGap(78, 78, 78)
+                        .addComponent(jLabel21)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel20)
+                        .addGap(36, 36, 36)
+                        .addComponent(pesoSe, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 473, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addComponent(jLabel17)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel19)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel18)))))
+                .addContainerGap(223, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 477, Short.MAX_VALUE)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel17)
+                    .addComponent(jLabel18)
+                    .addComponent(jLabel19))
+                .addGap(28, 28, 28)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel21)
+                    .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel20)
+                    .addComponent(pesoSe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2))
+                .addGap(46, 46, 46)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(146, Short.MAX_VALUE))
         );
 
         jScrollPane3.setViewportView(jPanel7);
@@ -808,6 +1025,39 @@ public final class Perfil_Segi extends javax.swing.JFrame {
        
     }//GEN-LAST:event_GuardarbtnActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        
+       
+        saveQRToDatabase(ID,generateQRCode(ID.getText(),QRID));
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void pesoSeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesoSeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pesoSeActionPerformed
+
+    private void fechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fechaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fechaActionPerformed
+
+    private void pesotxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesotxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pesotxtActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        SeguimientoCLiente(ID, pesoSe,alturatxt);
+        TablaSegimineto(ID);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void imctxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_imctxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_imctxtActionPerformed
+
+    private void alturatxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alturatxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_alturatxtActionPerformed
+
     public void GenerarRutinas(JTextField ID) {
         try {
 
@@ -869,6 +1119,10 @@ public final class Perfil_Segi extends javax.swing.JFrame {
                 String membresia = resultado.getString("membresia");
                 byte[] fotoBytes = resultado.getBytes("foto");
                 String contra = resultado.getString("contrasena");
+                Double peso_inicial = resultado.getDouble("peso_inicial");
+                Double altura = resultado.getDouble("estatura");
+                Double imc = resultado.getDouble("imc");
+            
 
                 // Convertir arreglo de bytes a ImageIcon
                 ImageIcon imagen = new ImageIcon(fotoBytes);
@@ -884,6 +1138,7 @@ public final class Perfil_Segi extends javax.swing.JFrame {
 
                 NomUsetxt.setText(nombre + " " + apellidoP + " " + apellidoM);
                 Mtxt.setText(membresia);
+                pesotxt.setText(String.valueOf(peso_inicial));
                 Nombre.setText(nombre);
                 ApellidoP.setText(apellidoP);
                 ApellidoM.setText(apellidoM);
@@ -891,6 +1146,8 @@ public final class Perfil_Segi extends javax.swing.JFrame {
                 celulartxt.setText(String.valueOf(celular));
                 correo1.setText(contra);
                 contra2.setText(contra);
+                alturatxt.setText(String.valueOf(altura));
+                imctxt.setText(String.valueOf(imc));
 
             } else {
                 JOptionPane.showMessageDialog(null, "No se pudo encontrar al usuario");
@@ -938,6 +1195,180 @@ public final class Perfil_Segi extends javax.swing.JFrame {
             contrasenaRep.setText("");
         }
 
+    }
+    
+    public void  SeguimientoCLiente(JTextField ID, JTextField pesoactual, JTextField altura){
+        
+        try {
+            
+            conectar ObjetoConexion = new conectar();
+            
+          //  String actualizacion="UPDATE cliente set peso_inicial =?";
+            String insert = "INSERT INTO seguimientoCl (id_Cliente, fecha, semana, pesoActual,imcActual) "
+             + "SELECT ?, ?, COALESCE(MAX(semana), 0) + 1, ?,?"
+             + "FROM seguimientoCl WHERE id_Cliente = ?;";
+            
+            
+           Double altura1 =  Double.parseDouble(altura.getText());
+       // peso / (altura * altura);
+            Double imc = Double.parseDouble(pesoactual.getText())/(altura1*altura1);
+            DecimalFormat formato = new DecimalFormat("#.##");
+        String numeroFormateado = formato.format(imc);
+           
+            PreparedStatement psI= ObjetoConexion.prepareStatement(insert);
+           
+            
+            psI.setString(1, ID.getText());
+            psI.setDate(2,  java.sql.Date.valueOf(fechaActual));
+            psI.setDouble(3, Double.parseDouble(pesoactual.getText()) );
+            psI.setDouble(4, Double.parseDouble(numeroFormateado));
+            psI.setString(5, ID.getText());
+            
+            
+           
+            
+            psI.executeUpdate(); 
+            JOptionPane.showMessageDialog(null, "Guardado con EXITO");
+           
+        } catch (NumberFormatException | SQLException e) {
+            
+            JOptionPane.showMessageDialog(null, e.toString());
+            
+            
+        }
+        
+        
+    }
+    
+    public void TablaSegimineto(JTextField ID){
+        try {
+            conectar ObjetoConexion = new conectar();
+            String consulta ="SELECT * FROM seguimientoCl WHERE id_Cliente=?";
+             PreparedStatement psC= ObjetoConexion.prepareStatement(consulta);
+             
+              psC.setString(1, ID.getText());
+              
+               ResultSet resultado = psC.executeQuery();
+                    // Crear un DefaultTableModel para almacenar los datos
+            DefaultTableModel modeloTabla = (DefaultTableModel) SegimientoTabla.getModel();
+            // Eliminar las filas existentes de la tabla -------------------------------checar eso
+           modeloTabla.setRowCount(0);
+
+            // Agregar las filas al modelo de tabla
+            while (resultado.next()) {
+                Object[] fila2 = {
+                    //resultado.getString("id_Cliente"),
+                    // resultado.getString("id_Rutina"),
+                    resultado.getString("semana"),
+                    resultado.getString("fecha"),
+                    resultado.getDouble("pesoActual"),
+                    resultado.getDouble("imcActual")
+                };
+               modeloTabla.addRow(fila2);
+            }
+            
+        } catch (Exception e) {
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    //Generar QR
+    public static byte[] generateQRCode(String content , JLabel label) {
+        int size = 1000; // Tamaño del código QR
+
+        try {
+            
+            
+            // Configuración para la generación del código QR
+            Hashtable<EncodeHintType, Object> hintMap = new Hashtable<>();
+            hintMap.put(EncodeHintType.CHARACTER_SET, "UTF-8");
+
+            // Crear el objeto QRCodeWriter
+            QRCodeWriter qrCodeWriter = new QRCodeWriter();
+
+            // Generar la matriz de bits del código QR
+            BitMatrix bitMatrix = qrCodeWriter.encode(content, BarcodeFormat.QR_CODE, size, size, hintMap);
+
+            // Crear la imagen del código QR
+            int matrixWidth = bitMatrix.getWidth();
+            BufferedImage image = new BufferedImage(matrixWidth, matrixWidth, BufferedImage.TYPE_INT_RGB);
+            image.createGraphics();
+
+            // Renderizar la matriz de bits en la imagen del código QR
+            Graphics2D graphics2D = (Graphics2D) image.getGraphics();
+            graphics2D.setColor(Color.WHITE);
+            graphics2D.fillRect(0, 0, matrixWidth, matrixWidth);
+            graphics2D.setColor(Color.BLACK);
+
+            for (int x = 0; x < matrixWidth; x++) {
+                for (int y = 0; y < matrixWidth; y++) {
+                    if (bitMatrix.get(x, y)) {
+                        graphics2D.fillRect(x, y, 1, 1);
+                    }
+                }
+            }
+
+            // Convertir la imagen del código QR a un arreglo de bytes
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(image, "png", baos);
+            byte[] qrBytes = baos.toByteArray();
+
+            // Mostrar el código QR en el JLabel
+            displayQRCode(qrBytes, label);
+
+            return qrBytes;
+        } catch (WriterException | IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    public static void displayQRCode(byte[] qrBytes, JLabel label) {
+        try {
+            ByteArrayInputStream bais = new ByteArrayInputStream(qrBytes);
+            BufferedImage image = ImageIO.read(bais);
+            ImageIcon icon = new ImageIcon(image);
+            label.setIcon(icon);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    
+    
+    
+    // Guarda el código QR en la base de datos junto con el contenido asociado
+    public static void saveQRToDatabase(JTextField ID, byte[] qrBytes) {
+        
+
+        try {
+                            conectar ObjetoConexion = new conectar();
+
+           String sql = "INSERT INTO cliente (qr) VALUES (?) WHERE id_cliente = ?;";
+            try (PreparedStatement statement = ObjetoConexion.prepareStatement(sql)) {
+                statement.setString(2, ID.getText());
+                statement.setBytes(1, qrBytes);
+                statement.executeUpdate();
+                System.out.println("Código QR guardado en la base de datos.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -988,17 +1419,23 @@ public final class Perfil_Segi extends javax.swing.JFrame {
     private javax.swing.JPanel Fondo;
     private javax.swing.JButton Guardarbtn;
     private javax.swing.JTextField ID;
-    private javax.swing.JLabel Jlabel2;
     private javax.swing.JTextField Mtxt;
     private javax.swing.JTextField NomUsetxt;
     private javax.swing.JTextField Nombre;
     private javax.swing.JLabel Perfil;
+    private javax.swing.JLabel QRID;
     private javax.swing.JButton Salir;
+    private javax.swing.JTable SegimientoTabla;
+    private javax.swing.JTextField alturatxt;
     private javax.swing.JTextField celulartxt;
     private javax.swing.JTextField contra2;
     private javax.swing.JTextField correo1;
     private javax.swing.JTextField correotxt;
+    private javax.swing.JTextField fecha;
     private javax.swing.JTextField idIG;
+    private javax.swing.JTextField imctxt;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -1006,7 +1443,15 @@ public final class Perfil_Segi extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1021,7 +1466,10 @@ public final class Perfil_Segi extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane2;
+    private javax.swing.JTextField pesoSe;
+    private javax.swing.JTextField pesotxt;
     private javax.swing.JTable tblRutinas;
     // End of variables declaration//GEN-END:variables
 
