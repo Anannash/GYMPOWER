@@ -130,6 +130,59 @@ public class BD_Movimientos {
     return nuevoID;
 }
     
+    
+    public String obtenerUltimoNumeroEmpleado(String TipoUsuario, String fecha) {
+    String ultimoID = "";
+    String nuevoID="0";
+     String [] fechac=  fecha.split("-");
+        String ano = fechac[0];
+        
+        
+     String numSucursal = "5";
+    
+    // Aquí deberías tener tu lógica para obtener la conexión a tu base de datos
+    conectar ObjetoConexion = new conectar();
+    
+    // Consulta SQL para obtener el máximo número de cliente
+    String consulta = "SELECT MAX(id_Empleado) AS ultimo_numero FROM Empleado WHERE id_Empleado LIKE ?;";
+    
+    
+    try {
+        // Crear la sentencia SQL
+        PreparedStatement ps = ObjetoConexion.prepareStatement(consulta);
+        ps.setString(1, TipoUsuario+'%');
+        
+        // Ejecutar la consulta y obtener el resultado
+        ResultSet rs = ps.executeQuery();
+        
+        // Si se encontraron resultados, obtener el máximo número de cliente
+        if (rs.next()) {
+            ultimoID = rs.getString("ultimo_numero");
+         if(ultimoID==null){
+            nuevoID="0";
+            return nuevoID;
+        }else{
+             // Extraer el número después del prefijo 'C' y el año
+                String numeroStr = ultimoID.substring(ultimoID.indexOf('5') + 1);
+                int ultimoNumero = Integer.parseInt(numeroStr);
+                
+                // Incrementar el número
+                int nuevoNumero = ultimoNumero + 1;
+                
+                // Construir el nuevo ID concatenando las partes
+                nuevoID = String.valueOf(nuevoNumero);
+        }
+        
+        }
+      
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Error: "+e.toString());
+    }
+    
+    return nuevoID;
+}
+    
+    
     public boolean Login(JTextField ID, JPasswordField Pass){
             char[] P= Pass.getPassword();
             String Password = new String(P);
@@ -168,5 +221,43 @@ public class BD_Movimientos {
         
     }
     
+    public boolean LoginEm(JTextField ID, JPasswordField Pass){
+        //tranformar el password para ser capturado
+            char[] P= Pass.getPassword();
+            String Password = new String(P);
+        try {
+            
+            
+            conectar ObjetoConexion = new conectar();
+            
+            String ver = "SELECT * FROM Empleado WHERE id_Empleado = ? AND contrasena = ?;";
+            
+            
+            PreparedStatement ps = ObjetoConexion.prepareStatement(ver);
+            ps.setString(1, ID.getText());
+            ps.setString(2, Password);
+            
+            try {
+                ResultSet resultado = ps.executeQuery();
+                if (resultado.next()) {
+                    return true;
+                } else {
+                     return false;
+                }
+                
+            } catch (Exception e) {
+                
+                System.out.println(e.getMessage());
+            }
+            
+            
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
+        
+        
+    }
 
 }

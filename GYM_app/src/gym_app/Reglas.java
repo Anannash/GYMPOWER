@@ -66,4 +66,24 @@ public class Reglas {
         return ID;
     }
 
+    
+        public String CrearIDEmpleado(String TipoUsuario, String fecha) {
+        // C 2024 5 1-1000
+        //Numero de la sucursal sera 5
+        
+        
+        String numSucursal = "5";
+        String[] fechac = fecha.split("-");
+        String ano = fechac[0];
+
+        // Instanciar la clase que contiene el método obtenerUltimoNumeroCliente
+        BD_Movimientos numCl = new BD_Movimientos();
+
+        // Llamar al método obtenerUltimoNumeroCliente para obtener el nuevo ID
+        String nuevoNumeroCliente = numCl.obtenerUltimoNumeroEmpleado(TipoUsuario, fecha);
+
+        // Construir el ID concatenando las partes
+        String ID = TipoUsuario + ano + numSucursal + nuevoNumeroCliente;
+        return ID;
+    }
 }

@@ -5,14 +5,21 @@
 package gym_app;
 
 import com.mysql.cj.jdbc.CallableStatement;
+import com.mysql.cj.jdbc.PreparedStatementWrapper;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
 /**
@@ -46,16 +53,25 @@ public class Registro_Cliente extends javax.swing.JFrame {
         Fondo.setLayout(new BorderLayout());
         Fondo.add(fondo);
         
-         
+         //ocultar botones
+         MCbtn.show(false);
+         altabtn.show(false);
         
 
         SetImageButton("src/Image/X.png", Salir);
+          SetImageButton("src/Image/regresar.png", Regresarbtn2);
 
         //fecha del dispositivo
         fecha.setText(fechaFormateada);
-
+        
+        ///////////////////////////////////////////////
+        java.util.Date selectedDate = Cfecha.getDate();
+        java.sql.Date sqlDate = new java.sql.Date(selectedDate.getTime());
+        fecha_cumpletxt.setText(sqlDate.toString());
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         
         id.setText(reglas.CrearID("C", fechaFormateada));
+        
 
     }
     
@@ -84,6 +100,10 @@ public class Registro_Cliente extends javax.swing.JFrame {
         Fondo = new javax.swing.JPanel();
         Salir = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
+        modificarbtn = new javax.swing.JButton();
+        eliminarbtn = new javax.swing.JButton();
+        Regresarbtn2 = new javax.swing.JButton();
+        altabtn = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         Cargar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
@@ -99,19 +119,21 @@ public class Registro_Cliente extends javax.swing.JFrame {
         SiE = new javax.swing.JRadioButton();
         NoE = new javax.swing.JRadioButton();
         ApellidoM = new javax.swing.JTextField();
-        celular = new javax.swing.JTextField();
-        edad = new javax.swing.JTextField();
-        sexo = new javax.swing.JComboBox<>();
+        celulartxt = new javax.swing.JTextField();
+        sexoCb = new javax.swing.JComboBox<>();
         Guardar = new javax.swing.JButton();
-        membresia = new javax.swing.JComboBox<>();
+        membresiaCb = new javax.swing.JComboBox<>();
         ApellidoP = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        correo = new javax.swing.JTextField();
+        correotxt = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         id = new javax.swing.JTextField();
         fecha = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
+        MCbtn = new javax.swing.JButton();
+        Cfecha = new com.toedter.calendar.JCalendar();
+        fecha_cumpletxt = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -140,34 +162,97 @@ public class Registro_Cliente extends javax.swing.JFrame {
 
         jLabel12.setFont(new java.awt.Font("Eras Demi ITC", 1, 48)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setText("Registro de Usuario");
+        jLabel12.setText("Registro de Cliente");
+
+        modificarbtn.setBackground(new java.awt.Color(255, 145, 77));
+        modificarbtn.setFont(new java.awt.Font("Eras Bold ITC", 0, 14)); // NOI18N
+        modificarbtn.setForeground(new java.awt.Color(255, 255, 255));
+        modificarbtn.setText("Modificar");
+        modificarbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modificarbtnActionPerformed(evt);
+            }
+        });
+
+        eliminarbtn.setBackground(new java.awt.Color(255, 145, 77));
+        eliminarbtn.setFont(new java.awt.Font("Eras Bold ITC", 0, 14)); // NOI18N
+        eliminarbtn.setForeground(new java.awt.Color(255, 255, 255));
+        eliminarbtn.setText("Eliminar");
+        eliminarbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminarbtnActionPerformed(evt);
+            }
+        });
+
+        Regresarbtn2.setBackground(new java.awt.Color(193, 86, 14));
+        Regresarbtn2.setFont(new java.awt.Font("Consolas", 1, 36)); // NOI18N
+        Regresarbtn2.setForeground(new java.awt.Color(255, 255, 255));
+        Regresarbtn2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Regresarbtn2.setMaximumSize(new java.awt.Dimension(10, 8));
+        Regresarbtn2.setMinimumSize(new java.awt.Dimension(10, 8));
+        Regresarbtn2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Regresarbtn2ActionPerformed(evt);
+            }
+        });
+
+        altabtn.setBackground(new java.awt.Color(255, 145, 77));
+        altabtn.setFont(new java.awt.Font("Eras Bold ITC", 0, 14)); // NOI18N
+        altabtn.setForeground(new java.awt.Color(255, 255, 255));
+        altabtn.setText("Alta de Cliente");
+        altabtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                altabtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout FondoLayout = new javax.swing.GroupLayout(Fondo);
         Fondo.setLayout(FondoLayout);
         FondoLayout.setHorizontalGroup(
-            FondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            FondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(FondoLayout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 361, Short.MAX_VALUE)
+                .addComponent(Regresarbtn2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Salir, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+            .addGroup(FondoLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(altabtn, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addComponent(modificarbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(eliminarbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(115, 115, 115))
         );
         FondoLayout.setVerticalGroup(
             FondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(FondoLayout.createSequentialGroup()
-                .addContainerGap(40, Short.MAX_VALUE)
-                .addComponent(jLabel12)
-                .addGap(48, 48, 48))
-            .addGroup(FondoLayout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addComponent(Salir, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(FondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(FondoLayout.createSequentialGroup()
+                        .addGroup(FondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel12)
+                            .addComponent(Regresarbtn2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 25, Short.MAX_VALUE)
+                        .addGroup(FondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(modificarbtn)
+                            .addComponent(eliminarbtn)
+                            .addComponent(altabtn))
+                        .addGap(12, 12, 12))
+                    .addGroup(FondoLayout.createSequentialGroup()
+                        .addComponent(Salir, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         jPanel3.setBackground(new java.awt.Color(251, 250, 248));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        Cargar.setBackground(new java.awt.Color(255, 145, 77));
+        Cargar.setFont(new java.awt.Font("Eras Bold ITC", 0, 14)); // NOI18N
+        Cargar.setForeground(new java.awt.Color(255, 255, 255));
         Cargar.setText("Cambiar Imagen");
         Cargar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -208,32 +293,32 @@ public class Registro_Cliente extends javax.swing.JFrame {
         jLabel3.setBackground(new java.awt.Color(0, 0, 0));
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel3.setText("Apellido Materno:");
-        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 190, -1, -1));
+        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 70, -1, -1));
 
         jLabel4.setBackground(new java.awt.Color(0, 0, 0));
         jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel4.setText("Edad:");
-        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 250, -1, -1));
+        jLabel4.setText("Fecha de Cumpleanos:");
+        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 190, -1, -1));
 
         jLabel5.setBackground(new java.awt.Color(0, 0, 0));
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel5.setText("Celular:");
-        jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 70, -1, -1));
+        jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 130, -1, -1));
 
         jLabel6.setBackground(new java.awt.Color(0, 0, 0));
         jLabel6.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel6.setText("Tipo de membresia:");
-        jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 190, -1, -1));
+        jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 130, -1, -1));
 
         jLabel8.setBackground(new java.awt.Color(0, 0, 0));
         jLabel8.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel8.setText("Sexo:");
-        jPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 250, -1, -1));
+        jPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 200, -1, -1));
 
         jLabel9.setBackground(new java.awt.Color(0, 0, 0));
         jLabel9.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel9.setText("Estudiante?");
-        jPanel3.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 260, 90, -1));
+        jPanel3.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 200, 90, -1));
 
         Nombre.setBackground(new java.awt.Color(251, 250, 248));
         Nombre.setToolTipText("");
@@ -252,7 +337,7 @@ public class Registro_Cliente extends javax.swing.JFrame {
                 SiEActionPerformed(evt);
             }
         });
-        jPanel3.add(SiE, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 260, -1, -1));
+        jPanel3.add(SiE, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 220, -1, -1));
 
         buttonGroup1.add(NoE);
         NoE.setText("No");
@@ -262,7 +347,7 @@ public class Registro_Cliente extends javax.swing.JFrame {
                 NoEActionPerformed(evt);
             }
         });
-        jPanel3.add(NoE, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 260, -1, -1));
+        jPanel3.add(NoE, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 220, -1, -1));
 
         ApellidoM.setBackground(new java.awt.Color(251, 250, 248));
         ApellidoM.setToolTipText("");
@@ -271,40 +356,35 @@ public class Registro_Cliente extends javax.swing.JFrame {
                 ApellidoMActionPerformed(evt);
             }
         });
-        jPanel3.add(ApellidoM, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 210, 180, -1));
+        jPanel3.add(ApellidoM, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 90, 180, -1));
 
-        celular.setBackground(new java.awt.Color(251, 250, 248));
-        celular.setToolTipText("");
-        celular.addActionListener(new java.awt.event.ActionListener() {
+        celulartxt.setBackground(new java.awt.Color(251, 250, 248));
+        celulartxt.setToolTipText("");
+        celulartxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                celularActionPerformed(evt);
+                celulartxtActionPerformed(evt);
             }
         });
-        jPanel3.add(celular, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 90, 200, -1));
+        jPanel3.add(celulartxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 150, 200, -1));
 
-        edad.setToolTipText("");
-        edad.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                edadActionPerformed(evt);
-            }
-        });
-        jPanel3.add(edad, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 270, 40, -1));
+        sexoCb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "M", "H" }));
+        sexoCb.setToolTipText("");
+        jPanel3.add(sexoCb, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 220, -1, -1));
 
-        sexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "F", "M" }));
-        sexo.setToolTipText("");
-        jPanel3.add(sexo, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 270, -1, -1));
-
+        Guardar.setBackground(new java.awt.Color(255, 145, 77));
+        Guardar.setFont(new java.awt.Font("Eras Bold ITC", 0, 14)); // NOI18N
+        Guardar.setForeground(new java.awt.Color(255, 255, 255));
         Guardar.setText("Generar Perfil");
         Guardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 GuardarActionPerformed(evt);
             }
         });
-        jPanel3.add(Guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 310, 370, 60));
+        jPanel3.add(Guardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 280, 180, 60));
 
-        membresia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Normal", "Premium" }));
-        membresia.setToolTipText("");
-        jPanel3.add(membresia, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 210, 200, 30));
+        membresiaCb.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Normal", "Premium" }));
+        membresiaCb.setToolTipText("");
+        jPanel3.add(membresiaCb, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 150, 110, 30));
 
         ApellidoP.setBackground(new java.awt.Color(251, 250, 248));
         ApellidoP.setToolTipText("");
@@ -313,34 +393,34 @@ public class Registro_Cliente extends javax.swing.JFrame {
                 ApellidoPActionPerformed(evt);
             }
         });
-        jPanel3.add(ApellidoP, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 150, 180, -1));
+        jPanel3.add(ApellidoP, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 90, 180, -1));
 
         jLabel7.setBackground(new java.awt.Color(0, 0, 0));
         jLabel7.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel7.setText("Apellido Paterno:");
-        jPanel3.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 130, -1, -1));
+        jPanel3.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 70, -1, -1));
 
         jLabel10.setBackground(new java.awt.Color(0, 0, 0));
         jLabel10.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel10.setText("Correo:");
         jPanel3.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 130, -1, -1));
 
-        correo.setBackground(new java.awt.Color(251, 250, 248));
-        correo.setToolTipText("");
-        correo.addActionListener(new java.awt.event.ActionListener() {
+        correotxt.setBackground(new java.awt.Color(251, 250, 248));
+        correotxt.setToolTipText("");
+        correotxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                correoActionPerformed(evt);
+                correotxtActionPerformed(evt);
             }
         });
-        jPanel3.add(correo, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 150, 200, -1));
+        jPanel3.add(correotxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 150, 200, -1));
 
         jLabel11.setBackground(new java.awt.Color(0, 0, 0));
         jLabel11.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel11.setText("Fecha:");
-        jPanel3.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 20, -1, -1));
+        jPanel3.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 20, -1, -1));
 
         id.setEditable(false);
-        id.setBackground(new java.awt.Color(240, 239, 239));
+        id.setBackground(new java.awt.Color(251, 250, 248));
         id.setToolTipText("");
         id.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -359,21 +439,42 @@ public class Registro_Cliente extends javax.swing.JFrame {
                 fechaActionPerformed(evt);
             }
         });
-        jPanel3.add(fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 40, 150, -1));
+        jPanel3.add(fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 40, 150, -1));
 
         jLabel13.setBackground(new java.awt.Color(0, 0, 0));
         jLabel13.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel13.setText("Id:");
         jPanel3.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 20, -1, -1));
 
+        MCbtn.setBackground(new java.awt.Color(255, 145, 77));
+        MCbtn.setFont(new java.awt.Font("Eras Bold ITC", 0, 14)); // NOI18N
+        MCbtn.setForeground(new java.awt.Color(255, 255, 255));
+        MCbtn.setText("Modificar cliente");
+        MCbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MCbtnActionPerformed(evt);
+            }
+        });
+        jPanel3.add(MCbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 280, 180, 60));
+
+        Cfecha.setWeekdayForeground(new java.awt.Color(255, 145, 77));
+        jPanel3.add(Cfecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 220, 330, 190));
+
+        fecha_cumpletxt.setBackground(new java.awt.Color(251, 250, 248));
+        fecha_cumpletxt.setToolTipText("");
+        fecha_cumpletxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fecha_cumpletxtActionPerformed(evt);
+            }
+        });
+        jPanel3.add(fecha_cumpletxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 190, 150, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Fondo, javax.swing.GroupLayout.DEFAULT_SIZE, 844, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 844, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(Fondo, javax.swing.GroupLayout.DEFAULT_SIZE, 987, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 987, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -381,7 +482,7 @@ public class Registro_Cliente extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addComponent(Fondo, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 421, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
 
@@ -426,26 +527,24 @@ public class Registro_Cliente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_ApellidoMActionPerformed
 
-    private void celularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_celularActionPerformed
+    private void celulartxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_celulartxtActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_celularActionPerformed
-
-    private void edadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edadActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_edadActionPerformed
+    }//GEN-LAST:event_celulartxtActionPerformed
 
     private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
         // TODO add your handling code here:
         //SE Genra Perfil
      //   BD_Movimientos AddCl = new BD_Movimientos();
         try {
+             // Obtener la fecha del JCalendar
+     
              if (SiE.isSelected()) {
             //metodo para agregarlo a la BD de CLiente
-            AgregarCliente(Nombre, ApellidoP, ApellidoM, id, membresia, correo, celular,
-                    0, 0, 0, "NA", archivoSeleccionado, java.sql.Date.valueOf(fechaActual), sexo, "Si", edad);
+            AgregarCliente(Nombre, ApellidoP, ApellidoM, id, membresiaCb, correotxt, celulartxt,
+                    0, 0, 0, "NA", archivoSeleccionado, java.sql.Date.valueOf(fechaActual), sexoCb, "Si");
         } else if (NoE.isSelected()) {
-            AgregarCliente(Nombre, ApellidoP, ApellidoM, id, membresia, correo, celular,
-                    0, 0, 0, "NA", archivoSeleccionado, java.sql.Date.valueOf(fechaActual), sexo, "No", edad);
+            AgregarCliente(Nombre, ApellidoP, ApellidoM, id, membresiaCb, correotxt, celulartxt,
+                    0, 0, 0, "NA", archivoSeleccionado, java.sql.Date.valueOf(fechaActual), sexoCb, "No");
         }
 
         
@@ -454,9 +553,9 @@ public class Registro_Cliente extends javax.swing.JFrame {
         Nombre.setText("");
         ApellidoP.setText("");
         ApellidoM.setText("");
-        celular.setText("");
-        correo.setText("");
-        edad.setText("");
+        celulartxt.setText("");
+        correotxt.setText("");
+        
         SiE.setSelected(false);
         NoE.setSelected(false);
         Perfil.setIcon(null);
@@ -477,9 +576,9 @@ public class Registro_Cliente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_ApellidoPActionPerformed
 
-    private void correoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_correoActionPerformed
+    private void correotxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_correotxtActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_correoActionPerformed
+    }//GEN-LAST:event_correotxtActionPerformed
 
     private void idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idActionPerformed
         // TODO add your handling code here:
@@ -522,24 +621,212 @@ public class Registro_Cliente extends javax.swing.JFrame {
         getComponentAt(mPoint);
     }//GEN-LAST:event_FondoMousePressed
 
-    
+    private void Regresarbtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Regresarbtn2ActionPerformed
+        // TODO add your handling code here:
+
+        int R = JOptionPane.showConfirmDialog(null, "Estas Seguro de regresar?", "Regresar", JOptionPane.YES_NO_OPTION,
+            JOptionPane.INFORMATION_MESSAGE);
+
+        if (R == 0) {
+            Perfil_Empleado Perfill = new Perfil_Empleado();
+            Perfill.setVisible(true);
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_Regresarbtn2ActionPerformed
+
+    private void modificarbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarbtnActionPerformed
+        // TODO add your handling code here:
+       String id_Cliente= JOptionPane.showInputDialog("Ingrese el ID del Empleado: ",JOptionPane.QUESTION_MESSAGE);
+       altabtn.show(true);
+       MCbtn.show(true);
+       Guardar.show(false);
+       Buscardatos(id_Cliente);
+       
+      
+    }//GEN-LAST:event_modificarbtnActionPerformed
+
+    private void MCbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MCbtnActionPerformed
+        // TODO add your handling code here:
+          try {
+              
+               conectar ObjetoConexion = new conectar();
+               
+               String Modificar="UPDATE cliente SET membresia = ?, nombreC= ?, apellidoPC = ?, "
+                       + "apellidoMC= ?, correo= ?, foto= ?, sexo= ?, estudiante = ?, fecha= ?, fecha_cumple = ? WHERE  id_cliente= ?; ";
+               
+               //pa la imagen
+               FileInputStream fis = new FileInputStream(archivoSeleccionado);
+               //pa el ingreso de datos al SQL bb
+               PreparedStatement  ps = ObjetoConexion.prepareStatement(Modificar);
+               
+               java.util.Date selectedDate = Cfecha.getDate();
+        java.sql.Date sqlDate = new java.sql.Date(selectedDate.getTime());
+               
+               ps.setString(1, membresiaCb.getSelectedItem().toString());
+               ps.setString(2, Nombre.getText());
+               ps.setString(3, ApellidoP.getText());
+               ps.setString(4, ApellidoM.getText());
+               ps.setString(5, correotxt.getText());
+               ps.setBinaryStream(6,fis, (int) archivoSeleccionado.length());
+               ps.setString(7, sexoCb.getSelectedItem().toString());
+               
+               if(SiE.isSelected()){
+                   ps.setString(8, "Si");
+               }else{
+                   ps.setString(8, "No");
+               }
+               
+               ps.setDate(9,java.sql.Date.valueOf(fechaActual));
+               ps.setDate(10,sqlDate);
+               ps.setString(11, id.getText());
+               
+              // System.out.println("No furula el codigo");
+               
+               
+               
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Registro_Cliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_MCbtnActionPerformed
+
+    private void fecha_cumpletxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fecha_cumpletxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fecha_cumpletxtActionPerformed
+
+    private void eliminarbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarbtnActionPerformed
+        // TODO add your handling code here:
+        String id_Cliente= JOptionPane.showInputDialog("Ingrese el ID del Empleado: ",JOptionPane.QUESTION_MESSAGE);
+        
+        try {
+              
+               conectar ObjetoConexion = new conectar();
+               
+               String Eliminar="DELETE FROM cliente WHERE  id_cliente= ?;";
+               
+               
+               //pa la leiminacion  de datos al SQL bb
+               PreparedStatement  ps = ObjetoConexion.prepareStatement(Eliminar);
+               
+             
+               ps.setString(1, id_Cliente);
+               
+               // Ejecutar la eliminación
+            int filasAfectadas = ps.executeUpdate();
+
+            // Comprobar si se eliminó alguna fila
+            if (filasAfectadas > 0) {
+                JOptionPane.showMessageDialog(null, "Se eliminó el cliente con ID: " + id_Cliente);
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró el cliente con ID: " + id_Cliente);
+            }
+        
+               
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.toString());
+        }
+        
+    }//GEN-LAST:event_eliminarbtnActionPerformed
+
+    private void altabtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_altabtnActionPerformed
+        // TODO add your handling code here:
+        
+        MCbtn.show(false);
+       Guardar.show(true);
+    }//GEN-LAST:event_altabtnActionPerformed
+
+    public void Buscardatos(String ID) {
+        try {
+            conectar ObjetoConexion = new conectar();
+
+            String cosulta = "SELECT * FROM cliente WHERE id_cliente=?";
+
+            PreparedStatement ps = ObjetoConexion.prepareStatement(cosulta);
+
+            ps.setString(1, ID);
+
+            ResultSet resultado = ps.executeQuery();
+
+            if (resultado.next()) {
+                String nombre = resultado.getString("nombreC");
+                String apellidoP = resultado.getString("apellidoPC");
+                String apellidoM = resultado.getString("apellidoMC");
+                String correo = resultado.getString("correoC");
+                int celular = resultado.getInt("celularC");
+                byte[] fotoBytes = resultado.getBytes("foto");
+              // Date fechaCum = resultado.getDate("fecha_cumple");
+              String estudiante = resultado.getString("estudiante");
+              String membresia= resultado.getString("membresia");
+              String sexo = resultado.getString("sexo");
+                
+
+                // Convertir arreglo de bytes a ImageIcon
+                ImageIcon imagen = new ImageIcon(fotoBytes);
+                // Escalar la imagen si es necesario
+              
+                Image imagenEscalada2 = imagen.getImage().getScaledInstance(Perfil.getWidth(), Perfil.getHeight(), Image.SCALE_SMOOTH);
+                
+                ImageIcon imagenEscaladaIcon2 = new ImageIcon(imagenEscalada2);
+
+                // Asignar la imagen al JLabel
+             
+                Perfil.setIcon(imagenEscaladaIcon2);
+
+               
+               
+                Nombre.setText(nombre);
+                ApellidoP.setText(apellidoP);
+                ApellidoM.setText(apellidoM);
+                correotxt.setText(correo);
+                celulartxt.setText(String.valueOf(celular));
+               // fecha_cumpletxt.setText(contra);
+                
+                if ("Si".equals(estudiante)) {
+                    SiE.setSelected(true);
+                } else {
+                    NoE.setSelected(true);
+                }
+                
+                if ("M".equals(sexo)) {
+                    sexoCb.setSelectedIndex(0);
+                } else {
+                    sexoCb.setSelectedIndex(1);
+                }
+                
+                if ("Normal".equals(membresia)) {
+                    membresiaCb.setSelectedIndex(0);
+                } else {
+                    membresiaCb.setSelectedIndex(1);
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "No se pudo encontrar al usuario");
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error: " + e.toString());
+        }
+
+    }
     
       public void AgregarCliente(JTextField nombre, JTextField apellidoP, JTextField apellidoM, JTextField idCliente,
             JComboBox Membresia, JTextField correo, JTextField celular, double peso, double estatura, double imc,
-            String motivo, File foto, Date fecha, JComboBox sexo, String estudiante, JTextField edad) {
+            String motivo, File foto, Date fecha, JComboBox sexo, String estudiante) {
 
         conectar ObjetoConexion = new conectar();
 
         String Alta = "insert into cliente (id_cliente, membresia, nombreC, apellidoPC, "
                 + "apellidoMC, correoC, celularC, peso_inicial, estatura, imc, motivo_entre, foto,fecha, sexo, "
-                + "estudiante, edad, contrasena)" + "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?); ";
+                + "estudiante, fecha_cumple, contrasena)" + "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?); ";
 
         try {
             FileInputStream fis = new FileInputStream(foto);
 
             CallableStatement cs = (CallableStatement) ObjetoConexion.getConexion().prepareCall(Alta);
 
-           
+              java.util.Date selectedDate = Cfecha.getDate();
+        java.sql.Date sqlDate = new java.sql.Date(selectedDate.getTime());
 
             cs.setString(1, idCliente.getText());
             cs.setString(2, Membresia.getSelectedItem().toString());
@@ -556,7 +843,8 @@ public class Registro_Cliente extends javax.swing.JFrame {
             cs.setDate(13, (java.sql.Date) fecha);
             cs.setString(14, sexo.getSelectedItem().toString());
             cs.setString(15, estudiante);
-            cs.setInt(16, Integer.parseInt(edad.getText()));
+            cs.setDate(16, sqlDate);
+            System.out.println(sqlDate);
             cs.setString(17, "PowerGYM123");
 
             cs.execute();
@@ -613,18 +901,23 @@ public class Registro_Cliente extends javax.swing.JFrame {
     private javax.swing.JTextField ApellidoM;
     private javax.swing.JTextField ApellidoP;
     private javax.swing.JButton Cargar;
+    private com.toedter.calendar.JCalendar Cfecha;
     private javax.swing.JPanel Fondo;
     private javax.swing.JButton Guardar;
+    private javax.swing.JButton MCbtn;
     private javax.swing.JRadioButton NoE;
     private javax.swing.JTextField Nombre;
     private javax.swing.JLabel Perfil;
+    private javax.swing.JButton Regresarbtn2;
     private javax.swing.JButton Salir;
     private javax.swing.JRadioButton SiE;
+    private javax.swing.JButton altabtn;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JTextField celular;
-    private javax.swing.JTextField correo;
-    private javax.swing.JTextField edad;
+    private javax.swing.JTextField celulartxt;
+    private javax.swing.JTextField correotxt;
+    private javax.swing.JButton eliminarbtn;
     private javax.swing.JTextField fecha;
+    private javax.swing.JTextField fecha_cumpletxt;
     private javax.swing.JTextField id;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -640,7 +933,8 @@ public class Registro_Cliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JComboBox<String> membresia;
-    private javax.swing.JComboBox<String> sexo;
+    private javax.swing.JComboBox<String> membresiaCb;
+    private javax.swing.JButton modificarbtn;
+    private javax.swing.JComboBox<String> sexoCb;
     // End of variables declaration//GEN-END:variables
 }

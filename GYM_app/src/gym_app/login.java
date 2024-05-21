@@ -29,7 +29,8 @@ public class login extends javax.swing.JFrame {
          setUndecorated(true);
          
         initComponents();
-        
+       //imagen pal bootn
+       
         SetImageButton("src/Image/X.png", Salir);
        // setExtendedState(MAXIMIZED_BOTH);
         
@@ -40,6 +41,7 @@ public class login extends javax.swing.JFrame {
                           imagen = new ImageIcon(images);
                           Plantilla.setIcon(imagen);
                  */
+        //inmmagenes pa los label 
                ImagenLabel("src/Image/Plantilla_Inicio.png",icon,imagen,Plantilla);      
                ImagenLabel("src/Image/7.png",icon,imagen,mostar);      
                ImagenLabel("src/Image/8.png",icon,imagen,NOmostar);     
@@ -265,7 +267,7 @@ public class login extends javax.swing.JFrame {
         char[] digitos = id.toCharArray();
         String TipoUsuario=  new String(digitos, 0, 1);
         
-        if (BD.Login(ID, Password)==true) {
+        if (BD.Login(ID, Password)==true || BD.LoginEm(ID, Password)) {
             Perfil_Segi c= new  Perfil_Segi ();
         Perfil_Empleado e= new  Perfil_Empleado ();
             

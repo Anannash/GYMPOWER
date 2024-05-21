@@ -5,9 +5,23 @@
 package gym_app;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.List;
 import java.awt.Point;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -25,13 +39,19 @@ public class Perfil_Empleado extends javax.swing.JFrame {
     ImageIcon icon;
     ImageIcon imagen;
     private Point mPoint;
+   public  File archivoSeleccionado;
     
   private JPanelConFondo fondo;
+  
+  public Component pestana; // para c=guardar temporalmente la pestana
+  public int index; // para guardar el numero de la pestana
 
  
  public Perfil_Empleado() {
      setUndecorated(true);
         initComponents();
+        index=MenuPrincipal.getSelectedIndex();
+        pestana=MenuPrincipal.getComponentAt(index);
        // setExtendedState(MAXIMIZED_BOTH);
       
         
@@ -50,16 +70,37 @@ public class Perfil_Empleado extends javax.swing.JFrame {
         SetImageButton("src/Image/Empleado.png",AltaEm);
         SetImageButton("src/Image/SeguiEntre.png",SeguiEn);
         SetImageButton("src/Image/Grupal.png",Grupalbtn);
-         ID.setText(Variables.getIDU());
+          imagenBtn_EoR("src/Image/X.png", Salir);
+        SetImageButton("src/Image/Ajustes.png", Editarbtn);
+        SetImageButton("src/Image/regresar.png", Regresarbtn);
         
+         IDtxt.setText(Variables.getIDU());
+        idIG.setText(IDtxt.getText());
         
+        Buscardatos(IDtxt);
+        
+        //obtener primera letra
+        String idd =Variables.getIDU();
+       // char[] caracter = id.toCharArray();
+     
+        PerfilXCargo(idd);
 
 
         
       
     }
         
- 
+ private void imagenBtn_EoR(String url, JButton boton) {
+        ImageIcon image = new ImageIcon(url);
+        Icon icon = new ImageIcon(image.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
+        boton.setIcon(icon);
+
+        boton.setBorderPainted(false);
+        boton.setContentAreaFilled(false);
+        boton.setFocusPainted(false);
+        boton.setOpaque(false);
+        this.repaint();
+    }
     
    
     private void SetImageButton(String url,  JButton boton) {
@@ -95,7 +136,24 @@ public class Perfil_Empleado extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel2 = new javax.swing.JPanel();
+        FondoP = new javax.swing.JPanel();
+        FOTOP = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        IDtxt = new javax.swing.JTextField();
+        nombretxt = new javax.swing.JTextField();
+        correotxt = new javax.swing.JTextField();
+        puestotxt = new javax.swing.JTextField();
+        Jlabel2 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        Regresarbtn2 = new javax.swing.JButton();
+        Salir = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        EvaEntrbtn = new javax.swing.JButton();
+        MenuPrincipal = new javax.swing.JTabbedPane();
+        MenuP = new javax.swing.JPanel();
         AltaCl = new javax.swing.JButton();
         Comprabtn = new javax.swing.JButton();
         AltaEm = new javax.swing.JButton();
@@ -109,104 +167,39 @@ public class Perfil_Empleado extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        FondoP = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        ID = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        Jlabel2 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        Salir = new javax.swing.JButton();
-        jLabel10 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        Nombre = new javax.swing.JTextField();
+        ApellidoM = new javax.swing.JTextField();
+        celulartxt = new javax.swing.JTextField();
+        ApellidoP = new javax.swing.JTextField();
+        jLabel18 = new javax.swing.JLabel();
+        Perfil = new javax.swing.JLabel();
+        Cargarbtn = new javax.swing.JButton();
+        Editarbtn = new javax.swing.JButton();
+        Guardarbtn = new javax.swing.JButton();
+        jLabel20 = new javax.swing.JLabel();
+        contra1 = new javax.swing.JTextField();
+        contra2 = new javax.swing.JTextField();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        idIG = new javax.swing.JTextField();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        Domiciliotxt = new javax.swing.JTextField();
+        jLabel26 = new javax.swing.JLabel();
+        CPtxt = new javax.swing.JTextField();
+        jLabel27 = new javax.swing.JLabel();
+        celularEtxt = new javax.swing.JTextField();
+        jLabel29 = new javax.swing.JLabel();
+        curptxt = new javax.swing.JTextField();
+        jLabel31 = new javax.swing.JLabel();
+        rfctxt = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        AltaCl.setBackground(new java.awt.Color(255, 255, 255));
-        AltaCl.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        AltaCl.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AltaClActionPerformed(evt);
-            }
-        });
-        jPanel2.add(AltaCl, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 30, 220, 160));
-
-        Comprabtn.setBackground(new java.awt.Color(255, 255, 255));
-        Comprabtn.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        Comprabtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ComprabtnActionPerformed(evt);
-            }
-        });
-        jPanel2.add(Comprabtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 30, 210, 160));
-
-        AltaEm.setBackground(new java.awt.Color(255, 255, 255));
-        AltaEm.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        AltaEm.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AltaEmActionPerformed(evt);
-            }
-        });
-        jPanel2.add(AltaEm, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 30, 220, 160));
-
-        Ventabtn.setBackground(new java.awt.Color(255, 255, 255));
-        Ventabtn.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jPanel2.add(Ventabtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 220, 210, 160));
-
-        Grupalbtn.setBackground(new java.awt.Color(255, 255, 255));
-        Grupalbtn.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        Grupalbtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                GrupalbtnActionPerformed(evt);
-            }
-        });
-        jPanel2.add(Grupalbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 220, 220, 160));
-
-        SeguiEn.setBackground(new java.awt.Color(255, 255, 255));
-        SeguiEn.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jPanel2.add(SeguiEn, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 220, 220, 160));
-
-        jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(251, 153, 93));
-        jLabel5.setText("Registro de clases Grupales");
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 380, -1, -1));
-
-        jLabel9.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Correo electronico:");
-        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 20, -1, -1));
-
-        jLabel11.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(251, 153, 93));
-        jLabel11.setText("Segimiento del Entrenador");
-        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 380, 190, -1));
-
-        jLabel12.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(251, 153, 93));
-        jLabel12.setText("Empelados");
-        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 190, -1, -1));
-
-        jLabel13.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(251, 153, 93));
-        jLabel13.setText("Venta de Productos");
-        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 380, -1, -1));
-
-        jLabel14.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(251, 153, 93));
-        jLabel14.setText("Clientes");
-        jPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 190, -1, -1));
-
-        jLabel15.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(251, 153, 93));
-        jLabel15.setText("Compra de Productos");
-        jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 190, -1, -1));
 
         FondoP.setMaximumSize(new java.awt.Dimension(600, 282));
         FondoP.setMinimumSize(new java.awt.Dimension(600, 282));
@@ -222,110 +215,420 @@ public class Perfil_Empleado extends javax.swing.JFrame {
             }
         });
         FondoP.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        FondoP.add(FOTOP, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 270, 230));
 
-        jLabel1.setText("Foto de perfil del Empelado\\");
-            FondoP.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 270, 230));
+        jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Id Empelado:");
+        FondoP.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 80, -1, -1));
 
-            jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-            jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-            jLabel2.setText("Id Empelado:");
-            FondoP.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 80, -1, -1));
+        jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Nombre completo:");
+        FondoP.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 130, -1, -1));
 
-            jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-            jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-            jLabel3.setText("Nombre completo:");
-            FondoP.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 140, -1, -1));
+        jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Puesto:");
+        FondoP.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 80, -1, -1));
 
-            jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-            jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-            jLabel4.setText("Puesto:");
-            FondoP.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 80, -1, -1));
-            FondoP.add(ID, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 100, 139, -1));
-            FondoP.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 160, 370, -1));
-            FondoP.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 220, 370, -1));
-            FondoP.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 100, 159, -1));
+        IDtxt.setEditable(false);
+        IDtxt.setBackground(new java.awt.Color(240, 239, 239));
+        FondoP.add(IDtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 100, 139, -1));
 
-            Jlabel2.setBackground(new java.awt.Color(204, 255, 204));
-            Jlabel2.setForeground(new java.awt.Color(204, 102, 0));
-            Jlabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/IMAGENES JESUS/Commons_QR_code.png"))); // NOI18N
-            Jlabel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-            FondoP.add(Jlabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 40, 190, 190));
+        nombretxt.setEditable(false);
+        nombretxt.setBackground(new java.awt.Color(240, 239, 239));
+        FondoP.add(nombretxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 150, 370, -1));
 
-            jLabel6.setFont(new java.awt.Font("Eras Demi ITC", 0, 48)); // NOI18N
-            jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-            jLabel6.setText("Hola,");
-            FondoP.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 10, -1, -1));
+        correotxt.setEditable(false);
+        correotxt.setBackground(new java.awt.Color(240, 239, 239));
+        FondoP.add(correotxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 210, 370, -1));
 
-            jLabel8.setFont(new java.awt.Font("Eras Demi ITC", 1, 48)); // NOI18N
-            jLabel8.setForeground(new java.awt.Color(251, 153, 93));
-            jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-            jLabel8.setText("Carlo!");
-            FondoP.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 10, -1, -1));
+        puestotxt.setEditable(false);
+        puestotxt.setBackground(new java.awt.Color(240, 239, 239));
+        FondoP.add(puestotxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 100, 159, -1));
 
-            Salir.setFont(new java.awt.Font("Consolas", 1, 36)); // NOI18N
-            Salir.setForeground(new java.awt.Color(255, 255, 255));
-            Salir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-            Salir.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    SalirActionPerformed(evt);
-                }
-            });
-            FondoP.add(Salir, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 10, 60, 60));
+        Jlabel2.setBackground(new java.awt.Color(204, 255, 204));
+        Jlabel2.setForeground(new java.awt.Color(204, 102, 0));
+        Jlabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/IMAGENES JESUS/Commons_QR_code.png"))); // NOI18N
+        Jlabel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        FondoP.add(Jlabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 50, 190, 190));
 
-            jLabel10.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-            jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-            jLabel10.setText("Correo electronico:");
-            FondoP.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 200, -1, -1));
+        jLabel6.setFont(new java.awt.Font("Eras Demi ITC", 0, 48)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Hola,");
+        FondoP.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 10, -1, -1));
 
-            javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-            getContentPane().setLayout(layout);
-            layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(FondoP, javax.swing.GroupLayout.DEFAULT_SIZE, 1093, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            );
-            layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addComponent(FondoP, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE))
-            );
+        jLabel8.setFont(new java.awt.Font("Eras Demi ITC", 1, 48)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(251, 153, 93));
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel8.setText("Carlo!");
+        FondoP.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 10, 350, -1));
 
-            pack();
-        }// </editor-fold>//GEN-END:initComponents
+        Regresarbtn2.setBackground(new java.awt.Color(193, 86, 14));
+        Regresarbtn2.setFont(new java.awt.Font("Consolas", 1, 36)); // NOI18N
+        Regresarbtn2.setForeground(new java.awt.Color(255, 255, 255));
+        Regresarbtn2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Regresarbtn2.setMaximumSize(new java.awt.Dimension(10, 8));
+        Regresarbtn2.setMinimumSize(new java.awt.Dimension(10, 8));
+        Regresarbtn2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Regresarbtn2ActionPerformed(evt);
+            }
+        });
+        FondoP.add(Regresarbtn2, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 20, 50, 50));
+
+        Salir.setFont(new java.awt.Font("Consolas", 1, 36)); // NOI18N
+        Salir.setForeground(new java.awt.Color(255, 255, 255));
+        Salir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Salir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SalirActionPerformed(evt);
+            }
+        });
+        FondoP.add(Salir, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 10, 60, 60));
+
+        jLabel10.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("Correo electronico:");
+        FondoP.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 190, -1, -1));
+
+        EvaEntrbtn.setText("Realizar evaluacion del entrenador");
+        FondoP.add(EvaEntrbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 240, 360, -1));
+
+        MenuPrincipal.setBackground(new java.awt.Color(251, 153, 93));
+
+        MenuP.setBackground(new java.awt.Color(255, 255, 255));
+        MenuP.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        AltaCl.setBackground(new java.awt.Color(255, 255, 255));
+        AltaCl.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        AltaCl.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AltaClActionPerformed(evt);
+            }
+        });
+        MenuP.add(AltaCl, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 30, 220, 160));
+
+        Comprabtn.setBackground(new java.awt.Color(255, 255, 255));
+        Comprabtn.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        Comprabtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComprabtnActionPerformed(evt);
+            }
+        });
+        MenuP.add(Comprabtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 30, 210, 160));
+
+        AltaEm.setBackground(new java.awt.Color(255, 255, 255));
+        AltaEm.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        AltaEm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AltaEmActionPerformed(evt);
+            }
+        });
+        MenuP.add(AltaEm, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 30, 220, 160));
+
+        Ventabtn.setBackground(new java.awt.Color(255, 255, 255));
+        Ventabtn.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        MenuP.add(Ventabtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 220, 210, 160));
+
+        Grupalbtn.setBackground(new java.awt.Color(255, 255, 255));
+        Grupalbtn.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        Grupalbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GrupalbtnActionPerformed(evt);
+            }
+        });
+        MenuP.add(Grupalbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 220, 220, 160));
+
+        SeguiEn.setBackground(new java.awt.Color(255, 255, 255));
+        SeguiEn.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        MenuP.add(SeguiEn, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 220, 220, 160));
+
+        jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(251, 153, 93));
+        jLabel5.setText("Registro de clases Grupales");
+        MenuP.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 380, -1, -1));
+
+        jLabel9.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("Correo electronico:");
+        MenuP.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 20, -1, -1));
+
+        jLabel11.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(251, 153, 93));
+        jLabel11.setText("Segimiento del Entrenador");
+        MenuP.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 380, 190, -1));
+
+        jLabel12.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(251, 153, 93));
+        jLabel12.setText("Empelados");
+        MenuP.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 190, -1, -1));
+
+        jLabel13.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(251, 153, 93));
+        jLabel13.setText("Venta de Productos");
+        MenuP.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 380, -1, -1));
+
+        jLabel14.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(251, 153, 93));
+        jLabel14.setText("Clientes");
+        MenuP.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 190, -1, -1));
+
+        jLabel15.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(251, 153, 93));
+        jLabel15.setText("Compra de Productos");
+        MenuP.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 190, -1, -1));
+
+        MenuPrincipal.addTab("Menu Principal", MenuP);
+
+        jPanel3.setBackground(new java.awt.Color(251, 250, 248));
+        jPanel3.setMaximumSize(new java.awt.Dimension(863, 90));
+        jPanel3.setMinimumSize(new java.awt.Dimension(863, 90));
+        jPanel3.setPreferredSize(new java.awt.Dimension(895, 477));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel7.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel7.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel7.setText("Nombres:");
+        jPanel3.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(194, 90, -1, -1));
+
+        jLabel16.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel16.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel16.setText("Apellido Materno:");
+        jPanel3.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(535, 90, -1, -1));
+
+        jLabel17.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel17.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel17.setText("Celular:");
+        jPanel3.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 200, -1, -1));
+
+        Nombre.setEditable(false);
+        Nombre.setBackground(new java.awt.Color(240, 239, 239));
+        Nombre.setToolTipText("");
+        Nombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NombreActionPerformed(evt);
+            }
+        });
+        jPanel3.add(Nombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(194, 110, 158, -1));
+
+        ApellidoM.setEditable(false);
+        ApellidoM.setBackground(new java.awt.Color(240, 239, 239));
+        ApellidoM.setToolTipText("");
+        ApellidoM.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ApellidoMActionPerformed(evt);
+            }
+        });
+        jPanel3.add(ApellidoM, new org.netbeans.lib.awtextra.AbsoluteConstraints(535, 110, 156, -1));
+
+        celulartxt.setEditable(false);
+        celulartxt.setBackground(new java.awt.Color(240, 239, 239));
+        celulartxt.setToolTipText("");
+        celulartxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                celulartxtActionPerformed(evt);
+            }
+        });
+        jPanel3.add(celulartxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 220, 148, -1));
+
+        ApellidoP.setEditable(false);
+        ApellidoP.setBackground(new java.awt.Color(240, 239, 239));
+        ApellidoP.setToolTipText("");
+        ApellidoP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ApellidoPActionPerformed(evt);
+            }
+        });
+        jPanel3.add(ApellidoP, new org.netbeans.lib.awtextra.AbsoluteConstraints(364, 110, 159, -1));
+
+        jLabel18.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel18.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel18.setText("Apellido Paterno:");
+        jPanel3.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(364, 90, -1, -1));
+
+        Perfil.setBackground(new java.awt.Color(204, 255, 204));
+        Perfil.setForeground(new java.awt.Color(204, 102, 0));
+        Perfil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/perfildef.png"))); // NOI18N
+        jPanel3.add(Perfil, new org.netbeans.lib.awtextra.AbsoluteConstraints(728, 17, -1, 331));
+
+        Cargarbtn.setText("Cambiar Imagen");
+        Cargarbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CargarbtnActionPerformed(evt);
+            }
+        });
+        jPanel3.add(Cargarbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(791, 360, 222, 35));
+
+        Editarbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EditarbtnActionPerformed(evt);
+            }
+        });
+        jPanel3.add(Editarbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 5, 73, 64));
+
+        Guardarbtn.setText("Guardar");
+        Guardarbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GuardarbtnActionPerformed(evt);
+            }
+        });
+        jPanel3.add(Guardarbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 320, 389, 48));
+
+        jLabel20.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel20.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel20.setText("Contrasena nueva:");
+        jPanel3.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, -1, -1));
+
+        contra1.setEditable(false);
+        contra1.setBackground(new java.awt.Color(240, 239, 239));
+        contra1.setToolTipText("");
+        contra1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                contra1ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(contra1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, 290, -1));
+
+        contra2.setEditable(false);
+        contra2.setBackground(new java.awt.Color(240, 239, 239));
+        contra2.setToolTipText("");
+        contra2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                contra2ActionPerformed(evt);
+            }
+        });
+        jPanel3.add(contra2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 280, 280, -1));
+
+        jLabel21.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel21.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel21.setText("Repetir contrasena:");
+        jPanel3.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 260, -1, -1));
+
+        jLabel22.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel22.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel22.setText("Id:");
+        jPanel3.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, -1, -1));
+
+        idIG.setEditable(false);
+        idIG.setBackground(new java.awt.Color(240, 239, 239));
+        idIG.setToolTipText("");
+        idIG.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                idIGActionPerformed(evt);
+            }
+        });
+        jPanel3.add(idIG, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 148, -1));
+
+        jLabel23.setFont(new java.awt.Font("Eras Demi ITC", 0, 36)); // NOI18N
+        jLabel23.setText("Datos");
+        jPanel3.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(103, 30, -1, -1));
+
+        jLabel24.setFont(new java.awt.Font("Eras Demi ITC", 0, 36)); // NOI18N
+        jLabel24.setForeground(new java.awt.Color(255, 145, 77));
+        jLabel24.setText("del Empleado");
+        jPanel3.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(213, 30, 317, -1));
+
+        jLabel25.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel25.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel25.setText("Domicilio:");
+        jPanel3.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 130, -1));
+
+        Domiciliotxt.setEditable(false);
+        Domiciliotxt.setBackground(new java.awt.Color(240, 239, 239));
+        Domiciliotxt.setToolTipText("");
+        Domiciliotxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DomiciliotxtActionPerformed(evt);
+            }
+        });
+        jPanel3.add(Domiciliotxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 220, -1));
+
+        jLabel26.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel26.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel26.setText("Codigo Postal:");
+        jPanel3.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 140, -1, -1));
+
+        CPtxt.setEditable(false);
+        CPtxt.setBackground(new java.awt.Color(240, 239, 239));
+        CPtxt.setToolTipText("");
+        CPtxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CPtxtActionPerformed(evt);
+            }
+        });
+        jPanel3.add(CPtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 160, 159, -1));
+
+        jLabel27.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel27.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel27.setText("Celular Emergencia:");
+        jPanel3.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 200, -1, -1));
+
+        celularEtxt.setEditable(false);
+        celularEtxt.setBackground(new java.awt.Color(240, 239, 239));
+        celularEtxt.setToolTipText("");
+        celularEtxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                celularEtxtActionPerformed(evt);
+            }
+        });
+        jPanel3.add(celularEtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 220, 159, -1));
+
+        jLabel29.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel29.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel29.setText("CURP:");
+        jPanel3.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 140, -1, -1));
+
+        curptxt.setEditable(false);
+        curptxt.setBackground(new java.awt.Color(240, 239, 239));
+        curptxt.setToolTipText("");
+        curptxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                curptxtActionPerformed(evt);
+            }
+        });
+        jPanel3.add(curptxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 160, 230, -1));
+
+        jLabel31.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel31.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel31.setText("RFC:");
+        jPanel3.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, -1, -1));
+
+        rfctxt.setEditable(false);
+        rfctxt.setBackground(new java.awt.Color(240, 239, 239));
+        rfctxt.setToolTipText("");
+        rfctxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rfctxtActionPerformed(evt);
+            }
+        });
+        jPanel3.add(rfctxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, 230, -1));
+
+        MenuPrincipal.addTab("Informacion General", jPanel3);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(FondoP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(MenuPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 1092, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(FondoP, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(MenuPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
 
     private void SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirActionPerformed
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_SalirActionPerformed
-
-    private void GrupalbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GrupalbtnActionPerformed
-        // TODO add your handling code here:
-        RegistroClases Grupales = new RegistroClases();
-        Grupales.setVisible(true);
-        this.setVisible(false);
-        
-    }//GEN-LAST:event_GrupalbtnActionPerformed
-
-    private void ComprabtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComprabtnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ComprabtnActionPerformed
-
-    private void AltaEmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AltaEmActionPerformed
-        // TODO add your handling code here:
-        RDE RegistroEmpleado= new RDE();
-        RegistroEmpleado.setVisible(true);
-        this.setVisible(false);
-        
-    }//GEN-LAST:event_AltaEmActionPerformed
-
-    private void AltaClActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AltaClActionPerformed
-        // TODO add your handling code here:
-        Registro_Cliente cliente = new  Registro_Cliente();
-        cliente.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_AltaClActionPerformed
 
     private void FondoPMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FondoPMousePressed
         // TODO add your handling code here:
@@ -349,6 +652,268 @@ public class Perfil_Empleado extends javax.swing.JFrame {
         
         this.setLocation(x, y);
     }//GEN-LAST:event_FondoPMouseDragged
+
+    private void idIGActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idIGActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_idIGActionPerformed
+
+    private void contra2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contra2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_contra2ActionPerformed
+
+    private void contra1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contra1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_contra1ActionPerformed
+
+    private void GuardarbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarbtnActionPerformed
+
+        // TODO add your handling code here:
+        ActualizarDatos(IDtxt, celulartxt, correotxt, contra1, contra2, archivoSeleccionado,celularEtxt);
+    }//GEN-LAST:event_GuardarbtnActionPerformed
+
+    private void EditarbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditarbtnActionPerformed
+        // TODO add your handling code here:
+        Cargarbtn.show(true);
+        Guardarbtn.show(true);
+        correotxt.setEditable(true);
+        celulartxt.setEditable(true);
+        celularEtxt.setEditable(true);
+        contra2.setEditable(true);
+        contra1.setEditable(true);
+        correotxt.setBackground(Color.WHITE);
+        celulartxt.setBackground(Color.WHITE);
+        contra2.setBackground(Color.WHITE);
+        contra1.setBackground(Color.WHITE);
+    }//GEN-LAST:event_EditarbtnActionPerformed
+
+    private void CargarbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CargarbtnActionPerformed
+
+        //METODO PARA CARGAR IMAGEN desde el explorador
+        JFileChooser fileChooser = new JFileChooser();
+        int resultado = fileChooser.showOpenDialog(null);
+
+        if (resultado == JFileChooser.APPROVE_OPTION) {
+            archivoSeleccionado = fileChooser.getSelectedFile();
+            String ruta = archivoSeleccionado.getName();
+            System.out.println(ruta);
+
+            try {
+                Image imagenSeleccionada = ImageIO.read(archivoSeleccionado);
+                ImageIcon Imagen = new ImageIcon(imagenSeleccionada);
+
+                int labelancho = Perfil.getWidth();
+                int labellargo = Perfil.getHeight();
+
+                Image scaledImage = Imagen.getImage().getScaledInstance(labelancho, labellargo, Image.SCALE_SMOOTH);
+
+                Perfil.setIcon(new ImageIcon(scaledImage));
+            } catch (Exception e) {
+
+                JOptionPane.showMessageDialog(null, "Error: " + e.toString());
+            }
+        }
+    }//GEN-LAST:event_CargarbtnActionPerformed
+
+    private void ApellidoPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ApellidoPActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ApellidoPActionPerformed
+
+    private void celulartxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_celulartxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_celulartxtActionPerformed
+
+    private void ApellidoMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ApellidoMActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ApellidoMActionPerformed
+
+    private void NombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_NombreActionPerformed
+
+    private void GrupalbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GrupalbtnActionPerformed
+        // TODO add your handling code here:
+        RegistroClases Grupales = new RegistroClases();
+        Grupales.setVisible(true);
+        this.setVisible(false);
+
+    }//GEN-LAST:event_GrupalbtnActionPerformed
+
+    private void AltaEmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AltaEmActionPerformed
+        // TODO add your handling code here:
+        Registro_Empleado RegistroEmpleado= new Registro_Empleado();
+        RegistroEmpleado.setVisible(true);
+        this.setVisible(false);
+
+    }//GEN-LAST:event_AltaEmActionPerformed
+
+    private void ComprabtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComprabtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ComprabtnActionPerformed
+
+    private void AltaClActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AltaClActionPerformed
+        // TODO add your handling code here:
+        Registro_Cliente cliente = new  Registro_Cliente();
+        cliente.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_AltaClActionPerformed
+
+    private void DomiciliotxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DomiciliotxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_DomiciliotxtActionPerformed
+
+    private void CPtxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CPtxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CPtxtActionPerformed
+
+    private void celularEtxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_celularEtxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_celularEtxtActionPerformed
+
+    private void curptxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_curptxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_curptxtActionPerformed
+
+    private void rfctxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rfctxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rfctxtActionPerformed
+
+    private void Regresarbtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Regresarbtn2ActionPerformed
+        // TODO add your handling code here:
+
+        int R = JOptionPane.showConfirmDialog(null, "Estas Seguro de regresar?", "Regresar", JOptionPane.YES_NO_OPTION,
+            JOptionPane.INFORMATION_MESSAGE);
+
+        if (R == 0) {
+            login Perfil = new login();
+            Perfil.setVisible(true);
+            this.setVisible(false);
+        }
+
+    }//GEN-LAST:event_Regresarbtn2ActionPerformed
+
+    //Metodo para cargar Datos
+    public void Buscardatos(JTextField ID) {
+        try {
+            conectar ObjetoConexion = new conectar();
+
+            String cosulta = "SELECT * FROM Empleado WHERE id_Empleado=?";
+
+            PreparedStatement ps = ObjetoConexion.prepareStatement(cosulta);
+
+            ps.setString(1, ID.getText());
+
+            ResultSet resultado = ps.executeQuery();
+
+            if (resultado.next()) {
+                String nombre = resultado.getString("nombreE");
+                String apellidoP = resultado.getString("apellidoPE");
+                String apellidoM = resultado.getString("apellidoME");
+                String correo = resultado.getString("correoE");
+                int celular = resultado.getInt("celularE");
+                int celularE = resultado.getInt("telefonoME");
+                String domicilio = resultado.getString("domicilioE");
+                byte[] fotoBytes = resultado.getBytes("foto");
+                String contra = resultado.getString("contrasena");
+               String puesto = resultado.getString("puesto");
+               int CP = resultado.getInt("codigoPo");
+               String curp = resultado.getString("curp");
+               String RFC = resultado.getString("rfc");
+
+                // Convertir arreglo de bytes a ImageIcon
+                ImageIcon imagen = new ImageIcon(fotoBytes);
+                // Escalar la imagen si es necesario
+                Image imagenEscalada = imagen.getImage().getScaledInstance(FOTOP.getWidth(), FOTOP.getHeight(), Image.SCALE_SMOOTH);
+               Image imagenEscalada2 = imagen.getImage().getScaledInstance(Perfil.getWidth(), Perfil.getHeight(), Image.SCALE_SMOOTH);
+                ImageIcon imagenEscaladaIcon = new ImageIcon(imagenEscalada);
+               ImageIcon imagenEscaladaIcon2 = new ImageIcon(imagenEscalada2);
+
+                // Asignar la imagen al JLabel
+                FOTOP.setIcon(imagenEscaladaIcon);
+                Perfil.setIcon(imagenEscaladaIcon2);
+
+                nombretxt.setText(nombre + " " + apellidoP + " " + apellidoM);
+                jLabel8.setText(nombre+"!");
+               Nombre.setText(nombre);
+                ApellidoP.setText(apellidoP);
+                ApellidoM.setText(apellidoM);
+                correotxt.setText(correo);
+                puestotxt.setText(puesto);
+                Domiciliotxt.setText(domicilio);
+                CPtxt.setText(String.valueOf(CP));
+                curptxt.setText(curp);
+                rfctxt.setText(RFC);
+               celulartxt.setText(String.valueOf(celular));
+               celularEtxt.setText(String.valueOf(celularE));
+                contra1.setText(contra);
+                contra2.setText(contra);
+                
+
+            } else {
+                JOptionPane.showMessageDialog(null, "No se pudo encontrar al usuario");
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error: " + e.toString());
+        }
+
+    }
+    
+    public void PerfilXCargo(String tipoUsuario){
+
+       
+        
+        if (tipoUsuario.startsWith("E") || tipoUsuario.startsWith("I") ) {
+            //NO MOSTRAR EL MENU RPINCIPAL
+            
+            MenuPrincipal.removeTabAt(index);
+            
+        } else {
+            EvaEntrbtn.show(false);
+          //  MenuPrincipal.add("Menu Principal",pestana);
+           
+        }
+        
+        
+    }
+    
+    public void ActualizarDatos(JTextField ID, JTextField celular, JTextField correo, JTextField contrasena, JTextField contrasenaRep, File foto,JTextField celularEm) {
+
+        if (contrasena.getText().equals(contrasenaRep.getText())) {
+            try {
+                conectar ObjetoConexion = new conectar();
+
+                String actualizar = "update Empleado set celularE =?, correoC = ?, contrasena = ?, foto= ?, telefonoME=?  where id_cliente= ?;";
+                FileInputStream fis = new FileInputStream(foto);
+                PreparedStatement ps = ObjetoConexion.prepareStatement(actualizar);
+
+                ps.setInt(1, Integer.parseInt(celular.getText()));
+                ps.setString(2, correo.getText());
+                ps.setString(3, contrasena.getText());
+                ps.setBinaryStream(4, fis, (int) foto.length());
+                ps.setInt(5, Integer.parseInt(celularEm.getText()));
+                ps.setString(6, ID.getText());
+
+                // Ejecutar la sentencia SQL de actualización
+                int filasActualizadas = ps.executeUpdate();
+
+                // Verificar si se actualizaron filas y mostrar un mensaje
+                if (filasActualizadas > 0) {
+                    JOptionPane.showMessageDialog(null, "Se guardo correctamente");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Lo sentimos, NO guardo correctamente");
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Error A: " + e.toString());
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(Perfil_Segi.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "La contrasena no son similares");
+            contrasena.setText("");
+            contrasenaRep.setText("");
+        }
+
+    }
 
     /**
      * @param args the command line arguments
@@ -411,31 +976,67 @@ public class Perfil_Empleado extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AltaCl;
     private javax.swing.JButton AltaEm;
+    private javax.swing.JTextField ApellidoM;
+    private javax.swing.JTextField ApellidoP;
+    private javax.swing.JTextField CPtxt;
+    private javax.swing.JButton Cargarbtn;
     private javax.swing.JButton Comprabtn;
+    private javax.swing.JTextField Domiciliotxt;
+    private javax.swing.JButton Editarbtn;
+    private javax.swing.JButton EvaEntrbtn;
+    private javax.swing.JLabel FOTOP;
     private javax.swing.JPanel FondoP;
     private javax.swing.JButton Grupalbtn;
-    private javax.swing.JTextField ID;
+    private javax.swing.JButton Guardarbtn;
+    private javax.swing.JTextField IDtxt;
     private javax.swing.JLabel Jlabel2;
+    private javax.swing.JPanel MenuP;
+    private javax.swing.JTabbedPane MenuPrincipal;
+    private javax.swing.JTextField Nombre;
+    private javax.swing.JLabel Perfil;
+    private javax.swing.JButton Regresarbtn;
+    private javax.swing.JButton Regresarbtn1;
+    private javax.swing.JButton Regresarbtn2;
     private javax.swing.JButton Salir;
     private javax.swing.JButton SeguiEn;
     private javax.swing.JButton Ventabtn;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JTextField celularEtxt;
+    private javax.swing.JTextField celulartxt;
+    private javax.swing.JTextField contra1;
+    private javax.swing.JTextField contra2;
+    private javax.swing.JTextField correotxt;
+    private javax.swing.JTextField curptxt;
+    private javax.swing.JTextField idIG;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JTextField nombretxt;
+    private javax.swing.JTextField puestotxt;
+    private javax.swing.JTextField rfctxt;
     // End of variables declaration//GEN-END:variables
 }

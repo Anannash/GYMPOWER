@@ -25,6 +25,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.jfree.chart.*;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 
 /**
  *
@@ -38,11 +45,10 @@ public final class Perfil_Segi extends javax.swing.JFrame {
     // Formatear la fecha como una cadena en el formato deseado (YYYY-MM-DD)
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     String fechaFormateada = fechaActual.format(formatter);
-        
+
     private JPanelConFondo fondo;
     public File archivoSeleccionado;
     private Point mPoint;
-   
 
     public Perfil_Segi() {
         setUndecorated(true);
@@ -58,27 +64,29 @@ public final class Perfil_Segi extends javax.swing.JFrame {
 
         //colocar id
         ID.setText(Variables.getIDU());
-       // System.out.println("Perfil : " + Variables.getIDU());
+        // System.out.println("Perfil : " + Variables.getIDU());
 
         idIG.setText(Variables.getIDU());
 
         imagenBtn_EoR("src/Image/X.png", Salir);
         SetImageButton("src/Image/Ajustes.png", Editarbtn);
+        SetImageButton("src/Image/regresar.png", Regresarbtn);
 
         Cargarbtn.show(false);
         Guardarbtn.show(false);
         Buscardatos(ID);
         GenerarRutinas(ID);
-        
+
         if (tblRutinas.getRowCount() > 0) {
-           BtnEntrevistaR.show(false);
+            BtnEntrevistaR.show(false);
         } else {
             BtnEntrevistaR.show(true);
         }
         //fecha del dispositivo
         fecha.setText(fechaFormateada);
         TablaSegimineto(ID);
-        
+        GraficaSeguimiento();
+
     }
 
     private void imagenBtn_EoR(String url, JButton boton) {
@@ -153,6 +161,7 @@ public final class Perfil_Segi extends javax.swing.JFrame {
         imctxt = new javax.swing.JTextField();
         alturatxt = new javax.swing.JTextField();
         jLabel24 = new javax.swing.JLabel();
+        Regresarbtn = new javax.swing.JButton();
         jTabbedPane2 = new javax.swing.JTabbedPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel2 = new javax.swing.JPanel();
@@ -196,6 +205,7 @@ public final class Perfil_Segi extends javax.swing.JFrame {
         jScrollPane5 = new javax.swing.JScrollPane();
         SegimientoTabla = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
+        graficaSeg = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocationByPlatform(true);
@@ -295,7 +305,7 @@ public final class Perfil_Segi extends javax.swing.JFrame {
         jLabel22.setBackground(new java.awt.Color(67, 16, 0));
         jLabel22.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel22.setText("Peso Actual:");
+        jLabel22.setText("Peso Inicial:");
 
         pesotxt.setEditable(false);
         pesotxt.setBackground(new java.awt.Color(240, 239, 239));
@@ -308,7 +318,7 @@ public final class Perfil_Segi extends javax.swing.JFrame {
         jLabel23.setBackground(new java.awt.Color(67, 16, 0));
         jLabel23.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel23.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel23.setText("IMC Actual:");
+        jLabel23.setText("IMC Inicial:");
 
         imctxt.setEditable(false);
         imctxt.setBackground(new java.awt.Color(240, 239, 239));
@@ -330,6 +340,18 @@ public final class Perfil_Segi extends javax.swing.JFrame {
         jLabel24.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel24.setForeground(new java.awt.Color(255, 255, 255));
         jLabel24.setText("Altura:");
+
+        Regresarbtn.setBackground(new java.awt.Color(193, 86, 14));
+        Regresarbtn.setFont(new java.awt.Font("Consolas", 1, 36)); // NOI18N
+        Regresarbtn.setForeground(new java.awt.Color(255, 255, 255));
+        Regresarbtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Regresarbtn.setMaximumSize(new java.awt.Dimension(10, 8));
+        Regresarbtn.setMinimumSize(new java.awt.Dimension(10, 8));
+        Regresarbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RegresarbtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout FondoLayout = new javax.swing.GroupLayout(Fondo);
         Fondo.setLayout(FondoLayout);
@@ -365,23 +387,23 @@ public final class Perfil_Segi extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(imctxt, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(FondoLayout.createSequentialGroup()
-                        .addGap(94, 94, 94)
+                        .addGap(78, 78, 78)
                         .addComponent(BtnEntrevistaR, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(FondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FondoLayout.createSequentialGroup()
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addGroup(FondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(QRID, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(FondoLayout.createSequentialGroup()
                         .addComponent(jButton1)
-                        .addGap(31, 31, 31)
-                        .addComponent(Salir, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FondoLayout.createSequentialGroup()
-                        .addComponent(QRID, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Regresarbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Salir, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         FondoLayout.setVerticalGroup(
             FondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FondoLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(32, Short.MAX_VALUE)
                 .addGroup(FondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(FOTOP, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FondoLayout.createSequentialGroup()
@@ -413,15 +435,21 @@ public final class Perfil_Segi extends javax.swing.JFrame {
                 .addGroup(FondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(Salir, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(FondoLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jButton1)))
-                .addGap(5, 5, 5)
-                .addComponent(QRID, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(40, Short.MAX_VALUE))
+                        .addGroup(FondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(FondoLayout.createSequentialGroup()
+                                .addGap(14, 14, 14)
+                                .addComponent(jButton1))
+                            .addGroup(FondoLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(Regresarbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(QRID, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        getContentPane().add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 320));
+        getContentPane().add(Fondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 320));
 
+        jTabbedPane2.setBackground(new java.awt.Color(255, 145, 77));
         jTabbedPane2.setMaximumSize(new java.awt.Dimension(900, 75));
         jTabbedPane2.setMinimumSize(new java.awt.Dimension(900, 75));
         jTabbedPane2.setPreferredSize(new java.awt.Dimension(900, 75));
@@ -460,6 +488,7 @@ public final class Perfil_Segi extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblRutinas.setSelectionBackground(new java.awt.Color(255, 145, 77));
         jScrollPane4.setViewportView(tblRutinas);
         if (tblRutinas.getColumnModel().getColumnCount() > 0) {
             tblRutinas.getColumnModel().getColumn(0).setResizable(false);
@@ -482,8 +511,8 @@ public final class Perfil_Segi extends javax.swing.JFrame {
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(25, 25, 25)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 847, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(23, Short.MAX_VALUE))
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 901, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -493,8 +522,8 @@ public final class Perfil_Segi extends javax.swing.JFrame {
                     .addComponent(jLabel7)
                     .addComponent(jLabel6))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(194, Short.MAX_VALUE))
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(215, Short.MAX_VALUE))
         );
 
         jScrollPane1.setViewportView(jPanel2);
@@ -663,7 +692,7 @@ public final class Perfil_Segi extends javax.swing.JFrame {
                                 .addComponent(idIG, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
                                 .addComponent(ApellidoP, javax.swing.GroupLayout.Alignment.LEADING))
                             .addComponent(jLabel16))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(celulartxt, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel10)
@@ -761,17 +790,21 @@ public final class Perfil_Segi extends javax.swing.JFrame {
         jPanel7.setBackground(new java.awt.Color(251, 250, 248));
         jPanel7.setMaximumSize(new java.awt.Dimension(863, 90));
         jPanel7.setMinimumSize(new java.awt.Dimension(863, 90));
+        jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel17.setFont(new java.awt.Font("Eras Demi ITC", 0, 48)); // NOI18N
         jLabel17.setText("Seguimiento");
+        jPanel7.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(42, 22, -1, -1));
 
         jLabel18.setFont(new java.awt.Font("Eras Demi ITC", 0, 48)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(255, 145, 77));
         jLabel18.setText("Cliente");
+        jPanel7.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(435, 22, -1, -1));
 
         jLabel19.setFont(new java.awt.Font("Eras Demi ITC", 0, 48)); // NOI18N
-        jLabel19.setForeground(new java.awt.Color(237, 166, 122));
+        jLabel19.setForeground(new java.awt.Color(255, 145, 77));
         jLabel19.setText("del");
+        jPanel7.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(347, 22, -1, -1));
 
         fecha.setEditable(false);
         fecha.setBackground(new java.awt.Color(240, 239, 239));
@@ -781,14 +814,17 @@ public final class Perfil_Segi extends javax.swing.JFrame {
                 fechaActionPerformed(evt);
             }
         });
+        jPanel7.add(fecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(135, 106, 163, -1));
 
         jLabel21.setBackground(new java.awt.Color(0, 0, 0));
         jLabel21.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel21.setText("Fecha: ");
+        jPanel7.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 108, -1, -1));
 
         jLabel20.setBackground(new java.awt.Color(0, 0, 0));
         jLabel20.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel20.setText("Peso Actual:");
+        jPanel7.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(316, 108, -1, -1));
 
         pesoSe.setBackground(new java.awt.Color(255, 255, 255));
         pesoSe.setToolTipText("");
@@ -797,6 +833,7 @@ public final class Perfil_Segi extends javax.swing.JFrame {
                 pesoSeActionPerformed(evt);
             }
         });
+        jPanel7.add(pesoSe, new org.netbeans.lib.awtextra.AbsoluteConstraints(438, 106, 165, -1));
 
         SegimientoTabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -826,67 +863,37 @@ public final class Perfil_Segi extends javax.swing.JFrame {
             SegimientoTabla.getColumnModel().getColumn(3).setResizable(false);
         }
 
+        jPanel7.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, 423, 155));
+
         jButton2.setText("Guardar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
+        jPanel7.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(633, 106, 111, -1));
 
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(78, 78, 78)
-                        .addComponent(jLabel21)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel20)
-                        .addGap(36, 36, 36)
-                        .addComponent(pesoSe, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 473, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel7Layout.createSequentialGroup()
-                                .addComponent(jLabel17)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel19)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel18)))))
-                .addContainerGap(223, Short.MAX_VALUE))
+        graficaSeg.setMaximumSize(new java.awt.Dimension(800, 600));
+        graficaSeg.setMinimumSize(new java.awt.Dimension(800, 600));
+
+        javax.swing.GroupLayout graficaSegLayout = new javax.swing.GroupLayout(graficaSeg);
+        graficaSeg.setLayout(graficaSegLayout);
+        graficaSegLayout.setHorizontalGroup(
+            graficaSegLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 800, Short.MAX_VALUE)
         );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel17)
-                    .addComponent(jLabel18)
-                    .addComponent(jLabel19))
-                .addGap(28, 28, 28)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel21)
-                    .addComponent(fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel20)
-                    .addComponent(pesoSe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
-                .addGap(46, 46, 46)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(146, Short.MAX_VALUE))
+        graficaSegLayout.setVerticalGroup(
+            graficaSegLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 600, Short.MAX_VALUE)
         );
+
+        jPanel7.add(graficaSeg, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 180, 440, 290));
 
         jScrollPane3.setViewportView(jPanel7);
 
         jTabbedPane2.addTab("Segimiento del cliente?", jScrollPane3);
 
-        getContentPane().add(jTabbedPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 900, 390));
+        getContentPane().add(jTabbedPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 970, 390));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -1018,18 +1025,16 @@ public final class Perfil_Segi extends javax.swing.JFrame {
     }//GEN-LAST:event_FondoMouseDragged
 
     private void GuardarbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarbtnActionPerformed
-        
-            // TODO add your handling code here:
 
-            ActualizarDatos(ID,celulartxt,correotxt,correo1,contra2,archivoSeleccionado);
-       
+        // TODO add your handling code here:
+        ActualizarDatos(ID, celulartxt, correotxt, correo1, contra2, archivoSeleccionado);
+
     }//GEN-LAST:event_GuardarbtnActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        
-       
-        saveQRToDatabase(ID,generateQRCode(ID.getText(),QRID));
+
+        saveQRToDatabase(ID, generateQRCode(ID.getText(), QRID));
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void pesoSeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesoSeActionPerformed
@@ -1046,7 +1051,7 @@ public final class Perfil_Segi extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        SeguimientoCLiente(ID, pesoSe,alturatxt);
+        SeguimientoCLiente(ID, pesoSe, alturatxt);
         TablaSegimineto(ID);
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -1057,6 +1062,19 @@ public final class Perfil_Segi extends javax.swing.JFrame {
     private void alturatxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_alturatxtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_alturatxtActionPerformed
+
+    private void RegresarbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegresarbtnActionPerformed
+        // TODO add your handling code here:
+
+        int R = JOptionPane.showConfirmDialog(null, "Estas Seguro de cerrar Sesion", "Si", JOptionPane.YES_NO_OPTION,
+            JOptionPane.INFORMATION_MESSAGE);
+
+        if (R == 0) {
+            login Perfil = new login();
+            Perfil.setVisible(true);
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_RegresarbtnActionPerformed
 
     public void GenerarRutinas(JTextField ID) {
         try {
@@ -1122,7 +1140,6 @@ public final class Perfil_Segi extends javax.swing.JFrame {
                 Double peso_inicial = resultado.getDouble("peso_inicial");
                 Double altura = resultado.getDouble("estatura");
                 Double imc = resultado.getDouble("imc");
-            
 
                 // Convertir arreglo de bytes a ImageIcon
                 ImageIcon imagen = new ImageIcon(fotoBytes);
@@ -1169,7 +1186,7 @@ public final class Perfil_Segi extends javax.swing.JFrame {
                 FileInputStream fis = new FileInputStream(foto);
                 PreparedStatement ps = ObjetoConexion.prepareStatement(actualizar);
 
-                ps.setInt(1,Integer.parseInt(celular.getText()));
+                ps.setInt(1, Integer.parseInt(celular.getText()));
                 ps.setString(2, correo.getText());
                 ps.setString(3, contrasena.getText());
                 ps.setBinaryStream(4, fis, (int) foto.length());
@@ -1191,68 +1208,61 @@ public final class Perfil_Segi extends javax.swing.JFrame {
             }
         } else {
             JOptionPane.showMessageDialog(null, "La contrasena no son similares");
-            contrasena.setText("") ;
+            contrasena.setText("");
             contrasenaRep.setText("");
         }
 
     }
-    
-    public void  SeguimientoCLiente(JTextField ID, JTextField pesoactual, JTextField altura){
-        
+
+    public void SeguimientoCLiente(JTextField ID, JTextField pesoactual, JTextField altura) {
+
         try {
-            
+
             conectar ObjetoConexion = new conectar();
-            
-          //  String actualizacion="UPDATE cliente set peso_inicial =?";
+
+            //  String actualizacion="UPDATE cliente set peso_inicial =?";
             String insert = "INSERT INTO seguimientoCl (id_Cliente, fecha, semana, pesoActual,imcActual) "
-             + "SELECT ?, ?, COALESCE(MAX(semana), 0) + 1, ?,?"
-             + "FROM seguimientoCl WHERE id_Cliente = ?;";
-            
-            
-           Double altura1 =  Double.parseDouble(altura.getText());
-       // peso / (altura * altura);
-            Double imc = Double.parseDouble(pesoactual.getText())/(altura1*altura1);
+                    + "SELECT ?, ?, COALESCE(MAX(semana), 0) + 1, ?,?"
+                    + "FROM seguimientoCl WHERE id_Cliente = ?;";
+
+            Double altura1 = Double.parseDouble(altura.getText());
+            // peso / (altura * altura);
+            Double imc = Double.parseDouble(pesoactual.getText()) / (altura1 * altura1);
             DecimalFormat formato = new DecimalFormat("#.##");
-        String numeroFormateado = formato.format(imc);
-           
-            PreparedStatement psI= ObjetoConexion.prepareStatement(insert);
-           
-            
+            String numeroFormateado = formato.format(imc);
+
+            PreparedStatement psI = ObjetoConexion.prepareStatement(insert);
+
             psI.setString(1, ID.getText());
-            psI.setDate(2,  java.sql.Date.valueOf(fechaActual));
-            psI.setDouble(3, Double.parseDouble(pesoactual.getText()) );
+            psI.setDate(2, java.sql.Date.valueOf(fechaActual));
+            psI.setDouble(3, Double.parseDouble(pesoactual.getText()));
             psI.setDouble(4, Double.parseDouble(numeroFormateado));
             psI.setString(5, ID.getText());
-            
-            
-           
-            
-            psI.executeUpdate(); 
+
+            psI.executeUpdate();
             JOptionPane.showMessageDialog(null, "Guardado con EXITO");
-           
+
         } catch (NumberFormatException | SQLException e) {
-            
+
             JOptionPane.showMessageDialog(null, e.toString());
-            
-            
+
         }
-        
-        
+
     }
-    
-    public void TablaSegimineto(JTextField ID){
+
+    public void TablaSegimineto(JTextField ID) {
         try {
             conectar ObjetoConexion = new conectar();
-            String consulta ="SELECT * FROM seguimientoCl WHERE id_Cliente=?";
-             PreparedStatement psC= ObjetoConexion.prepareStatement(consulta);
-             
-              psC.setString(1, ID.getText());
-              
-               ResultSet resultado = psC.executeQuery();
-                    // Crear un DefaultTableModel para almacenar los datos
+            String consulta = "SELECT * FROM seguimientoCl WHERE id_Cliente=?";
+            PreparedStatement psC = ObjetoConexion.prepareStatement(consulta);
+
+            psC.setString(1, ID.getText());
+
+            ResultSet resultado = psC.executeQuery();
+            // Crear un DefaultTableModel para almacenar los datos
             DefaultTableModel modeloTabla = (DefaultTableModel) SegimientoTabla.getModel();
             // Eliminar las filas existentes de la tabla -------------------------------checar eso
-           modeloTabla.setRowCount(0);
+            modeloTabla.setRowCount(0);
 
             // Agregar las filas al modelo de tabla
             while (resultado.next()) {
@@ -1264,36 +1274,82 @@ public final class Perfil_Segi extends javax.swing.JFrame {
                     resultado.getDouble("pesoActual"),
                     resultado.getDouble("imcActual")
                 };
-               modeloTabla.addRow(fila2);
+                modeloTabla.addRow(fila2);
             }
-            
+            GraficaSeguimiento();
         } catch (Exception e) {
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+    public void GraficaSeguimiento() {
+
+        try {
+            XYSeries seguimiento = new XYSeries("Seguimiento del Cliente");
+            for (int i = 0; i < SegimientoTabla.getRowCount(); i++) {
+                // Obtener los datos de la tabla como objetos
+                Object semanaObject = SegimientoTabla.getValueAt(i, 0);
+                Object pesoObject = SegimientoTabla.getValueAt(i, 2);
+
+                // Convertir la semana de String a Double
+                double semana;
+                if (semanaObject instanceof String string) {
+                    try {
+                        semana = Double.parseDouble(string);
+                    } catch (NumberFormatException ex) {
+                        System.out.println("Error al convertir la semana en la fila " + i + ": " + ex.getMessage());
+                        continue; // Saltar esta fila y pasar a la siguiente iteración del bucle
+                    }
+                } else if (semanaObject instanceof Double aDouble) {
+                    semana = aDouble;
+                } else {
+                    System.out.println("Error: Tipo de datos no válido para la semana en la fila " + i);
+                    continue; // Saltar esta fila y pasar a la siguiente iteración del bucle
+                }
+
+                // Verificar si el peso es un Double
+                if (!(pesoObject instanceof Double)) {
+                    System.out.println("Error: Tipo de datos no válido para el peso en la fila " + i);
+                    continue; // Saltar esta fila y pasar a la siguiente iteración del bucle
+                }
+
+                // Convertir el peso de Double a double
+                double peso = (Double) pesoObject;
+
+                // Agregar los datos a la serie
+                seguimiento.add(semana, peso);
+            }
+
+            //CREACION DE GRAFICA LINEAS
+            XYSeriesCollection dataset = new XYSeriesCollection();
+            dataset.addSeries(seguimiento);
+
+            JFreeChart chart = ChartFactory.createXYLineChart("", "Semanas", "Peso", dataset, PlotOrientation.VERTICAL, true, true, false);
+            
+         XYPlot plot = chart.getXYPlot();
+        NumberAxis domainAxis = (NumberAxis) plot.getDomainAxis();
+        domainAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+
+            // Crear el ChartPanel y añadirlo al JPanel existente
+            ChartPanel chartPanel = new ChartPanel(chart);
+            chartPanel.setPreferredSize(new Dimension(800, 600));
+
+            this.graficaSeg.removeAll();  // Limpiar cualquier componente existente
+            this.graficaSeg.setLayout(new BorderLayout());  // Establecer el layout
+            this.graficaSeg.add(chartPanel, BorderLayout.CENTER);
+            this.graficaSeg.validate();  // Validar el JPanel para actualizarlo
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+    }
+
     //Generar QR
-    public static byte[] generateQRCode(String content , JLabel label) {
+    public static byte[] generateQRCode(String content, JLabel label) {
         int size = 1000; // Tamaño del código QR
 
         try {
-            
-            
+
             // Configuración para la generación del código QR
             Hashtable<EncodeHintType, Object> hintMap = new Hashtable<>();
             hintMap.put(EncodeHintType.CHARACTER_SET, "UTF-8");
@@ -1337,7 +1393,7 @@ public final class Perfil_Segi extends javax.swing.JFrame {
             return null;
         }
     }
-    
+
     public static void displayQRCode(byte[] qrBytes, JLabel label) {
         try {
             ByteArrayInputStream bais = new ByteArrayInputStream(qrBytes);
@@ -1349,17 +1405,13 @@ public final class Perfil_Segi extends javax.swing.JFrame {
         }
     }
 
-    
-    
-    
     // Guarda el código QR en la base de datos junto con el contenido asociado
     public static void saveQRToDatabase(JTextField ID, byte[] qrBytes) {
-        
 
         try {
-                            conectar ObjetoConexion = new conectar();
+            conectar ObjetoConexion = new conectar();
 
-           String sql = "INSERT INTO cliente (qr) VALUES (?) WHERE id_cliente = ?;";
+            String sql = "INSERT INTO cliente (qr) VALUES (?) WHERE id_cliente = ?;";
             try (PreparedStatement statement = ObjetoConexion.prepareStatement(sql)) {
                 statement.setString(2, ID.getText());
                 statement.setBytes(1, qrBytes);
@@ -1424,6 +1476,7 @@ public final class Perfil_Segi extends javax.swing.JFrame {
     private javax.swing.JTextField Nombre;
     private javax.swing.JLabel Perfil;
     private javax.swing.JLabel QRID;
+    private javax.swing.JButton Regresarbtn;
     private javax.swing.JButton Salir;
     private javax.swing.JTable SegimientoTabla;
     private javax.swing.JTextField alturatxt;
@@ -1432,6 +1485,7 @@ public final class Perfil_Segi extends javax.swing.JFrame {
     private javax.swing.JTextField correo1;
     private javax.swing.JTextField correotxt;
     private javax.swing.JTextField fecha;
+    private javax.swing.JPanel graficaSeg;
     private javax.swing.JTextField idIG;
     private javax.swing.JTextField imctxt;
     private javax.swing.JButton jButton1;
