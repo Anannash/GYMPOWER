@@ -765,6 +765,9 @@ public class Perfil_Empleado extends javax.swing.JFrame {
 
     private void ComprabtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComprabtnActionPerformed
         // TODO add your handling code here:
+         compraprod cliente = new  compraprod();
+        cliente.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_ComprabtnActionPerformed
 
     private void AltaClActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AltaClActionPerformed
@@ -810,6 +813,9 @@ public class Perfil_Empleado extends javax.swing.JFrame {
 
     private void HorariobtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HorariobtnActionPerformed
         // TODO add your handling code here:
+        Horarios cliente = new  Horarios();
+        cliente.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_HorariobtnActionPerformed
 
     //Metodo para cargar Datos
