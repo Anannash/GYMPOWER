@@ -4,9 +4,12 @@
  */
 package gym_app;
 
+import gym_app.entrevista_rutina;
+import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -14,7 +17,9 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent; 
@@ -34,9 +39,22 @@ public class compraprod extends javax.swing.JFrame {
     /**
      * Creates new form Rutinas
      */
+     private JPanelConFondo fondo;
+    private Point mPoint;
     public compraprod() throws FontFormatException, IOException {
+         setUndecorated(true);
         initComponents();
-        setExtendedState(MAXIMIZED_BOTH);
+        
+        setLocationRelativeTo(this);
+        
+        fondo = new JPanelConFondo("src/Image/perfilF.png");
+        Fondo.setLayout(new BorderLayout());
+        Fondo.add(fondo);
+        // foto de salir
+        SetImageButton("src/Image/X.png", Salir);
+        SetImageButton("src/Image/regresar.png", Regresarbtn);
+       
+        
 
         /*IMAGENES*/
        /*
@@ -109,11 +127,6 @@ public class compraprod extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField1 = new javax.swing.JTextField();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        fechatxt = new javax.swing.JTextField();
-        noControltxt = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
         Lcliente = new javax.swing.JLabel();
@@ -121,83 +134,47 @@ public class compraprod extends javax.swing.JFrame {
         Lcliente2 = new javax.swing.JLabel();
         arttxt = new javax.swing.JTextField();
         buscartbtn = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
+        provtxt = new javax.swing.JTextField();
+        buscarprovbtn = new javax.swing.JButton();
+        Lcliente7 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         articulosarea = new javax.swing.JTextArea();
-        totaltxt = new javax.swing.JTextField();
-        añadirbtn = new javax.swing.JButton();
+        Lcliente3 = new javax.swing.JLabel();
+        ctotaltxt = new javax.swing.JTextField();
+        confirmarbtn = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         compratxt = new javax.swing.JTextArea();
         Lcliente1 = new javax.swing.JLabel();
         Lcliente4 = new javax.swing.JLabel();
+        añadirbtn = new javax.swing.JButton();
+        articuloctxt = new javax.swing.JTextField();
         Lcliente5 = new javax.swing.JLabel();
         Lcliente6 = new javax.swing.JLabel();
-        articuloctxt = new javax.swing.JTextField();
-        Lcliente3 = new javax.swing.JLabel();
-        confirmarbtn = new javax.swing.JButton();
-        provtxt = new javax.swing.JTextField();
-        buscarprovbtn = new javax.swing.JButton();
-        Lcliente7 = new javax.swing.JLabel();
-
-        jTextField1.setText("jTextField1");
+        provdisp = new javax.swing.JButton();
+        confirmarbtn1 = new javax.swing.JButton();
+        Lcliente8 = new javax.swing.JLabel();
+        Lcliente10 = new javax.swing.JLabel();
+        Lcliente11 = new javax.swing.JLabel();
+        Fondo = new javax.swing.JPanel();
+        Salir = new javax.swing.JButton();
+        jLabel21 = new javax.swing.JLabel();
+        Regresarbtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(244, 246, 248));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setExtendedState(MAXIMIZED_BOTH);
-
-        jPanel2.setBackground(new java.awt.Color(51, 51, 51));
-
-        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel1.setFont(new java.awt.Font("Lucida Sans", 1, 48)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Compra proveedores");
-
-        fechatxt.setEditable(false);
-        fechatxt.setBackground(new java.awt.Color(204, 204, 204));
-        fechatxt.setText("09/10/2024");
-        fechatxt.setCaretColor(new java.awt.Color(153, 153, 153));
-        fechatxt.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-
-        noControltxt.setEditable(false);
-        noControltxt.setBackground(new java.awt.Color(204, 204, 204));
-        noControltxt.setText("21550747");
-        noControltxt.setCaretColor(new java.awt.Color(153, 153, 153));
-        noControltxt.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 101, Short.MAX_VALUE)
-                .addComponent(noControltxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
-                .addComponent(fechatxt, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(fechatxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(noControltxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap())
-        );
+        setLocation(new java.awt.Point(200, 300));
+        setLocationByPlatform(true);
+        setMaximizedBounds(new java.awt.Rectangle(300, 200, 1155, 720));
+        setResizable(false);
 
         jScrollPane1.setBorder(null);
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
         jScrollPane1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        jPanel1.setBackground(new java.awt.Color(242, 242, 242));
+        jPanel1.setBackground(new java.awt.Color(251, 250, 248));
         jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -206,149 +183,34 @@ public class compraprod extends javax.swing.JFrame {
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         Lcliente2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        Lcliente2.setText("Artículo a comprar");
-        jPanel1.add(Lcliente2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 30, -1, -1));
+        Lcliente2.setText("Ingrese el nombre del producto:");
+        jPanel1.add(Lcliente2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 24, -1, 20));
 
-        arttxt.setBackground(new java.awt.Color(204, 204, 204));
+        arttxt.setBackground(new java.awt.Color(251, 250, 248));
         arttxt.setCaretColor(new java.awt.Color(153, 153, 153));
         arttxt.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jPanel1.add(arttxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 210, -1));
+        jPanel1.add(arttxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 390, -1));
 
-        buscartbtn.setFont(new java.awt.Font("Bahnschrift", 1, 13)); // NOI18N
-        buscartbtn.setText("Buscar por articulo");
+        buscartbtn.setBackground(new java.awt.Color(255, 145, 77));
+        buscartbtn.setFont(new java.awt.Font("Eras Bold ITC", 1, 14)); // NOI18N
+        buscartbtn.setForeground(new java.awt.Color(251, 250, 248));
+        buscartbtn.setText("Buscar producto");
         buscartbtn.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         buscartbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buscartbtnActionPerformed(evt);
             }
         });
-        jPanel1.add(buscartbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 30, 170, -1));
+        jPanel1.add(buscartbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 83, 390, 30));
 
-        articulosarea.setColumns(20);
-        articulosarea.setRows(5);
-        jScrollPane2.setViewportView(articulosarea);
-
-        totaltxt.setEditable(false);
-        totaltxt.setBackground(new java.awt.Color(204, 204, 204));
-        totaltxt.setCaretColor(new java.awt.Color(153, 153, 153));
-        totaltxt.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-
-        añadirbtn.setFont(new java.awt.Font("Bahnschrift", 1, 13)); // NOI18N
-        añadirbtn.setText("Añadir al carrito");
-        añadirbtn.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        añadirbtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                añadirbtnActionPerformed(evt);
-            }
-        });
-
-        compratxt.setColumns(20);
-        compratxt.setRows(5);
-        compratxt.setText("2232\t10\t\t450.23 \t\t$4,502.30\n8665\t5\t\t320.50\t\t$1602.50");
-        jScrollPane3.setViewportView(compratxt);
-
-        Lcliente1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        Lcliente1.setText("id articulo");
-
-        Lcliente4.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        Lcliente4.setText("No. unidades");
-
-        Lcliente5.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        Lcliente5.setText("Precio por unidad");
-
-        Lcliente6.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        Lcliente6.setText("Total de articulo");
-
-        articuloctxt.setBackground(new java.awt.Color(204, 204, 204));
-        articuloctxt.setCaretColor(new java.awt.Color(153, 153, 153));
-        articuloctxt.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        articuloctxt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                articuloctxtActionPerformed(evt);
-            }
-        });
-
-        Lcliente3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        Lcliente3.setText("TOTAL DE COMPRA");
-
-        confirmarbtn.setFont(new java.awt.Font("Bahnschrift", 1, 13)); // NOI18N
-        confirmarbtn.setText("Confirmar compra");
-        confirmarbtn.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        confirmarbtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                confirmarbtnActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 444, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(Lcliente1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(Lcliente4)
-                                .addGap(57, 57, 57)
-                                .addComponent(Lcliente5)
-                                .addGap(26, 26, 26)
-                                .addComponent(Lcliente6))
-                            .addComponent(totaltxt, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Lcliente3)
-                            .addComponent(confirmarbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addComponent(articuloctxt, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(añadirbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26))))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(articuloctxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(añadirbtn))
-                        .addGap(11, 11, 11)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(Lcliente4)
-                                .addComponent(Lcliente5)
-                                .addComponent(Lcliente6))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(Lcliente1)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(Lcliente3)
-                        .addGap(11, 11, 11)
-                        .addComponent(totaltxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(confirmarbtn))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(27, Short.MAX_VALUE))
-        );
-
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 780, 490));
-
-        provtxt.setBackground(new java.awt.Color(204, 204, 204));
+        provtxt.setBackground(new java.awt.Color(251, 250, 248));
         provtxt.setCaretColor(new java.awt.Color(153, 153, 153));
         provtxt.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jPanel1.add(provtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 210, -1));
+        jPanel1.add(provtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 210, -1));
 
-        buscarprovbtn.setFont(new java.awt.Font("Bahnschrift", 1, 13)); // NOI18N
+        buscarprovbtn.setBackground(new java.awt.Color(255, 145, 77));
+        buscarprovbtn.setFont(new java.awt.Font("Eras Bold ITC", 1, 14)); // NOI18N
+        buscarprovbtn.setForeground(new java.awt.Color(251, 250, 248));
         buscarprovbtn.setText("Buscar por proveedor");
         buscarprovbtn.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         buscarprovbtn.addActionListener(new java.awt.event.ActionListener() {
@@ -356,50 +218,231 @@ public class compraprod extends javax.swing.JFrame {
                 buscarprovbtnActionPerformed(evt);
             }
         });
-        jPanel1.add(buscarprovbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 60, 170, -1));
+        jPanel1.add(buscarprovbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 150, 170, -1));
 
         Lcliente7.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        Lcliente7.setText("Proveedor");
-        jPanel1.add(Lcliente7, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 70, -1, -1));
+        Lcliente7.setText("Ingrese el id del Provedor:");
+        jPanel1.add(Lcliente7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, -1, -1));
+
+        articulosarea.setEditable(false);
+        articulosarea.setColumns(20);
+        articulosarea.setRows(5);
+        jScrollPane2.setViewportView(articulosarea);
+
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 580, 330));
+
+        Lcliente3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        Lcliente3.setText("TOTAL DE COMPRA");
+        jPanel1.add(Lcliente3, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 360, -1, -1));
+
+        ctotaltxt.setEditable(false);
+        ctotaltxt.setBackground(new java.awt.Color(204, 204, 204));
+        ctotaltxt.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        ctotaltxt.setCaretColor(new java.awt.Color(153, 153, 153));
+        ctotaltxt.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jPanel1.add(ctotaltxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 360, 210, -1));
+
+        confirmarbtn.setBackground(new java.awt.Color(255, 145, 77));
+        confirmarbtn.setFont(new java.awt.Font("Eras Bold ITC", 1, 14)); // NOI18N
+        confirmarbtn.setForeground(new java.awt.Color(251, 250, 248));
+        confirmarbtn.setText("Confirmar compra");
+        confirmarbtn.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        confirmarbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                confirmarbtnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(confirmarbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 390, 170, -1));
+
+        compratxt.setEditable(false);
+        compratxt.setColumns(20);
+        compratxt.setRows(5);
+        jScrollPane3.setViewportView(compratxt);
+
+        jPanel1.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 190, 444, 150));
+
+        Lcliente1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        Lcliente1.setText("Articulo");
+        jPanel1.add(Lcliente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 170, -1, -1));
+
+        Lcliente4.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        Lcliente4.setText("No. unidades");
+        jPanel1.add(Lcliente4, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 170, -1, -1));
+
+        añadirbtn.setBackground(new java.awt.Color(255, 145, 77));
+        añadirbtn.setFont(new java.awt.Font("Eras Bold ITC", 1, 14)); // NOI18N
+        añadirbtn.setForeground(new java.awt.Color(251, 250, 248));
+        añadirbtn.setText("Añadir al carrito");
+        añadirbtn.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        añadirbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                añadirbtnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(añadirbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 110, 170, -1));
+
+        articuloctxt.setBackground(new java.awt.Color(251, 250, 248));
+        articuloctxt.setCaretColor(new java.awt.Color(153, 153, 153));
+        articuloctxt.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        articuloctxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                articuloctxtActionPerformed(evt);
+            }
+        });
+        jPanel1.add(articuloctxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 110, 260, -1));
+
+        Lcliente5.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        Lcliente5.setText("Precio por unidad");
+        jPanel1.add(Lcliente5, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 170, -1, -1));
+
+        Lcliente6.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        Lcliente6.setText("Stock actual");
+        jPanel1.add(Lcliente6, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 170, -1, -1));
+
+        provdisp.setBackground(new java.awt.Color(255, 145, 77));
+        provdisp.setFont(new java.awt.Font("Eras Bold ITC", 1, 14)); // NOI18N
+        provdisp.setForeground(new java.awt.Color(251, 250, 248));
+        provdisp.setText("Lista de proveedores");
+        provdisp.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        provdisp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                provdispActionPerformed(evt);
+            }
+        });
+        jPanel1.add(provdisp, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 190, 170, -1));
+
+        confirmarbtn1.setBackground(new java.awt.Color(255, 145, 77));
+        confirmarbtn1.setFont(new java.awt.Font("Eras Bold ITC", 1, 14)); // NOI18N
+        confirmarbtn1.setForeground(new java.awt.Color(251, 250, 248));
+        confirmarbtn1.setText("Eliminar articulo");
+        confirmarbtn1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        confirmarbtn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                confirmarbtn1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(confirmarbtn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 390, 170, -1));
+
+        Lcliente8.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        Lcliente8.setText("No sabes quienes son los  provedores?");
+        jPanel1.add(Lcliente8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, -1, -1));
+
+        Lcliente10.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
+        Lcliente10.setForeground(new java.awt.Color(255, 145, 77));
+        Lcliente10.setText("Proceso de compra");
+        jPanel1.add(Lcliente10, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 30, -1, -1));
+
+        Lcliente11.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        Lcliente11.setText("Ingrese el id del producto:");
+        jPanel1.add(Lcliente11, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 80, -1, -1));
 
         jScrollPane1.setViewportView(jPanel1);
+
+        Fondo.setBackground(new java.awt.Color(255, 145, 77));
+        Fondo.setPreferredSize(new java.awt.Dimension(836, 336));
+        Fondo.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                FondoMouseDragged(evt);
+            }
+        });
+        Fondo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                FondoMousePressed(evt);
+            }
+        });
+        Fondo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        Salir.setBackground(new java.awt.Color(193, 86, 14));
+        Salir.setFont(new java.awt.Font("Consolas", 1, 36)); // NOI18N
+        Salir.setForeground(new java.awt.Color(255, 255, 255));
+        Salir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Salir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SalirActionPerformed(evt);
+            }
+        });
+        Fondo.add(Salir, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 10, 60, 53));
+
+        jLabel21.setFont(new java.awt.Font("Eras Demi ITC", 1, 48)); // NOI18N
+        jLabel21.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel21.setText("Compra de Productos");
+        Fondo.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 540, -1));
+
+        Regresarbtn.setBackground(new java.awt.Color(193, 86, 14));
+        Regresarbtn.setFont(new java.awt.Font("Consolas", 1, 36)); // NOI18N
+        Regresarbtn.setForeground(new java.awt.Color(255, 255, 255));
+        Regresarbtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Regresarbtn.setMaximumSize(new java.awt.Dimension(10, 8));
+        Regresarbtn.setMinimumSize(new java.awt.Dimension(10, 8));
+        Regresarbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RegresarbtnActionPerformed(evt);
+            }
+        });
+        Fondo.add(Regresarbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 10, 50, 50));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 815, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(0, 0, 0)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1087, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(Fondo, javax.swing.GroupLayout.DEFAULT_SIZE, 1087, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(0, 100, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 576, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(Fondo, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 575, Short.MAX_VALUE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+       private void SetImageButton(String url, JButton boton) {
+        ImageIcon image = new ImageIcon(url);
+        Icon icon = new ImageIcon(image.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
+        boton.setIcon(icon);
+
+        boton.setBorderPainted(false);
+        boton.setContentAreaFilled(false);
+        boton.setFocusPainted(false);
+        boton.setOpaque(false);
+        this.repaint();
+    }
+    
     private void añadirbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_añadirbtnActionPerformed
         String prod = articuloctxt.getText();
-        String articulo = arttxt.getText();
-        
-        exclusivoKaren g = new exclusivoKaren();
+        String canti = JOptionPane.showInputDialog("Ingrese la cantidad a comprar: ");
+        int cant = Integer.parseInt(canti);
+        exclusivoCompraprov g = new exclusivoCompraprov();
+        try{
+            g.Borrarcompra();
+            g.Compra(canti);
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(rootPane, e);
+        }
         String datos_e =""; 
-        datos_e = datos_e + g.leer_producto(articulo,prod);
-        compratxt.setText(datos_e);
+        datos_e = g.BuscarProducto(prod, cant);
+        compratxt.append(datos_e);
+        String t = g.Total(prod, cant);
+        ctotaltxt.setText(t);
+        articuloctxt.setEditable(false);
+
     }//GEN-LAST:event_añadirbtnActionPerformed
 
     private void buscartbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscartbtnActionPerformed
         String articulo = arttxt.getText(); 
-         exclusivoKaren g = new exclusivoKaren();
-        String datos_e = g.leer(articulo);
+         exclusivoCompraprov g = new exclusivoCompraprov();
+        String datos_e = g.BuscarPArticulo(articulo);
         
         articulosarea.setText(datos_e);
        
@@ -407,19 +450,93 @@ public class compraprod extends javax.swing.JFrame {
 
     private void buscarprovbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarprovbtnActionPerformed
          String proveedor = provtxt.getText();
-         exclusivoKaren g = new exclusivoKaren();
-        String datos_e = g.leer(proveedor);
+         String datos_e;
+         try{
+             int prov = Integer.parseInt(proveedor);
+             exclusivoCompraprov g = new exclusivoCompraprov();            
+        datos_e = g.BuscarProv(Integer.toString(prov));
+         }catch(Exception e){
+             datos_e = "Caracteres ingresados erróneos, verifique la clave ingresada";
+         }
+        
         
         articulosarea.setText(datos_e);
     }//GEN-LAST:event_buscarprovbtnActionPerformed
 
     private void confirmarbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarbtnActionPerformed
-        // TODO add your handling code here:
+        exclusivoCompraprov g = new exclusivoCompraprov();
+        String compra = g.cargarCompra();
+        String prod = articuloctxt.getText();
+        g.Confirmar(compra, prod);
+        articuloctxt.setEditable(true);
+       String c = g.BuscarProducto(prod, Integer.parseInt(compra));
+        compratxt.setText(c);
+        
     }//GEN-LAST:event_confirmarbtnActionPerformed
 
     private void articuloctxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_articuloctxtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_articuloctxtActionPerformed
+
+    private void provdispActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_provdispActionPerformed
+            String prov;
+            exclusivoCompraprov g = new exclusivoCompraprov();
+            prov = g.Proveedores();
+            articulosarea.setText("              LISTA DE PROVEEDORES" +"\n"+prov);
+    }//GEN-LAST:event_provdispActionPerformed
+
+    private void confirmarbtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmarbtn1ActionPerformed
+        JOptionPane.showMessageDialog(rootPane, "Articulo eliminado con éxito");
+        exclusivoCompraprov g = new exclusivoCompraprov();
+        ctotaltxt.setText("");
+       try{
+           g.Borrarcompra();
+       }catch(Exception e){
+           JOptionPane.showMessageDialog(rootPane, e);
+       }
+       
+        compratxt.setText("");
+        articuloctxt.setEditable(true);
+    }//GEN-LAST:event_confirmarbtn1ActionPerformed
+
+    private void SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_SalirActionPerformed
+
+    private void RegresarbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegresarbtnActionPerformed
+        // TODO add your handling code here:
+
+        int R = JOptionPane.showConfirmDialog(null, "Estas Seguro de regresar?", "Regresar", JOptionPane.YES_NO_OPTION,
+            JOptionPane.INFORMATION_MESSAGE);
+
+        if (R == 0) {
+            Perfil_Empleado Perfil = new Perfil_Empleado();
+            Perfil.setVisible(true);
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_RegresarbtnActionPerformed
+
+    private void FondoMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FondoMouseDragged
+        // TODO add your handling code here:
+
+        int CX = this.getLocation().x;
+        int CY = this.getLocation().y;
+
+        int MoveX = ((CX + evt.getX()) - (CX + mPoint.x));
+        int MoveY = ((CY + evt.getY()) - (CY + mPoint.y));
+
+        int x = CX + MoveX;
+        int y = CY + MoveY;
+
+        this.setLocation(x, y);
+    }//GEN-LAST:event_FondoMouseDragged
+
+    private void FondoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FondoMousePressed
+        // TODO add your handling code here:
+        mPoint = evt.getPoint();
+        getComponentAt(mPoint);
+    }//GEN-LAST:event_FondoMousePressed
 
     /**
      * @param args the command line arguments
@@ -465,14 +582,20 @@ public class compraprod extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel Fondo;
     private javax.swing.JLabel Lcliente;
     private javax.swing.JLabel Lcliente1;
+    private javax.swing.JLabel Lcliente10;
+    private javax.swing.JLabel Lcliente11;
     private javax.swing.JLabel Lcliente2;
     private javax.swing.JLabel Lcliente3;
     private javax.swing.JLabel Lcliente4;
     private javax.swing.JLabel Lcliente5;
     private javax.swing.JLabel Lcliente6;
     private javax.swing.JLabel Lcliente7;
+    private javax.swing.JLabel Lcliente8;
+    private javax.swing.JButton Regresarbtn;
+    private javax.swing.JButton Salir;
     private javax.swing.JTextField articuloctxt;
     private javax.swing.JTextArea articulosarea;
     private javax.swing.JTextField arttxt;
@@ -481,18 +604,15 @@ public class compraprod extends javax.swing.JFrame {
     private javax.swing.JButton buscartbtn;
     private javax.swing.JTextArea compratxt;
     private javax.swing.JButton confirmarbtn;
-    private javax.swing.JTextField fechatxt;
-    public javax.swing.JLabel jLabel1;
+    private javax.swing.JButton confirmarbtn1;
+    private javax.swing.JTextField ctotaltxt;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField noControltxt;
+    private javax.swing.JButton provdisp;
     private javax.swing.JTextField provtxt;
-    private javax.swing.JTextField totaltxt;
     // End of variables declaration//GEN-END:variables
 }

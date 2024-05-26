@@ -70,7 +70,7 @@ public final class Perfil_Segi extends javax.swing.JFrame {
 
         imagenBtn_EoR("src/Image/X.png", Salir);
         SetImageButton("src/Image/Ajustes.png", Editarbtn);
-        SetImageButton("src/Image/regresar.png", Regresarbtn);
+           imagenBtn_EoR("src/Image/regresar.png", Regresarbtn);
 
         Cargarbtn.show(false);
         Guardarbtn.show(false);
@@ -1167,7 +1167,7 @@ public final class Perfil_Segi extends javax.swing.JFrame {
                 imctxt.setText(String.valueOf(imc));
 
             } else {
-                JOptionPane.showMessageDialog(null, "No se pudo encontrar al usuario");
+               // JOptionPane.showMessageDialog(null, "No se pudo encontrar al usuario");
             }
 
         } catch (SQLException e) {

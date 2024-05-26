@@ -707,42 +707,44 @@ public class Registro_Empleado extends javax.swing.JFrame {
 
     private void eliminarbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarbtnActionPerformed
         // TODO add your handling code here:
-        String id_Cliente = JOptionPane.showInputDialog("Ingrese el ID del Empleado: ", JOptionPane.QUESTION_MESSAGE);
+        String id_Empleado = JOptionPane.showInputDialog("Ingrese el ID del Empleado: ", JOptionPane.QUESTION_MESSAGE);
 
-        try {
+try {
+    // Conectar a la base de datos
+    conectar ObjetoConexion = new conectar();
 
-            conectar ObjetoConexion = new conectar();
+    // Consulta SQL para eliminar un empleado
+    String Eliminar = "DELETE FROM Empleado WHERE id_Empleado = ?;";
 
-            String Eliminar = "DELETE FROM cliente WHERE  id_cliente= ?;";
+    // Preparar la sentencia SQL para la eliminación
+    PreparedStatement ps = ObjetoConexion.prepareStatement(Eliminar);
 
-            //pa la leiminacion  de datos al SQL bb
-            PreparedStatement ps = ObjetoConexion.prepareStatement(Eliminar);
+    // Establecer el parámetro de la consulta
+    ps.setString(1, id_Empleado);
 
-            ps.setString(1, id_Cliente);
+    // Ejecutar la eliminación
+    int filasAfectadas = ps.executeUpdate();
 
-            // Ejecutar la eliminación
-            int filasAfectadas = ps.executeUpdate();
+    // Comprobar si se eliminó alguna fila
+    if (filasAfectadas > 0) {
+        JOptionPane.showMessageDialog(null, "Se eliminó el empleado con ID: " + id_Empleado);
+    } else {
+        JOptionPane.showMessageDialog(null, "No se encontró el empleado con ID: " + id_Empleado);
+    }
 
-            // Comprobar si se eliminó alguna fila
-            if (filasAfectadas > 0) {
-                JOptionPane.showMessageDialog(null, "Se eliminó el cliente con ID: " + id_Cliente);
-            } else {
-                JOptionPane.showMessageDialog(null, "No se encontró el cliente con ID: " + id_Cliente);
-            }
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e.toString());
-        }
+} catch (SQLException e) {
+    JOptionPane.showMessageDialog(null, e.toString());
+}
 
     }//GEN-LAST:event_eliminarbtnActionPerformed
 
     private void modificarbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarbtnActionPerformed
         // TODO add your handling code here:
-        String id_Cliente = JOptionPane.showInputDialog("Ingrese el ID del Empleado: ", JOptionPane.QUESTION_MESSAGE);
+        String id_Empelado = JOptionPane.showInputDialog("Ingrese el ID del Empleado: ", JOptionPane.QUESTION_MESSAGE);
 
         MCbtn.show(true);
        // Guardar.show(false);
-        Buscardatos(id_Cliente);
+        Buscardatos(id_Empelado);
 
     }//GEN-LAST:event_modificarbtnActionPerformed
 
@@ -827,7 +829,7 @@ public class Registro_Empleado extends javax.swing.JFrame {
     }//GEN-LAST:event_txtAMActionPerformed
 
     ///METODO PARA CARGAR DATOS
-    public void Buscardatos(JTextField ID) {
+    public void Buscardatos(String ID) {
         try {
             conectar ObjetoConexion = new conectar();
 
@@ -835,7 +837,7 @@ public class Registro_Empleado extends javax.swing.JFrame {
 
             PreparedStatement ps = ObjetoConexion.prepareStatement(cosulta);
 
-            ps.setString(1, ID.getText());
+            ps.setString(1, ID);
 
             ResultSet resultado = ps.executeQuery();
 
@@ -855,7 +857,7 @@ public class Registro_Empleado extends javax.swing.JFrame {
                 String RFC = resultado.getString("rfc");
                 String Educacion = resultado.getString("nivelEducacion");
                 String SMedico = resultado.getString("servicioMedico");
-                double sueldo = resultado.getDouble("sueldo");
+                double sueldo = resultado.getDouble("sueldoE");
 
                 // Convertir arreglo de bytes a ImageIcon
                 ImageIcon imagen = new ImageIcon(fotoBytes);
@@ -868,7 +870,7 @@ public class Registro_Empleado extends javax.swing.JFrame {
                 // Asignar la imagen al JLabel
                 Perfil.setIcon(imagenEscaladaIcon2);
 
-                txtAM.setText(nombre);
+                txtNombre.setText(nombre);
                 txtAP.setText(apellidoP);
                 txtAM.setText(apellidoM);
                 txtCorreo.setText(correo);

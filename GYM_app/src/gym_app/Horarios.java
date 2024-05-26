@@ -4,9 +4,11 @@
  */
 package gym_app;
 
+import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -16,7 +18,9 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent; 
@@ -32,77 +36,39 @@ public class Horarios extends javax.swing.JFrame {
     /**
      * Creates new form Rutinas
      */
+     private JPanelConFondo fondo;
+    public File archivoSeleccionado;
+    private Point mPoint;
     public Horarios() throws FontFormatException, IOException {
+        setUndecorated(true);
         initComponents();     
+         setLocationRelativeTo(null);
         panelh1.setVisible(false);
         panelh2.setVisible(false);
-        //this.setLocationRelativeTo(this);
         
-
         
+        
+         fondo = new JPanelConFondo("src/Image/perfilF.png");
+        Fondo.setLayout(new BorderLayout());
+        Fondo.add(fondo);
+        // foto de salir
+        SetImageButton("src/Image/X.png", Salir);
+        SetImageButton("src/Image/regresar.png", Regresarbtn);
        
-
- 
-        /*IMAGENES*/
-       /* Document doc = imctxt.getDocument();
-        doc.addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                actualizarImagen();
-                System.out.println("Insert");
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                actualizarImagen();
-                System.out.println("Eliminar");
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                actualizarImagen();
-                System.out.println("Cambio");
-            }
-
-            public void actualizarImagen() {
-                try {
-                    // Obtener el valor como un número
-
-                    double imc = Double.parseDouble(imctxt.getText());
-
-                    // Determinar qué imagen mostrar según el valor ingresado
-                    ImageIcon imagen;
-                    if (imc < 18.5) {
-                        imagen = new ImageIcon("src/Image/1azul.png");
-                        System.out.println("Inserto 1");
-                    } else if (imc <= 24.9) {
-                        imagen = new ImageIcon("src/Image/2Verde.png");
-                        System.out.println("Inserto 2");
-                    } else if (imc <= 29.9) {
-                        imagen = new ImageIcon("src/Image/3Amarillo.png");
-                        System.out.println("Inserto 3");
-                    } else if (imc <= 34.9) {
-                        imagen = new ImageIcon("src/Image/4Naranja.png");
-                        System.out.println("Inserto 4");
-                    } else if (imc <= 39.9) {
-                        imagen = new ImageIcon("src/Image/5Anaranjado.png");
-                        System.out.println("Inserto 5");
-                    } else {
-                        imagen = new ImageIcon("src/Image/6Rojo.png");
-                        System.out.println("Inserto 6");
-                    }
-
-                    // Establecer la imagen en el JLabel
-                    LabelIMC.setIcon(imagen);
-                } catch (NumberFormatException ex) {
-                    // En caso de que el texto no sea un número válido, no se actualiza la imagen
-                    LabelIMC.setIcon(null);
-                    System.out.println(ex);
-                }
-            }
-        });
-*/
     }
+    
+    private void SetImageButton(String url, JButton boton) {
+        ImageIcon image = new ImageIcon(url);
+        Icon icon = new ImageIcon(image.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
+        boton.setIcon(icon);
+
+        boton.setBorderPainted(false);
+        boton.setContentAreaFilled(false);
+        boton.setFocusPainted(false);
+        boton.setOpaque(false);
+        this.repaint();
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -114,14 +80,8 @@ public class Horarios extends javax.swing.JFrame {
     private void initComponents() {
 
         jTextField1 = new javax.swing.JTextField();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        fechatxt = new javax.swing.JTextField();
-        noControltxt = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
-        Lcliente = new javax.swing.JLabel();
-        membrhtxt = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -131,14 +91,24 @@ public class Horarios extends javax.swing.JFrame {
         nhorariotxt = new javax.swing.JTextField();
         confhorariobtn = new javax.swing.JButton();
         Lcliente3 = new javax.swing.JLabel();
-        Lcliente2 = new javax.swing.JLabel();
-        nombrehtxt = new javax.swing.JTextField();
-        cambiarhobtn = new javax.swing.JButton();
+        clavhorariotxt = new javax.swing.JTextField();
+        Lcliente4 = new javax.swing.JLabel();
+        Bhorariobtn = new javax.swing.JButton();
+        Clavesdisptxt = new javax.swing.JButton();
+        regresarbtn = new javax.swing.JButton();
         panelh2 = new javax.swing.JPanel();
         confhbtn = new javax.swing.JButton();
         Lcliente1 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         mhorariotxt = new javax.swing.JTextArea();
+        clavetxt = new javax.swing.JTextField();
+        Lcliente5 = new javax.swing.JLabel();
+        Lcliente6 = new javax.swing.JLabel();
+        cambiarhobtn1 = new javax.swing.JButton();
+        Fondo = new javax.swing.JPanel();
+        Salir = new javax.swing.JButton();
+        jLabel21 = new javax.swing.JLabel();
+        Regresarbtn = new javax.swing.JButton();
 
         jTextField1.setText("jTextField1");
 
@@ -146,101 +116,54 @@ public class Horarios extends javax.swing.JFrame {
         setBackground(new java.awt.Color(244, 246, 248));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setExtendedState(MAXIMIZED_BOTH);
-        setLocationByPlatform(true);
+        setLocation(new java.awt.Point(300, 200));
         setMaximizedBounds(new java.awt.Rectangle(600, 590, 590, 590));
-        setMaximumSize(new java.awt.Dimension(600, 590));
-
-        jPanel2.setBackground(new java.awt.Color(51, 51, 51));
-
-        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel1.setFont(new java.awt.Font("Lucida Sans", 1, 48)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Horarios");
-
-        fechatxt.setEditable(false);
-        fechatxt.setBackground(new java.awt.Color(204, 204, 204));
-        fechatxt.setText("09/10/2024");
-        fechatxt.setCaretColor(new java.awt.Color(153, 153, 153));
-        fechatxt.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-
-        noControltxt.setEditable(false);
-        noControltxt.setBackground(new java.awt.Color(204, 204, 204));
-        noControltxt.setText("21550747");
-        noControltxt.setCaretColor(new java.awt.Color(153, 153, 153));
-        noControltxt.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 217, Short.MAX_VALUE)
-                .addComponent(noControltxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
-                .addComponent(fechatxt, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(fechatxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(noControltxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap())
-        );
+        setResizable(false);
 
         jScrollPane1.setBorder(null);
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         jScrollPane1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        jPanel1.setBackground(new java.awt.Color(242, 242, 242));
+        jPanel1.setBackground(new java.awt.Color(251, 250, 248));
         jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jPanel1.setMaximumSize(new java.awt.Dimension(600, 590));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        Lcliente.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        Lcliente.setText("Membresía");
-        jPanel1.add(Lcliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 70, -1, -1));
-
-        membrhtxt.setBackground(new java.awt.Color(204, 204, 204));
-        membrhtxt.setCaretColor(new java.awt.Color(153, 153, 153));
-        membrhtxt.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jPanel1.add(membrhtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 280, -1));
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/membresia.png"))); // NOI18N
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 230, 140));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 140, 240, 140));
 
         datostxt.setEditable(false);
+        datostxt.setBackground(new java.awt.Color(224, 223, 222));
         datostxt.setColumns(20);
         datostxt.setRows(5);
         jScrollPane2.setViewportView(datostxt);
 
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 170, 280, 140));
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 50, 360, 190));
 
+        buscarhbtn.setBackground(new java.awt.Color(255, 145, 77));
+        buscarhbtn.setFont(new java.awt.Font("Eras Bold ITC", 0, 14)); // NOI18N
+        buscarhbtn.setForeground(new java.awt.Color(251, 250, 248));
         buscarhbtn.setText("Buscar");
-        buscarhbtn.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        buscarhbtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         buscarhbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buscarhbtnActionPerformed(evt);
             }
         });
-        jPanel1.add(buscarhbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, -1, -1));
+        jPanel1.add(buscarhbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 80, 150, 40));
 
-        nhorariotxt.setBackground(new java.awt.Color(204, 204, 204));
+        panelh1.setBackground(new java.awt.Color(236, 236, 236));
+
+        nhorariotxt.setBackground(new java.awt.Color(251, 250, 248));
         nhorariotxt.setCaretColor(new java.awt.Color(153, 153, 153));
         nhorariotxt.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
+        confhorariobtn.setBackground(new java.awt.Color(255, 145, 77));
+        confhorariobtn.setFont(new java.awt.Font("Eras Bold ITC", 0, 14)); // NOI18N
+        confhorariobtn.setForeground(new java.awt.Color(251, 250, 248));
         confhorariobtn.setText("Confirmar");
-        confhorariobtn.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        confhorariobtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         confhorariobtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 confhorariobtnActionPerformed(evt);
@@ -248,61 +171,106 @@ public class Horarios extends javax.swing.JFrame {
         });
 
         Lcliente3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        Lcliente3.setText("Ingresar horario a elegir:");
+        Lcliente3.setForeground(new java.awt.Color(255, 145, 77));
+        Lcliente3.setText("Ingresar clave del nuevo horario:");
+
+        clavhorariotxt.setBackground(new java.awt.Color(251, 250, 248));
+        clavhorariotxt.setCaretColor(new java.awt.Color(153, 153, 153));
+        clavhorariotxt.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        Lcliente4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        Lcliente4.setForeground(new java.awt.Color(255, 145, 77));
+        Lcliente4.setText("Ingresar clave del horario:");
+
+        Bhorariobtn.setBackground(new java.awt.Color(255, 145, 77));
+        Bhorariobtn.setFont(new java.awt.Font("Eras Bold ITC", 0, 14)); // NOI18N
+        Bhorariobtn.setForeground(new java.awt.Color(251, 250, 248));
+        Bhorariobtn.setText("Buscar");
+        Bhorariobtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        Bhorariobtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BhorariobtnActionPerformed(evt);
+            }
+        });
+
+        Clavesdisptxt.setBackground(new java.awt.Color(255, 145, 77));
+        Clavesdisptxt.setFont(new java.awt.Font("Eras Bold ITC", 0, 14)); // NOI18N
+        Clavesdisptxt.setForeground(new java.awt.Color(251, 250, 248));
+        Clavesdisptxt.setText("Claves disponibles");
+        Clavesdisptxt.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        Clavesdisptxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ClavesdisptxtActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelh1Layout = new javax.swing.GroupLayout(panelh1);
         panelh1.setLayout(panelh1Layout);
         panelh1Layout.setHorizontalGroup(
             panelh1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelh1Layout.createSequentialGroup()
-                .addGap(0, 169, Short.MAX_VALUE)
-                .addComponent(confhorariobtn, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(panelh1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(nhorariotxt)
-                .addContainerGap())
-            .addGroup(panelh1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelh1Layout.createSequentialGroup()
-                    .addContainerGap(22, Short.MAX_VALUE)
-                    .addComponent(Lcliente3)
-                    .addContainerGap()))
+                .addGroup(panelh1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelh1Layout.createSequentialGroup()
+                        .addGroup(panelh1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(clavhorariotxt)
+                            .addComponent(nhorariotxt)
+                            .addGroup(panelh1Layout.createSequentialGroup()
+                                .addGroup(panelh1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(Bhorariobtn, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(panelh1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(Lcliente4)
+                                        .addComponent(Lcliente3)))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())
+                    .addGroup(panelh1Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(Clavesdisptxt, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                        .addComponent(confhorariobtn, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(14, 14, 14))))
         );
         panelh1Layout.setVerticalGroup(
             panelh1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelh1Layout.createSequentialGroup()
-                .addContainerGap(42, Short.MAX_VALUE)
+                .addGap(27, 27, 27)
+                .addComponent(Lcliente4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(clavhorariotxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Bhorariobtn, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Lcliente3)
+                .addGap(18, 18, 18)
                 .addComponent(nhorariotxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(19, 19, 19)
-                .addComponent(confhorariobtn, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(panelh1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(panelh1Layout.createSequentialGroup()
-                    .addGap(10, 10, 10)
-                    .addComponent(Lcliente3)
-                    .addContainerGap(86, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(panelh1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Clavesdisptxt, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(confhorariobtn, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
-        jPanel1.add(panelh1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 410, 250, 120));
+        jPanel1.add(panelh1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 300, 340, 280));
 
-        Lcliente2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        Lcliente2.setText("Nombre completo");
-        jPanel1.add(Lcliente2, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 30, -1, -1));
-
-        nombrehtxt.setBackground(new java.awt.Color(204, 204, 204));
-        nombrehtxt.setCaretColor(new java.awt.Color(153, 153, 153));
-        nombrehtxt.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jPanel1.add(nombrehtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 380, -1));
-
-        cambiarhobtn.setText("Cambiar Horario");
-        cambiarhobtn.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        cambiarhobtn.addActionListener(new java.awt.event.ActionListener() {
+        regresarbtn.setBackground(new java.awt.Color(255, 145, 77));
+        regresarbtn.setFont(new java.awt.Font("Eras Bold ITC", 0, 14)); // NOI18N
+        regresarbtn.setForeground(new java.awt.Color(251, 250, 248));
+        regresarbtn.setText("Reingresar clave");
+        regresarbtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        regresarbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cambiarhobtnActionPerformed(evt);
+                regresarbtnActionPerformed(evt);
             }
         });
-        jPanel1.add(cambiarhobtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 330, -1, -1));
+        jPanel1.add(regresarbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 80, 150, 40));
 
+        panelh2.setBackground(new java.awt.Color(236, 236, 236));
+
+        confhbtn.setBackground(new java.awt.Color(255, 145, 77));
+        confhbtn.setFont(new java.awt.Font("Eras Bold ITC", 0, 14)); // NOI18N
+        confhbtn.setForeground(new java.awt.Color(251, 250, 248));
         confhbtn.setText("Confirmar");
-        confhbtn.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        confhbtn.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         confhbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 confhbtnActionPerformed(evt);
@@ -310,9 +278,11 @@ public class Horarios extends javax.swing.JFrame {
         });
 
         Lcliente1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        Lcliente1.setText("Nuevo horario elegido:");
+        Lcliente1.setForeground(new java.awt.Color(255, 145, 77));
+        Lcliente1.setText("Estado del Horario");
 
         mhorariotxt.setEditable(false);
+        mhorariotxt.setBackground(new java.awt.Color(224, 223, 222));
         mhorariotxt.setColumns(20);
         mhorariotxt.setRows(5);
         mhorariotxt.setText("\n");
@@ -324,47 +294,112 @@ public class Horarios extends javax.swing.JFrame {
             panelh2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelh2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelh2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelh2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
+                    .addComponent(confhbtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(panelh2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(confhbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelh2Layout.createSequentialGroup()
-                        .addGroup(panelh2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Lcliente1)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 77, Short.MAX_VALUE))))
+                        .addGap(109, 109, 109)
+                        .addComponent(Lcliente1)))
+                .addGap(0, 8, Short.MAX_VALUE))
         );
         panelh2Layout.setVerticalGroup(
             panelh2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelh2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelh2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelh2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(confhbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelh2Layout.createSequentialGroup()
-                        .addComponent(Lcliente1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(39, Short.MAX_VALUE))))
+                .addComponent(Lcliente1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(confhbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
-        jPanel1.add(panelh2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 400, 290, 190));
+        jPanel1.add(panelh2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 300, 400, 280));
+
+        clavetxt.setBackground(new java.awt.Color(251, 250, 248));
+        clavetxt.setCaretColor(new java.awt.Color(153, 153, 153));
+        clavetxt.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jPanel1.add(clavetxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 380, -1));
+
+        Lcliente5.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        Lcliente5.setForeground(new java.awt.Color(255, 145, 77));
+        Lcliente5.setText("Datos Generales");
+        jPanel1.add(Lcliente5, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 10, -1, -1));
+
+        Lcliente6.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        Lcliente6.setText("Ingrese la clave del Empleado:");
+        jPanel1.add(Lcliente6, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, -1, -1));
+
+        cambiarhobtn1.setBackground(new java.awt.Color(255, 145, 77));
+        cambiarhobtn1.setFont(new java.awt.Font("Eras Bold ITC", 0, 14)); // NOI18N
+        cambiarhobtn1.setForeground(new java.awt.Color(251, 250, 248));
+        cambiarhobtn1.setText("Cambiar Horario");
+        cambiarhobtn1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        cambiarhobtn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cambiarhobtn1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(cambiarhobtn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 250, 310, -1));
 
         jScrollPane1.setViewportView(jPanel1);
+
+        Fondo.setBackground(new java.awt.Color(255, 145, 77));
+        Fondo.setPreferredSize(new java.awt.Dimension(836, 336));
+        Fondo.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                FondoMouseDragged(evt);
+            }
+        });
+        Fondo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                FondoMousePressed(evt);
+            }
+        });
+        Fondo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        Salir.setBackground(new java.awt.Color(193, 86, 14));
+        Salir.setFont(new java.awt.Font("Consolas", 1, 36)); // NOI18N
+        Salir.setForeground(new java.awt.Color(255, 255, 255));
+        Salir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Salir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SalirActionPerformed(evt);
+            }
+        });
+        Fondo.add(Salir, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 10, 60, 53));
+
+        jLabel21.setFont(new java.awt.Font("Eras Demi ITC", 1, 48)); // NOI18N
+        jLabel21.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel21.setText("Gestion de Horarios");
+        Fondo.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 39, 540, -1));
+
+        Regresarbtn.setBackground(new java.awt.Color(193, 86, 14));
+        Regresarbtn.setFont(new java.awt.Font("Consolas", 1, 36)); // NOI18N
+        Regresarbtn.setForeground(new java.awt.Color(255, 255, 255));
+        Regresarbtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Regresarbtn.setMaximumSize(new java.awt.Dimension(10, 8));
+        Regresarbtn.setMinimumSize(new java.awt.Dimension(10, 8));
+        Regresarbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RegresarbtnActionPerformed(evt);
+            }
+        });
+        Fondo.add(Regresarbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 10, 50, 50));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 912, Short.MAX_VALUE)
+            .addComponent(Fondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
+                .addComponent(Fondo, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -374,71 +409,147 @@ public class Horarios extends javax.swing.JFrame {
     private void confhbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confhbtnActionPerformed
         JOptionPane.showMessageDialog(null,"Horario confirmado con exito");
         String horario = nhorariotxt.getText();
-        String n="";
-        if(horario.contains(",")){
-            String a[] =new String[horario.length()];
-            for(int i=0;i<horario.length();i++){
-
-                a[i] = ""+horario.charAt(i);
-                if(a[i].equals(",")){
-                    n = n +"\n";
-                }else{
-                    n = n + horario.charAt(i)+"";
-                }
-            }
-        }else{
-            n=horario;
-        }
-        String nom = nombrehtxt.getText();
-        String memb = membrhtxt.getText();
-        datostxt.setText(nom+"\n"+memb+"\n"+n);
+        String clave = clavetxt.getText();
+    
+        exclusivoHorarios g = new exclusivoHorarios();
+        g.RegistrarHorario(horario, clave);
+        
+        
+        datostxt.setText(g.leerBD(clave));
+        
+        nhorariotxt.setText("");
+        clavhorariotxt.setText("");
+        panelh1.setVisible(false);
+        panelh2.setVisible(false);
+        clavetxt.setEditable(true);
+        //En este boton se confirma el horario nuevo y se manda actualizar la base de datos.
+        //Además se borran todos los datos ingresados en la sección de cambio de horario y se vuelve a ocultar 
+        //dicha sección, la caja para ingresar la clave de empleado también se desbloquea
+        
     }//GEN-LAST:event_confhbtnActionPerformed
 
-    private void cambiarhobtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cambiarhobtnActionPerformed
-        panelh1.setVisible(true);
-        panelh2.setVisible(true);
-    }//GEN-LAST:event_cambiarhobtnActionPerformed
+    private void regresarbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_regresarbtnActionPerformed
+        panelh1.setVisible(false);
+        panelh2.setVisible(false);
+        clavetxt.setEditable(true);
+         nhorariotxt.setText("");
+        clavhorariotxt.setText("");
+        mhorariotxt.setText("");
+        
+        //En caso de haber seleccionado el boton de cambiar horario y querer cambiar la clave
+        // de empleado, en este botón se borra cualquier dato ingresado en la seccion de cambio de horario 
+        //y se desbloquea la caja para ingresar la clave
+    }//GEN-LAST:event_regresarbtnActionPerformed
 
     private void confhorariobtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confhorariobtnActionPerformed
-        String n="";
-
-        String horario = nhorariotxt.getText();
-        /*if(horario.contains(",")){
-            String a[] =new String[horario.length()];
-            for(int i=0;i<horario.length();i++){
-
-                a[i] = ""+horario.charAt(i);
-                if(a[i].equals(",")){
-                    n = n +"\nsin horario  ->  ";
-                }else{
-                    n = n + horario.charAt(i)+"";
-                }
-            }
-        }else{
-            n=horario;
-        }
-        */  //CODIGO FUNCIONAL DE PRUEBA DEL HORARIO
-        // mhorariotxt.setText("sin horario "+"  ->  "+n);
-        exclusivoKaren g = new exclusivoKaren();
-        String datos_e = g.leer_horario(membrhtxt.getText(),horario);
-        mhorariotxt.setText(datos_e);
-
+  
+        String claveh = nhorariotxt.getText();
+        exclusivoHorarios g = new exclusivoHorarios();
+        String datos_e = g.leerHBD(claveh);
+        if(datos_e.equals("")){
+        JOptionPane.showMessageDialog(null, "Clave erronea o no existente, verifique las claves disponibles");
+    }else{
+            mhorariotxt.append("Nuevo Horario: \n"+datos_e);
+        } 
+        
+        //En este boton se utiliza para ingresar la clave del nuevo horario a seleccionar, si la clave se 
+        //ingresó mal o no existe, se manda un mensaje de advertencia
     }//GEN-LAST:event_confhorariobtnActionPerformed
 
     private void buscarhbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarhbtnActionPerformed
-        String nom = nombrehtxt.getText();
-        String memb = membrhtxt.getText();
-
-        //datostxt.setText(nom+"\n"+memb+"\n sin horario\n");
-
-        String rutaProyecto = System.getProperty("user.dir");
-        String archivo= rutaProyecto+"\\src\\Doc\\"+memb+".txt"; 
-        exclusivoKaren g = new exclusivoKaren();
-        String datos_e = g.leer(memb);
-
+        String ClavE = clavetxt.getText();             
+        exclusivoHorarios g = new exclusivoHorarios();
+        String datos_e = g.leerBD(ClavE);      
+        if(datos_e.equals("")){
+            JOptionPane.showMessageDialog(null, "Clave no encontrada, Verifica la clave ingresada");
+        }
         datostxt.setText(datos_e);
+        // Se verifica que se haya marcado una sola casilla que coincida con el puesto del empleado
+        //Después si se cumple la condición, se manda llamar un método para consultar los datos del empleado en la base de datos por medio de su 
+        //clave de empleado (id_Empleado). Se recibe el nombre completo, edad y la id horario del empleado y se imprimen los datos en el textArea
+        
+        
 
     }//GEN-LAST:event_buscarhbtnActionPerformed
+
+    private void BhorariobtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BhorariobtnActionPerformed
+       //Clave de horario
+       try{           
+           int Chorario = Integer.parseInt(clavhorariotxt.getText());            
+           exclusivoHorarios g = new exclusivoHorarios();
+           String clab = g.VerificarCl(clavetxt.getText());
+           if(Integer.toString(Chorario).equals(clab)){
+               String horario = g.leerHBD(Integer.toString(Chorario));     
+                mhorariotxt.setText("Horario actual: \n"+horario+"\n");
+           }else{
+               JOptionPane.showMessageDialog(null, "La clave de horario ingresada no coincide \ncon la clave registrada del empleado");
+           }
+           
+       
+       }catch(Exception e){
+           JOptionPane.showMessageDialog(null,"Datos ingresados contiene caracteres inválidos");
+       }
+       
+       // Se verifica que la clave ingresada solo contenga datos enteros (ya que la clave o id_Horario 
+       // solo se conforma por enteros int) y de cumplir con la condicion entonces se vuelve a verificar
+       //que la clave ingresada coincida con la que el empleado tiene registrada actualmente, de coincidir 
+       //entonces se imprime los detalles del horario en el textArea de horarios.
+       
+       //De no cumplir con alguna de las condiciones se manda una alerta en una ventana emergente donde se da a conocer el error.
+    }//GEN-LAST:event_BhorariobtnActionPerformed
+
+    private void cambiarhobtn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cambiarhobtn1ActionPerformed
+       panelh1.setVisible(true);
+       panelh2.setVisible(true);
+       clavetxt.setEditable(false);
+       //El boton hace visible las ventanas para continuar con el cambio de horarion y además bloquea la caja donde se ingresa la clave de empleado
+       //para asegurar que no sea modificada y pueda ser usada en partes del código para el cambio de horario
+    }//GEN-LAST:event_cambiarhobtn1ActionPerformed
+
+    private void ClavesdisptxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClavesdisptxtActionPerformed
+       exclusivoHorarios g = new exclusivoHorarios();
+       String clabes = g.ClavesDisp();
+       JOptionPane.showMessageDialog(null, clabes);
+    }//GEN-LAST:event_ClavesdisptxtActionPerformed
+
+    private void SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_SalirActionPerformed
+
+    private void RegresarbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegresarbtnActionPerformed
+        // TODO add your handling code here:
+
+        int R = JOptionPane.showConfirmDialog(null, "Estas Seguro de regresar?", "Regresar", JOptionPane.YES_NO_OPTION,
+            JOptionPane.INFORMATION_MESSAGE);
+
+        if (R == 0) {
+            Perfil_Empleado Perfil = new Perfil_Empleado();
+            Perfil.setVisible(true);
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_RegresarbtnActionPerformed
+
+    private void FondoMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FondoMouseDragged
+        // TODO add your handling code here:
+
+        int CX = this.getLocation().x;
+        int CY = this.getLocation().y;
+
+        int MoveX = ((CX + evt.getX()) - (CX + mPoint.x));
+        int MoveY = ((CY + evt.getY()) - (CY + mPoint.y));
+
+        int x = CX + MoveX;
+        int y = CY + MoveY;
+
+        this.setLocation(x, y);
+    }//GEN-LAST:event_FondoMouseDragged
+
+    private void FondoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FondoMousePressed
+        // TODO add your handling code here:
+        mPoint = evt.getPoint();
+        getComponentAt(mPoint);
+    }//GEN-LAST:event_FondoMousePressed
 
     /**
      * @param args the command line arguments
@@ -485,31 +596,35 @@ public class Horarios extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel Lcliente;
+    private javax.swing.JButton Bhorariobtn;
+    private javax.swing.JButton Clavesdisptxt;
+    private javax.swing.JPanel Fondo;
     private javax.swing.JLabel Lcliente1;
-    private javax.swing.JLabel Lcliente2;
     private javax.swing.JLabel Lcliente3;
+    private javax.swing.JLabel Lcliente4;
+    private javax.swing.JLabel Lcliente5;
+    private javax.swing.JLabel Lcliente6;
+    private javax.swing.JButton Regresarbtn;
+    private javax.swing.JButton Salir;
     private javax.swing.JButton buscarhbtn;
-    private javax.swing.JButton cambiarhobtn;
+    private javax.swing.JButton cambiarhobtn1;
+    private javax.swing.JTextField clavetxt;
+    private javax.swing.JTextField clavhorariotxt;
     private javax.swing.JButton confhbtn;
     private javax.swing.JButton confhorariobtn;
     private javax.swing.JTextArea datostxt;
-    private javax.swing.JTextField fechatxt;
-    public javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField membrhtxt;
     private javax.swing.JTextArea mhorariotxt;
     private javax.swing.JTextField nhorariotxt;
-    private javax.swing.JTextField noControltxt;
-    private javax.swing.JTextField nombrehtxt;
     private javax.swing.JPanel panelh1;
     private javax.swing.JPanel panelh2;
+    private javax.swing.JButton regresarbtn;
     // End of variables declaration//GEN-END:variables
 }

@@ -72,7 +72,8 @@ public class Perfil_Empleado extends javax.swing.JFrame {
         SetImageButton("src/Image/Grupal.png",Grupalbtn);
           imagenBtn_EoR("src/Image/X.png", Salir);
         SetImageButton("src/Image/Ajustes.png", Editarbtn);
-        SetImageButton("src/Image/regresar.png", Regresarbtn);
+        imagenBtn_EoR("src/Image/regresar.png", Regresarbtn);
+        SetImageButton("src/Image/horario.png", Horariobtn);
         
          IDtxt.setText(Variables.getIDU());
         idIG.setText(IDtxt.getText());
@@ -148,7 +149,7 @@ public class Perfil_Empleado extends javax.swing.JFrame {
         Jlabel2 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        Regresarbtn2 = new javax.swing.JButton();
+        Regresarbtn = new javax.swing.JButton();
         Salir = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         EvaEntrbtn = new javax.swing.JButton();
@@ -167,6 +168,8 @@ public class Perfil_Empleado extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
+        Horariobtn = new javax.swing.JButton();
+        jLabel19 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
@@ -265,18 +268,18 @@ public class Perfil_Empleado extends javax.swing.JFrame {
         jLabel8.setText("Carlo!");
         FondoP.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 10, 350, -1));
 
-        Regresarbtn2.setBackground(new java.awt.Color(193, 86, 14));
-        Regresarbtn2.setFont(new java.awt.Font("Consolas", 1, 36)); // NOI18N
-        Regresarbtn2.setForeground(new java.awt.Color(255, 255, 255));
-        Regresarbtn2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        Regresarbtn2.setMaximumSize(new java.awt.Dimension(10, 8));
-        Regresarbtn2.setMinimumSize(new java.awt.Dimension(10, 8));
-        Regresarbtn2.addActionListener(new java.awt.event.ActionListener() {
+        Regresarbtn.setBackground(new java.awt.Color(193, 86, 14));
+        Regresarbtn.setFont(new java.awt.Font("Consolas", 1, 36)); // NOI18N
+        Regresarbtn.setForeground(new java.awt.Color(255, 255, 255));
+        Regresarbtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        Regresarbtn.setMaximumSize(new java.awt.Dimension(10, 8));
+        Regresarbtn.setMinimumSize(new java.awt.Dimension(10, 8));
+        Regresarbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Regresarbtn2ActionPerformed(evt);
+                RegresarbtnActionPerformed(evt);
             }
         });
-        FondoP.add(Regresarbtn2, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 20, 50, 50));
+        FondoP.add(Regresarbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 20, 50, 50));
 
         Salir.setFont(new java.awt.Font("Consolas", 1, 36)); // NOI18N
         Salir.setForeground(new java.awt.Color(255, 255, 255));
@@ -308,7 +311,7 @@ public class Perfil_Empleado extends javax.swing.JFrame {
                 AltaClActionPerformed(evt);
             }
         });
-        MenuP.add(AltaCl, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 30, 220, 160));
+        MenuP.add(AltaCl, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 30, 220, 160));
 
         Comprabtn.setBackground(new java.awt.Color(255, 255, 255));
         Comprabtn.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
@@ -317,7 +320,7 @@ public class Perfil_Empleado extends javax.swing.JFrame {
                 ComprabtnActionPerformed(evt);
             }
         });
-        MenuP.add(Comprabtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 30, 210, 160));
+        MenuP.add(Comprabtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 30, 210, 160));
 
         AltaEm.setBackground(new java.awt.Color(255, 255, 255));
         AltaEm.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
@@ -326,11 +329,11 @@ public class Perfil_Empleado extends javax.swing.JFrame {
                 AltaEmActionPerformed(evt);
             }
         });
-        MenuP.add(AltaEm, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 30, 220, 160));
+        MenuP.add(AltaEm, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, 220, 160));
 
         Ventabtn.setBackground(new java.awt.Color(255, 255, 255));
         Ventabtn.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        MenuP.add(Ventabtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 220, 210, 160));
+        MenuP.add(Ventabtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 220, 210, 160));
 
         Grupalbtn.setBackground(new java.awt.Color(255, 255, 255));
         Grupalbtn.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
@@ -339,16 +342,16 @@ public class Perfil_Empleado extends javax.swing.JFrame {
                 GrupalbtnActionPerformed(evt);
             }
         });
-        MenuP.add(Grupalbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 220, 220, 160));
+        MenuP.add(Grupalbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 220, 220, 160));
 
         SeguiEn.setBackground(new java.awt.Color(255, 255, 255));
         SeguiEn.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        MenuP.add(SeguiEn, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 220, 220, 160));
+        MenuP.add(SeguiEn, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 220, 220, 160));
 
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(251, 153, 93));
         jLabel5.setText("Registro de clases Grupales");
-        MenuP.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 380, -1, -1));
+        MenuP.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 380, -1, -1));
 
         jLabel9.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
@@ -358,27 +361,41 @@ public class Perfil_Empleado extends javax.swing.JFrame {
         jLabel11.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(251, 153, 93));
         jLabel11.setText("Segimiento del Entrenador");
-        MenuP.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 380, 190, -1));
+        MenuP.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 380, 190, -1));
 
         jLabel12.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(251, 153, 93));
         jLabel12.setText("Empelados");
-        MenuP.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 190, -1, -1));
+        MenuP.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 190, -1, -1));
 
         jLabel13.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(251, 153, 93));
         jLabel13.setText("Venta de Productos");
-        MenuP.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 380, -1, -1));
+        MenuP.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 380, -1, -1));
 
         jLabel14.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(251, 153, 93));
         jLabel14.setText("Clientes");
-        MenuP.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 190, -1, -1));
+        MenuP.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 190, -1, -1));
 
         jLabel15.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(251, 153, 93));
         jLabel15.setText("Compra de Productos");
-        MenuP.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(800, 190, -1, -1));
+        MenuP.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 190, -1, -1));
+
+        Horariobtn.setBackground(new java.awt.Color(255, 255, 255));
+        Horariobtn.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        Horariobtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                HorariobtnActionPerformed(evt);
+            }
+        });
+        MenuP.add(Horariobtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 30, 210, 160));
+
+        jLabel19.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        jLabel19.setForeground(new java.awt.Color(251, 153, 93));
+        jLabel19.setText("Horarios de los Empleados");
+        MenuP.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 190, -1, -1));
 
         MenuPrincipal.addTab("Menu Principal", MenuP);
 
@@ -777,7 +794,7 @@ public class Perfil_Empleado extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_rfctxtActionPerformed
 
-    private void Regresarbtn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Regresarbtn2ActionPerformed
+    private void RegresarbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegresarbtnActionPerformed
         // TODO add your handling code here:
 
         int R = JOptionPane.showConfirmDialog(null, "Estas Seguro de regresar?", "Regresar", JOptionPane.YES_NO_OPTION,
@@ -789,7 +806,11 @@ public class Perfil_Empleado extends javax.swing.JFrame {
             this.setVisible(false);
         }
 
-    }//GEN-LAST:event_Regresarbtn2ActionPerformed
+    }//GEN-LAST:event_RegresarbtnActionPerformed
+
+    private void HorariobtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HorariobtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_HorariobtnActionPerformed
 
     //Metodo para cargar Datos
     public void Buscardatos(JTextField ID) {
@@ -849,7 +870,7 @@ public class Perfil_Empleado extends javax.swing.JFrame {
                 
 
             } else {
-                JOptionPane.showMessageDialog(null, "No se pudo encontrar al usuario");
+               // JOptionPane.showMessageDialog(null, "No se pudo encontrar al usuario");
             }
 
         } catch (SQLException e) {
@@ -988,6 +1009,7 @@ public class Perfil_Empleado extends javax.swing.JFrame {
     private javax.swing.JPanel FondoP;
     private javax.swing.JButton Grupalbtn;
     private javax.swing.JButton Guardarbtn;
+    private javax.swing.JButton Horariobtn;
     private javax.swing.JTextField IDtxt;
     private javax.swing.JLabel Jlabel2;
     private javax.swing.JPanel MenuP;
@@ -995,8 +1017,6 @@ public class Perfil_Empleado extends javax.swing.JFrame {
     private javax.swing.JTextField Nombre;
     private javax.swing.JLabel Perfil;
     private javax.swing.JButton Regresarbtn;
-    private javax.swing.JButton Regresarbtn1;
-    private javax.swing.JButton Regresarbtn2;
     private javax.swing.JButton Salir;
     private javax.swing.JButton SeguiEn;
     private javax.swing.JButton Ventabtn;
@@ -1016,6 +1036,7 @@ public class Perfil_Empleado extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
