@@ -32,7 +32,7 @@ import javax.swing.JTextField;
 public class Registro_Empleado extends javax.swing.JFrame {
 
     Reglas IDD = new Reglas();
-
+    
     private JPanelConFondo fondo;
     public File archivoSeleccionado;
     private Point mPoint;
@@ -61,6 +61,7 @@ public class Registro_Empleado extends javax.swing.JFrame {
 
         // Ubica la ventana en el centro de la pantalla
         setLocationRelativeTo(null);
+         IDbtn.setText("Seleccione el cargo");
     }
 
     private void SetImageButton(String url, JButton boton) {
@@ -143,7 +144,7 @@ public class Registro_Empleado extends javax.swing.JFrame {
         txtCorreo = new javax.swing.JTextField();
         Cfecha = new com.toedter.calendar.JCalendar();
         jLabel7 = new javax.swing.JLabel();
-        ID = new javax.swing.JTextField();
+        IDbtn = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         Cargar = new javax.swing.JButton();
@@ -327,14 +328,19 @@ public class Registro_Empleado extends javax.swing.JFrame {
         jLabel7.setText("Nombre:");
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 140, 90, -1));
 
-        ID.setEditable(false);
-        ID.setBackground(new java.awt.Color(251, 250, 248));
-        ID.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                IDKeyTyped(evt);
+        IDbtn.setEditable(false);
+        IDbtn.setBackground(new java.awt.Color(251, 250, 248));
+        IDbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                IDbtnActionPerformed(evt);
             }
         });
-        jPanel1.add(ID, new org.netbeans.lib.awtextra.AbsoluteConstraints(505, 20, 203, -1));
+        IDbtn.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                IDbtnKeyTyped(evt);
+            }
+        });
+        jPanel1.add(IDbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(505, 20, 203, -1));
 
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel5.setText("Apellido Paterno:");
@@ -487,7 +493,7 @@ public class Registro_Empleado extends javax.swing.JFrame {
             java.util.Date selectedDate = Cfecha.getDate();
             java.sql.Date sqlDate = new java.sql.Date(selectedDate.getTime());
 
-            guardar.setString(1, ID.getText());
+            guardar.setString(1, IDbtn.getText());
             guardar.setString(2, txtAM.getText());
             guardar.setString(3, txtAP.getText());
             guardar.setString(4, txtAM.getText());
@@ -513,7 +519,7 @@ public class Registro_Empleado extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Los datos han sido registrados");
 
             //REINICIO
-            ID.setText("");
+            IDbtn.setText("");
             txtAM.setText("");
             txtAP.setText("");
             txtAM.setText("");
@@ -575,23 +581,23 @@ public class Registro_Empleado extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void IDKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_IDKeyTyped
+    private void IDbtnKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_IDbtnKeyTyped
         // TODO add your handling code here:
-        if (ID.getText().length() >= 3) {
+        if (IDbtn.getText().length() >= 3) {
             evt.consume();
         }
-    }//GEN-LAST:event_IDKeyTyped
+    }//GEN-LAST:event_IDbtnKeyTyped
 
     private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
         // TODO add your handling code here:
-        if (ID.getText().length() >= 10) {
+        if (IDbtn.getText().length() >= 10) {
             evt.consume();
         }
     }//GEN-LAST:event_txtTelefonoKeyTyped
 
     private void txtTelefonoEKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoEKeyTyped
         // TODO add your handling code here:
-        if (ID.getText().length() >= 10) {
+        if (IDbtn.getText().length() >= 10) {
             evt.consume();
         }
     }//GEN-LAST:event_txtTelefonoEKeyTyped
@@ -660,19 +666,19 @@ public class Registro_Empleado extends javax.swing.JFrame {
 
         if (CBCargo.getSelectedItem().equals("Entrenador")) {
 
-            ID.setText(IDD.CrearIDEmpleado("E", fechaFormateada));
+            IDbtn.setText(IDD.CrearIDEmpleado("E", fechaFormateada));
 
         } else if (CBCargo.getSelectedItem().equals("Gerente")) {
 
-            ID.setText(IDD.CrearIDEmpleado("G", fechaFormateada));
+            IDbtn.setText(IDD.CrearIDEmpleado("G", fechaFormateada));
 
         } else if (CBCargo.getSelectedItem().equals("Instructor")) {
 
-            ID.setText(IDD.CrearIDEmpleado("I", fechaFormateada));
+            IDbtn.setText(IDD.CrearIDEmpleado("I", fechaFormateada));
 
         } else if (CBCargo.getSelectedItem().equals("Secretaria")) {
 
-            ID.setText(IDD.CrearIDEmpleado("S", fechaFormateada));
+            IDbtn.setText(IDD.CrearIDEmpleado("S", fechaFormateada));
 
         }
 
@@ -813,7 +819,7 @@ try {
           
             ps.setDate(10, sqlDate);
             ps.setBinaryStream(6, fis, (int) archivoSeleccionado.length());
-            ps.setString(11, ID.getText());
+            ps.setString(11, IDbtn.getText());
 
             // System.out.println("No furula el codigo");
         } catch (SQLException e) {
@@ -827,6 +833,10 @@ try {
     private void txtAMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAMActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtAMActionPerformed
+
+    private void IDbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IDbtnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_IDbtnActionPerformed
 
     ///METODO PARA CARGAR DATOS
     public void Buscardatos(String ID) {
@@ -984,7 +994,7 @@ try {
     private javax.swing.JButton Cargar;
     private com.toedter.calendar.JCalendar Cfecha;
     private javax.swing.JPanel Fondo;
-    private javax.swing.JTextField ID;
+    private javax.swing.JTextField IDbtn;
     private javax.swing.JButton MCbtn;
     private javax.swing.JLabel Perfil;
     private javax.swing.JButton Regresarbtn;

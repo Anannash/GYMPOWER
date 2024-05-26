@@ -86,7 +86,7 @@ public final class Perfil_Segi extends javax.swing.JFrame {
         fecha.setText(fechaFormateada);
         TablaSegimineto(ID);
         GraficaSeguimiento();
-
+jButton1.show(false);
     }
 
     private void imagenBtn_EoR(String url, JButton boton) {
@@ -283,6 +283,7 @@ public final class Perfil_Segi extends javax.swing.JFrame {
 
         QRID.setBackground(new java.awt.Color(204, 255, 204));
         QRID.setForeground(new java.awt.Color(204, 102, 0));
+        QRID.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/IMAGENES JESUS/Commons_QR_code.png"))); // NOI18N
         QRID.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         Salir.setBackground(new java.awt.Color(193, 86, 14));
@@ -389,16 +390,21 @@ public final class Perfil_Segi extends javax.swing.JFrame {
                     .addGroup(FondoLayout.createSequentialGroup()
                         .addGap(78, 78, 78)
                         .addComponent(BtnEntrevistaR, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
-                .addGroup(FondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(QRID, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(FondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FondoLayout.createSequentialGroup()
+                        .addComponent(QRID)
+                        .addGap(63, 63, 63))
+                    .addComponent(Regresarbtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(FondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(FondoLayout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Salir, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FondoLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Regresarbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Salir, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                        .addComponent(jButton1)
+                        .addContainerGap())))
         );
         FondoLayout.setVerticalGroup(
             FondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -432,18 +438,16 @@ public final class Perfil_Segi extends javax.swing.JFrame {
                 .addComponent(BtnEntrevistaR, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22))
             .addGroup(FondoLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(FondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Salir, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(FondoLayout.createSequentialGroup()
-                        .addGroup(FondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(FondoLayout.createSequentialGroup()
-                                .addGap(14, 14, 14)
-                                .addComponent(jButton1))
-                            .addGroup(FondoLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(Regresarbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(QRID, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(Salir, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(42, 42, 42)
+                        .addComponent(jButton1))
+                    .addGroup(FondoLayout.createSequentialGroup()
+                        .addComponent(Regresarbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(QRID)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -891,7 +895,7 @@ public final class Perfil_Segi extends javax.swing.JFrame {
 
         jScrollPane3.setViewportView(jPanel7);
 
-        jTabbedPane2.addTab("Segimiento del cliente?", jScrollPane3);
+        jTabbedPane2.addTab("Segimiento del cliente", jScrollPane3);
 
         getContentPane().add(jTabbedPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 320, 970, 390));
 
@@ -1177,24 +1181,24 @@ public final class Perfil_Segi extends javax.swing.JFrame {
     }
 
     public void ActualizarDatos(JTextField ID, JTextField celular, JTextField correo, JTextField contrasena, JTextField contrasenaRep, File foto) {
-
         if (contrasena.getText().equals(contrasenaRep.getText())) {
             try {
+                //conectar BD
                 conectar ObjetoConexion = new conectar();
 
+                 //Generar consulta
                 String actualizar = "update cliente set celularC =?,correoC = ?,contrasena = ?, foto= ?  where id_cliente= ?;";
                 FileInputStream fis = new FileInputStream(foto);
                 PreparedStatement ps = ObjetoConexion.prepareStatement(actualizar);
 
-                ps.setInt(1, Integer.parseInt(celular.getText()));
+                    //poner los datos
+                ps.setInt(1, Integer.parseInt(celular.getText())); 
                 ps.setString(2, correo.getText());
                 ps.setString(3, contrasena.getText());
                 ps.setBinaryStream(4, fis, (int) foto.length());
                 ps.setString(5, ID.getText());
-
                 // Ejecutar la sentencia SQL de actualización
                 int filasActualizadas = ps.executeUpdate();
-
                 // Verificar si se actualizaron filas y mostrar un mensaje
                 if (filasActualizadas > 0) {
                     JOptionPane.showMessageDialog(null, "Se guardo correctamente");
@@ -1253,6 +1257,7 @@ public final class Perfil_Segi extends javax.swing.JFrame {
     public void TablaSegimineto(JTextField ID) {
         try {
             conectar ObjetoConexion = new conectar();
+            //
             String consulta = "SELECT * FROM seguimientoCl WHERE id_Cliente=?";
             PreparedStatement psC = ObjetoConexion.prepareStatement(consulta);
 
@@ -1282,8 +1287,8 @@ public final class Perfil_Segi extends javax.swing.JFrame {
     }
 
     public void GraficaSeguimiento() {
-
         try {
+            //GENERAR LA GRAFICA
             XYSeries seguimiento = new XYSeries("Seguimiento del Cliente");
             for (int i = 0; i < SegimientoTabla.getRowCount(); i++) {
                 // Obtener los datos de la tabla como objetos

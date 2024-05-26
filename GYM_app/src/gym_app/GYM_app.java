@@ -21,33 +21,27 @@ public class GYM_app {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-
+//conexion a la BD
         conectar conecta = new conectar();
 
         Connection con = conecta.getConexion();
-
+//EMPEZAR LA APP
         Runnable run = () -> {
             Splash splash = new Splash();
             splash.setVisible(true);
-
+//es un timepo para que cargue el splash
             try {
                 //timepo que tarda la pantalla de carga
                 Thread.sleep(5000);
             } catch (InterruptedException ex) {
                 Logger.getLogger(GYM_app.class.getName()).log(Level.SEVERE, null, ex);
             }
-
             splash.dispose();
 
             login incio = new login();
             incio.setVisible(true);
-
         };
-
         Thread hiloSplash = new Thread(run);
         hiloSplash.start();
-
     }
-    
-
 }

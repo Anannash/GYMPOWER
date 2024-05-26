@@ -153,8 +153,6 @@ public class entrevista_rutina extends javax.swing.JFrame {
         pesotxt = new javax.swing.JTextField();
         alturatxt = new javax.swing.JTextField();
         imctxt = new javax.swing.JTextField();
-        LEdad = new javax.swing.JLabel();
-        edadtxt = new javax.swing.JTextField();
         LCondiciones = new javax.swing.JLabel();
         LNivel = new javax.swing.JLabel();
         C1 = new javax.swing.JCheckBox();
@@ -218,20 +216,20 @@ public class entrevista_rutina extends javax.swing.JFrame {
         LPeso.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         LPeso.setForeground(new java.awt.Color(0, 0, 0));
         LPeso.setText("Peso:");
-        jPanel1.add(LPeso, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 150, -1, -1));
+        jPanel1.add(LPeso, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 150, -1, -1));
 
         LAltura.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         LAltura.setForeground(new java.awt.Color(0, 0, 0));
         LAltura.setText("Altura:");
-        jPanel1.add(LAltura, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 150, -1, -1));
+        jPanel1.add(LAltura, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 150, -1, -1));
 
         LIMC.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         LIMC.setForeground(new java.awt.Color(0, 0, 0));
         LIMC.setText("IMC:");
-        jPanel1.add(LIMC, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 150, -1, -1));
+        jPanel1.add(LIMC, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 150, -1, -1));
 
         pesotxt.setText("0");
-        jPanel1.add(pesotxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 150, 80, -1));
+        jPanel1.add(pesotxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 150, 80, -1));
 
         alturatxt.setText("0");
         alturatxt.addActionListener(new java.awt.event.ActionListener() {
@@ -244,7 +242,7 @@ public class entrevista_rutina extends javax.swing.JFrame {
                 alturatxtKeyReleased(evt);
             }
         });
-        jPanel1.add(alturatxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 150, 80, -1));
+        jPanel1.add(alturatxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 150, 80, -1));
 
         imctxt.setEditable(false);
         imctxt.setBackground(new java.awt.Color(204, 204, 204));
@@ -265,19 +263,7 @@ public class entrevista_rutina extends javax.swing.JFrame {
                 imctxtKeyTyped(evt);
             }
         });
-        jPanel1.add(imctxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 150, 56, -1));
-
-        LEdad.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        LEdad.setForeground(new java.awt.Color(0, 0, 0));
-        LEdad.setText("Edad:");
-        jPanel1.add(LEdad, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 150, -1, -1));
-
-        edadtxt.setEditable(false);
-        edadtxt.setBackground(new java.awt.Color(204, 204, 204));
-        edadtxt.setForeground(new java.awt.Color(0, 0, 0));
-        edadtxt.setCaretColor(new java.awt.Color(153, 153, 153));
-        edadtxt.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jPanel1.add(edadtxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 150, 38, -1));
+        jPanel1.add(imctxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 150, 56, -1));
 
         LCondiciones.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         LCondiciones.setForeground(new java.awt.Color(0, 0, 0));
@@ -1022,8 +1008,7 @@ public class entrevista_rutina extends javax.swing.JFrame {
     }//GEN-LAST:event_RegresarbtnActionPerformed
 
     private void completarbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_completarbtnActionPerformed
-        // TODO add your handling code here:
-
+        // guardar lesiones y enfermedades
         if (L1.isSelected()) {
             GuardarLesiones(ID, L1);
         } else if (L2.isSelected()) {
@@ -1039,9 +1024,7 @@ public class entrevista_rutina extends javax.swing.JFrame {
         } else if (L4.isSelected()) {
             GuardarLesiones(ID, L4);
         } else if (L10.isSelected()) {
-            GuardarLesiones(ID, L10);
-        }
-
+            GuardarLesiones(ID, L10); }
         if (C1.isSelected()) {
             GuardarEnfermedad(ID, C1);
         } else if (C2.isSelected()) {
@@ -1051,9 +1034,8 @@ public class entrevista_rutina extends javax.swing.JFrame {
         } else if (C5.isSelected()) {
             GuardarEnfermedad(ID, C5);
         } else if (C6.isSelected()) {
-            GuardarEnfermedad(ID, C6);
-        }
-
+            GuardarEnfermedad(ID, C6); }
+        //Actualizar datos del cleinte y la GENERACION DE RUTINAS
         if (Ob1.isSelected()) {
             ActualizarDatos4(ID, pesotxt, alturatxt, imctxt, NivelConFisBOX, Ob1,java.sql.Date.valueOf(fechaActual));
             generarRutina(ID, NivelConFisBOX, Ob1);
@@ -1065,14 +1047,11 @@ public class entrevista_rutina extends javax.swing.JFrame {
             generarRutina(ID, NivelConFisBOX, Ob3);
         } else if (Ob5.isSelected()) {
             ActualizarDatos4(ID, pesotxt, alturatxt, imctxt, NivelConFisBOX, Ob5,java.sql.Date.valueOf(fechaActual));
-            generarRutina(ID, NivelConFisBOX, Ob5);
-        }
-        
+            generarRutina(ID, NivelConFisBOX, Ob5);}
+        //mostrar su perfil
         Perfil_Segi Perfil = new Perfil_Segi();
             Perfil.setVisible(true);
             this.setVisible(false);
-
-            
     }//GEN-LAST:event_completarbtnActionPerformed
 
     private void IDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IDActionPerformed
@@ -1215,7 +1194,7 @@ public class entrevista_rutina extends javax.swing.JFrame {
         try {
             conectar ObjetoConexion = new conectar();
 
-            String cosulta = "SELECT nombreC,apellidoPC,apellidoMC,edad,sexo FROM cliente WHERE id_cliente=?";
+            String cosulta = "SELECT nombreC,apellidoPC,apellidoMC,sexo FROM cliente WHERE id_cliente=?";
 
             PreparedStatement ps = ObjetoConexion.prepareStatement(cosulta);
 
@@ -1227,12 +1206,10 @@ public class entrevista_rutina extends javax.swing.JFrame {
                 String nombre = resultado.getString("nombreC");
                 String apellidoP = resultado.getString("apellidoPC");
                 String apellidoM = resultado.getString("apellidoMC");
-                int edad = resultado.getInt("edad");
                 String sexo = resultado.getString("sexo");
 
                 nomClitxt.setText(nombre + " " + apellidoP + " " + apellidoM);
                 sexotxt.setText(sexo);
-                edadtxt.setText(String.valueOf(edad));
 
             } else {
                 JOptionPane.showMessageDialog(null, "No se pudo encontrar al usuario");
@@ -1336,7 +1313,6 @@ public class entrevista_rutina extends javax.swing.JFrame {
     private javax.swing.JCheckBox L8;
     private javax.swing.JLabel LAltura;
     private javax.swing.JLabel LCondiciones;
-    private javax.swing.JLabel LEdad;
     private javax.swing.JLabel LIMC;
     private javax.swing.JLabel LLesiones;
     private javax.swing.JLabel LLesionesIma;
@@ -1356,7 +1332,6 @@ public class entrevista_rutina extends javax.swing.JFrame {
     private javax.swing.JButton Salirbtn;
     private javax.swing.JTextField alturatxt;
     private javax.swing.JButton completarbtn;
-    private javax.swing.JTextField edadtxt;
     private javax.swing.JTextField imctxt;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;

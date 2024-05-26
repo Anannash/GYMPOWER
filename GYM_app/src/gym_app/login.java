@@ -251,52 +251,36 @@ public class login extends javax.swing.JFrame {
     }//GEN-LAST:event_SalirActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-
+        // Boton de Inicio de secion
         BD_Movimientos BD = new BD_Movimientos();
-      
-        
-        
-        //Checar si exite o si puso la contrasena correctamente
+        //Aqui se guarda 
         String id =ID.getText();
             Variables.setIDU(id);
-            
-           
-           //System.out.println("Login: "+Variables.getIDU());
-        
+            //divide la C con el numero
         char[] digitos = id.toCharArray();
-        String TipoUsuario=  new String(digitos, 0, 1);
-        
+        String TipoUsuario=  new String(digitos, 0, 1);      
+/* Verificacion de contrasena y Dependiedno del TIPO DE USUARIO se le muestra su perfil:
+        C == CLiente
+        E==Entrenador
+        I== Instructor
+        G== gerente
+        S== secretatia */ 
         if (BD.Login(ID, Password)==true || BD.LoginEm(ID, Password)) {
             Perfil_Segi c= new  Perfil_Segi ();
         Perfil_Empleado e= new  Perfil_Empleado ();
-            
             switch (TipoUsuario) {
                 case "C" -> {
                     c.setVisible(true);
                     this.setVisible(false);
-                }
-                    
+                }        
                 case "E", "G","S","I" -> {
                     e.setVisible(true);
                     this.setVisible(false);
-                }
-                
-                    
+                }      
                 default -> JOptionPane.showMessageDialog(null, "Lo sentimos, pero el ID es incorrecto");
-            }
-            
-            
-            
+            }       
         } else {
-            JOptionPane.showMessageDialog(null, "Lo sentimos, pero usted no esta registrado o ingreso mal sus datos");
-        }
-        
-        
-        
-        
-        
-        
+            JOptionPane.showMessageDialog(null, "Lo sentimos, pero usted no esta registrado o ingreso mal sus datos");}     
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jPanel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MousePressed

@@ -11,6 +11,8 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.List;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -68,11 +70,13 @@ public class Perfil_Empleado extends javax.swing.JFrame {
         SetImageButton("src/Image/VentaGYM.png",Ventabtn);
         SetImageButton("src/Image/Cliente.png",AltaCl);
         SetImageButton("src/Image/Empleado.png",AltaEm);
-        SetImageButton("src/Image/SeguiEntre.png",SeguiEn);
+       SetImageButton("src/Image/SeguiEntre.png",SeguiEn);
         SetImageButton("src/Image/Grupal.png",Grupalbtn);
           imagenBtn_EoR("src/Image/X.png", Salir);
+         // imagenBtn_EoR("src/Image/X.png", Salir1);
         SetImageButton("src/Image/Ajustes.png", Editarbtn);
         imagenBtn_EoR("src/Image/regresar.png", Regresarbtn);
+     //   imagenBtn_EoR("src/Image/regresar.png", Regresarbtn1);
         SetImageButton("src/Image/horario.png", Horariobtn);
         
          IDtxt.setText(Variables.getIDU());
@@ -297,6 +301,11 @@ public class Perfil_Empleado extends javax.swing.JFrame {
         FondoP.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 190, -1, -1));
 
         EvaEntrbtn.setText("Realizar evaluacion del entrenador");
+        EvaEntrbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EvaEntrbtnActionPerformed(evt);
+            }
+        });
         FondoP.add(EvaEntrbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 240, 360, -1));
 
         MenuPrincipal.setBackground(new java.awt.Color(251, 153, 93));
@@ -333,7 +342,7 @@ public class Perfil_Empleado extends javax.swing.JFrame {
 
         Ventabtn.setBackground(new java.awt.Color(255, 255, 255));
         Ventabtn.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        MenuP.add(Ventabtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 220, 210, 160));
+        MenuP.add(Ventabtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 220, 210, 160));
 
         Grupalbtn.setBackground(new java.awt.Color(255, 255, 255));
         Grupalbtn.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
@@ -342,16 +351,21 @@ public class Perfil_Empleado extends javax.swing.JFrame {
                 GrupalbtnActionPerformed(evt);
             }
         });
-        MenuP.add(Grupalbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 220, 220, 160));
+        MenuP.add(Grupalbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 220, 220, 160));
 
         SeguiEn.setBackground(new java.awt.Color(255, 255, 255));
         SeguiEn.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        MenuP.add(SeguiEn, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 220, 220, 160));
+        SeguiEn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SeguiEnActionPerformed(evt);
+            }
+        });
+        MenuP.add(SeguiEn, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 220, 220, 160));
 
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(251, 153, 93));
         jLabel5.setText("Registro de clases Grupales");
-        MenuP.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 380, -1, -1));
+        MenuP.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 380, -1, -1));
 
         jLabel9.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
@@ -361,7 +375,7 @@ public class Perfil_Empleado extends javax.swing.JFrame {
         jLabel11.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(251, 153, 93));
         jLabel11.setText("Segimiento del Entrenador");
-        MenuP.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 380, 190, -1));
+        MenuP.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 380, 190, -1));
 
         jLabel12.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(251, 153, 93));
@@ -371,7 +385,7 @@ public class Perfil_Empleado extends javax.swing.JFrame {
         jLabel13.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(251, 153, 93));
         jLabel13.setText("Venta de Productos");
-        MenuP.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 380, -1, -1));
+        MenuP.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 380, -1, -1));
 
         jLabel14.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(251, 153, 93));
@@ -818,6 +832,42 @@ public class Perfil_Empleado extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_HorariobtnActionPerformed
 
+    private void EvaEntrbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EvaEntrbtnActionPerformed
+        // TODO add your handling code here:
+            Encuesta en = new Encuesta();
+            en.setVisible(true);
+            this.setVisible(false);
+    }//GEN-LAST:event_EvaEntrbtnActionPerformed
+
+    private void SeguiEnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SeguiEnActionPerformed
+        // TODO add your handling code here:
+        String idEntrenador =   JOptionPane.showInputDialog("Ingrese ID del entrenador:");
+        if (!idEntrenador.equals("") && empleadoExiste( idEntrenador) == true ) {
+             Variables.setTID(idEntrenador);        
+         
+         Seguiietno seg = new Seguiietno(this, true);
+         seg.setVisible(true);
+        }else {
+            JOptionPane.showMessageDialog(null, "Tiene que poner un Id");
+        }
+        
+    }//GEN-LAST:event_SeguiEnActionPerformed
+        
+    public boolean empleadoExiste(String idEntrenador) {
+    boolean existe = false;
+    try {
+        conectar ObjetoConexion = new conectar();
+        String consulta = "SELECT * FROM Empleado WHERE id_Empleado=?";
+        PreparedStatement ps = ObjetoConexion.prepareStatement(consulta);
+        ps.setString(1, idEntrenador);
+        ResultSet resultado = ps.executeQuery();
+        existe = resultado.next(); // Si hay resultados, existe es verdadero
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error: " + e.toString());
+    }
+    return existe;
+}
+        
     //Metodo para cargar Datos
     public void Buscardatos(JTextField ID) {
         try {

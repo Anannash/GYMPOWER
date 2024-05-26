@@ -11,6 +11,16 @@ package gym_app;
 public class Variables {
     
     public static String IDU;
+    
+    public static String TID;
+
+    public static String getTID() {
+        return TID;
+    }
+
+    public static void setTID(String TID) {
+        Variables.TID = TID;
+    }
 
     public Variables() {
         
