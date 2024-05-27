@@ -3,7 +3,7 @@ package gym_app;
 
 public class Ventas {
   int id;
-int idCliente;
+String idCliente;
 String serie;
 String Fecha;
 double monto;
@@ -13,7 +13,7 @@ public Ventas(){
     
 }
 
-    public Ventas(int id, int idCliente, String serie, String Fecha, double monto, String estado) {
+    public Ventas(int id, String idCliente, String serie, String Fecha, double monto, String estado) {
         this.id = id;
         this.idCliente = idCliente;
         this.serie = serie;
@@ -30,11 +30,11 @@ public Ventas(){
         this.id = id;
     }
 
-    public int getIdCliente() {
+    public String getIdCliente() {
         return idCliente;
     }
 
-    public void setIdCliente(int idCliente) {
+    public void setIdCliente(String idCliente) {
         this.idCliente = idCliente;
     }
 

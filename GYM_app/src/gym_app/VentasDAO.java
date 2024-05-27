@@ -1,6 +1,7 @@
 
 package gym_app;
 
+import gym_app.DetalleVentas;
 import gym_app.conectar;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -52,7 +53,7 @@ public class VentasDAO {
       try {
         con=cn.getConexion();
         ps=con.prepareStatement(sql);
-        ps.setInt(1, v.getIdCliente());
+        ps.setString(1, v.getIdCliente());
         ps.setString(2, v.getSerie());
         ps.setString(3, v.getFecha());
         ps.setDouble(4, v.getMonto());

@@ -342,6 +342,11 @@ public class Perfil_Empleado extends javax.swing.JFrame {
 
         Ventabtn.setBackground(new java.awt.Color(255, 255, 255));
         Ventabtn.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        Ventabtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                VentabtnActionPerformed(evt);
+            }
+        });
         MenuP.add(Ventabtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 220, 210, 160));
 
         Grupalbtn.setBackground(new java.awt.Color(255, 255, 255));
@@ -852,6 +857,14 @@ public class Perfil_Empleado extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_SeguiEnActionPerformed
+
+    private void VentabtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VentabtnActionPerformed
+        // TODO add your handling code here:
+        ventaproductos pr = new ventaproductos();
+        pr.setVisible(true);
+        this.setVisible(false);
+                
+    }//GEN-LAST:event_VentabtnActionPerformed
         
     public boolean empleadoExiste(String idEntrenador) {
     boolean existe = false;

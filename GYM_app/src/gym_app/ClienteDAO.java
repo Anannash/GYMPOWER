@@ -1,5 +1,6 @@
 package gym_app;
 
+import gym_app.CRUD;
 import gym_app.conectar;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,13 +25,12 @@ public class ClienteDAO implements CRUD {
             rs=ps.executeQuery(); 
             while(rs.next()){
              c.setIdc(rs.getString(1));
-               c.setNom(rs.getString(2));
-               c.setApellidoP(rs.getString(3));
-              c.setApellidoM(rs.getString(4));
+               c.setNom(rs.getString(3));
+               c.setApellidoP(rs.getString(4));
+              c.setApellidoM(rs.getString(5));
            
             }
       } catch (SQLException e) {
-          System.out.println(e.getMessage());
       }
       return c;
   }
@@ -49,7 +49,6 @@ public class ClienteDAO implements CRUD {
             while (rs.next()){
                Cliente  c=new Cliente();
                c.setIdc(rs.getString(1));
-               c.setMem(rs.getString(2));
                c.setNom(rs.getString(3));
                c.setApellidoP(rs.getString(4));
               c.setApellidoM(rs.getString(5));

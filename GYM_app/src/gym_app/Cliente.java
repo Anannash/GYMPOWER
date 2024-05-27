@@ -6,25 +6,15 @@ public class Cliente {
 String nom;
 String apellidoM;
 String apellidoP;
-String mem;
 
     public Cliente() {
     }
 
-    public Cliente(String idc, String nom, String apellidoM, String apellidoP,String mem) {
+    public Cliente(String idc, String nom, String apellidoM, String apellidoP) {
         this.idc = idc;
         this.nom = nom;
         this.apellidoM = apellidoM;
         this.apellidoP = apellidoP;
-        this.mem = mem;
-    }
-
-    public String getMem() {
-        return mem;
-    }
-
-    public void setMem(String mem) {
-        this.mem = mem;
     }
 
     public String getIdc() {
