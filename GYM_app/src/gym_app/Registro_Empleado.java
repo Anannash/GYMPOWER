@@ -603,8 +603,11 @@ public class Registro_Empleado extends javax.swing.JFrame {
     }//GEN-LAST:event_txtTelefonoEKeyTyped
 
     private void SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirActionPerformed
-        // TODO add your handling code here:
-        System.exit(0);
+         int R = JOptionPane.showConfirmDialog(null, "Estas seguro de salir?", "Salir", JOptionPane.YES_NO_OPTION,
+            JOptionPane.INFORMATION_MESSAGE);
+
+        if (R == 0) {
+        System.exit(0);}
     }//GEN-LAST:event_SalirActionPerformed
 
     private void FondoMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FondoMouseDragged

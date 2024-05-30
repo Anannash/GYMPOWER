@@ -513,8 +513,11 @@ public class Horarios extends javax.swing.JFrame {
     }//GEN-LAST:event_ClavesdisptxtActionPerformed
 
     private void SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirActionPerformed
-        // TODO add your handling code here:
-        System.exit(0);
+         int R = JOptionPane.showConfirmDialog(null, "Estas seguro de salir?", "Salir", JOptionPane.YES_NO_OPTION,
+            JOptionPane.INFORMATION_MESSAGE);
+
+        if (R == 0) {
+        System.exit(0);}
     }//GEN-LAST:event_SalirActionPerformed
 
     private void RegresarbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegresarbtnActionPerformed

@@ -663,7 +663,11 @@ public class Perfil_Empleado extends javax.swing.JFrame {
 
     private void SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirActionPerformed
         // TODO add your handling code here:
-        System.exit(0);
+         int R = JOptionPane.showConfirmDialog(null, "Estas seguro de salir?", "Salir", JOptionPane.YES_NO_OPTION,
+            JOptionPane.INFORMATION_MESSAGE);
+
+        if (R == 0) {
+        System.exit(0);}
     }//GEN-LAST:event_SalirActionPerformed
 
     private void FondoPMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FondoPMousePressed
@@ -768,7 +772,7 @@ public class Perfil_Empleado extends javax.swing.JFrame {
 
     private void GrupalbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GrupalbtnActionPerformed
         // TODO add your handling code here:
-        RegistroClases Grupales = new RegistroClases();
+        clases2 Grupales = new clases2();
         Grupales.setVisible(true);
         this.setVisible(false);
 
