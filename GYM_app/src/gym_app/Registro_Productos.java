@@ -400,8 +400,8 @@ try {
        //Aqui se coloca el id del producto 1,2,3  RECUERDA QUE ES INCREMENTAL
         Buscardatos(id_Pr);
         //en este bton se realizara el UPDATE
-        RealizarMbtn.show(true);
-        modificarbtn.show(false);
+        RealizarMbtn.setVisible(true);
+        modificarbtn.setVisible(false);
      
 
     }//GEN-LAST:event_modificarbtnActionPerformed

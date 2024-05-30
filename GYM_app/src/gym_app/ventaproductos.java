@@ -4,6 +4,7 @@ package gym_app;
 import gym_app.DetalleVentas;
 import gym_app.ProductoDAO;
 import gym_app.productos;
+import gym_app.Cliente;
 import java.awt.BorderLayout;
 import java.awt.Image;
 import java.awt.Point;
@@ -22,7 +23,7 @@ public class ventaproductos extends javax.swing.JFrame {
     
     
 DetalleVentas dv=new DetalleVentas();
-Cliente cliente=new Cliente();
+//Cliente cliente=new Cliente();
     productos p=new productos();
 Ventas v=new Ventas();
     DefaultTableModel modelo=new DefaultTableModel();
@@ -48,6 +49,7 @@ Ventas v=new Ventas();
         fecha.setText(""+calendario.get(Calendar.YEAR)+"-"+calendario.get(Calendar.MONTH)+"-"+calendario.get(Calendar.DAY_OF_MONTH));
         SetImageButton("src/Image/X.png", Salir);
         SetImageButton("src/Image/regresar.png", Regresarbtn);
+        this.setLocationRelativeTo(null);
         
     }
 
@@ -333,7 +335,7 @@ Ventas v=new Ventas();
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(107, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -448,14 +450,14 @@ void  nuevo(){
     
     void actualizarstock(){
     
-    for (int i = 0; modelo.getRowCount() < 10; i++) {
-        productos pr=new productos();
-        idpr=Integer.parseInt(Tablaventa.getValueAt(i, 1).toString());
-        cant=Integer.parseInt(Tablaventa.getValueAt(i, 3).toString());
-        pr=pdao.listarID(idpr);
-        int sa=pr.getStock()- cant;
-        pdao.actualizarstock(sa, idpr);
-    }
+    for (int i = 0; i < modelo.getRowCount(); i++) {
+    productos pr = new productos();
+    idpr = Integer.parseInt(modelo.getValueAt(i, 1).toString());
+    cant = Integer.parseInt(modelo.getValueAt(i, 3).toString());
+    pr = pdao.listarID(idpr);
+    int sa = pr.getStock() - cant;
+    pdao.actualizarstock(sa, idpr);
+}
 }
     
     
@@ -502,42 +504,46 @@ void  nuevo(){
         }
     }
     
-    public void agregarproducto(){
-    int item=0;
+   public void agregarproducto() {
+    int item = 0;
     double total;
     int id;
-    modelo=(DefaultTableModel)Tablaventa.getModel();
-     item=item+1;
-    id=Integer.parseInt(Idproducto.getText());
-    productos p=pdao.listarID(id);
-    idpr=p.getID();
-   String nomp=Producto.getText();
-     pre=Double.parseDouble(Precio.getText());
-     cant=Integer.parseInt(Cantidad.getValue().toString());
-    int stock=Integer.parseInt(Stock.getText());
-    total=cant*pre;
-    ArrayList lista=new ArrayList();
-    if (stock>0) {
-        lista.add(item);
-        lista.add(idpr);
-        lista.add(nomp);
-        lista.add(cant);
-        lista.add(pre);
-        lista.add(total);
-       Object[]ob=new Object[6]; 
-       ob[0]=lista.get(0);
-       ob[1]=lista.get(1);
-       ob[2]=lista.get(2);
-       ob[3]=lista.get(3);
-       ob[4]=lista.get(4);
-       ob[5]=lista.get(5);
-       modelo.addRow(ob);
-       Tablaventa.setModel(modelo);
-    calculartotal();
-    }else{
-      JOptionPane.showMessageDialog(this, "Dificultades tecnicas ");  
+    modelo = (DefaultTableModel) Tablaventa.getModel();
+    item = item + 1;
+    String idProductoText = Idproducto.getText().trim();
+    if (!idProductoText.isEmpty()) { // Verificar si el campo Idproducto no está vacío
+        id = Integer.parseInt(idProductoText);
+        productos p = pdao.listarID(id);
+        idpr = p.getID();
+        String nomp = Producto.getText();
+        pre = Double.parseDouble(Precio.getText());
+        cant = Integer.parseInt(Cantidad.getValue().toString());
+        int stock = Integer.parseInt(Stock.getText());
+        total = cant * pre;
+        ArrayList<Object> lista = new ArrayList<>();
+        if (stock > 0) {
+            lista.add(item);
+            lista.add(idpr);
+            lista.add(nomp);
+            lista.add(cant);
+            lista.add(pre);
+            lista.add(total);
+            Object[] ob = new Object[6];
+            ob[0] = lista.get(0);
+            ob[1] = lista.get(1);
+            ob[2] = lista.get(2);
+            ob[3] = lista.get(3);
+            ob[4] = lista.get(4);
+            ob[5] = lista.get(5);
+            modelo.addRow(ob);
+            Tablaventa.setModel(modelo);
+            calculartotal();
+        } else {
+            JOptionPane.showMessageDialog(this, "Dificultades tecnicas ");
+        }
+    } else {
+        JOptionPane.showMessageDialog(this, "Por favor, ingresa un ID de producto.");
     }
-    
 }
   void calculartotal(){
     tpagar=0;
@@ -554,24 +560,26 @@ void  nuevo(){
     
     
     
-    void buscarproducto(){
-  int id=Integer.parseInt(Idproducto.getText()) ;
-      if(Idproducto.getText().equals("")){
-          JOptionPane.showMessageDialog(this, "Ingresa un ID ");
-      }else{
-        productos p=pdao.listarID(id);
-        if(p.getID()!=0){
-         Producto.setText(p.getNombres());
-         Stock.setText(""+p.getStock());
-         Precio.setText(""+p.getPrecio());
-         
-        }else{
-          JOptionPane.showMessageDialog(this, "Este producto no existe, pruebe con otro ");  
+   void buscarproducto() {
+    String idText = Idproducto.getText().trim(); // Obtener el texto del campo Idproducto y eliminar los espacios en blanco
+    if (idText.isEmpty()) { // Verificar si el campo Idproducto está vacío
+        JOptionPane.showMessageDialog(this, "Por favor, ingresa un ID.");
+    } else {
+        try {
+            int id = Integer.parseInt(idText); // Convertir el texto del campo Idproducto a un entero
+            productos p = pdao.listarID(id); // Obtener el producto correspondiente al ID ingresado
+            if (p.getID() != 0) { // Verificar si se encontró un producto con el ID ingresado
+                Producto.setText(p.getNombres());
+                Stock.setText(Integer.toString(p.getStock())); // Convertir el stock a String antes de asignarlo al campo de texto
+                Precio.setText(Double.toString(p.getPrecio())); // Convertir el precio a String antes de asignarlo al campo de texto
+            } else {
+                JOptionPane.showMessageDialog(this, "Este producto no existe. Por favor, prueba con otro ID.");
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "El ID ingresado no es válido. Por favor, ingresa un número entero.");
         }
-      }  
+    }
 }
-    
-    
     
     
     

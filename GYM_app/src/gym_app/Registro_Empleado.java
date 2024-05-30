@@ -6,6 +6,7 @@ package gym_app;
 
 import com.sun.jdi.connect.spi.Connection;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Image;
 import java.awt.Point;
 import java.io.File;
@@ -56,8 +57,8 @@ public class Registro_Empleado extends javax.swing.JFrame {
         SetImageButton("src/Image/regresar.png", Regresarbtn);
         fecha.setText(fechaFormateada);
         //ocultar 
-        altabtn.show(false);
-        MCbtn.show(false);
+        altabtn.setVisible(false);
+        MCbtn.setVisible(false);
 
         // Ubica la ventana en el centro de la pantalla
         setLocationRelativeTo(null);
@@ -494,7 +495,7 @@ public class Registro_Empleado extends javax.swing.JFrame {
             java.sql.Date sqlDate = new java.sql.Date(selectedDate.getTime());
 
             guardar.setString(1, IDbtn.getText());
-            guardar.setString(2, txtAM.getText());
+            guardar.setString(2, txtNombre.getText());
             guardar.setString(3, txtAP.getText());
             guardar.setString(4, txtAM.getText());
             guardar.setString(5, txtCorreo.getText());
@@ -666,7 +667,7 @@ public class Registro_Empleado extends javax.swing.JFrame {
 
     private void CBCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CBCargoActionPerformed
         // TODO add your handling code here:
-
+            IDbtn.setForeground(Color.BLACK);
         if (CBCargo.getSelectedItem().equals("Entrenador")) {
 
             IDbtn.setText(IDD.CrearIDEmpleado("E", fechaFormateada));
@@ -684,7 +685,7 @@ public class Registro_Empleado extends javax.swing.JFrame {
             IDbtn.setText(IDD.CrearIDEmpleado("S", fechaFormateada));
 
         }
-
+            
 
     }//GEN-LAST:event_CBCargoActionPerformed
 
@@ -744,24 +745,59 @@ try {
 } catch (SQLException e) {
     JOptionPane.showMessageDialog(null, e.toString());
 }
-
+ //REINICIO
+            IDbtn.setText("");
+            txtAM.setText("");
+            txtAP.setText("");
+            txtAM.setText("");
+            txtCorreo.setText("");
+            txtTelefono.setText("");
+            txtDireccion.setText("");
+            txtSueldo.setText("");
+            txtTelefonoE.setText("");
+            txtCP.setText("");
+            txtRFC.setText("");
+            Perfil.setIcon(null);
+            txtCURP.setText("");
+            
+            IDbtn.setForeground(Color.BLACK);
     }//GEN-LAST:event_eliminarbtnActionPerformed
 
     private void modificarbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarbtnActionPerformed
         // TODO add your handling code here:
         String id_Empelado = JOptionPane.showInputDialog("Ingrese el ID del Empleado: ", JOptionPane.QUESTION_MESSAGE);
 
-        MCbtn.show(true);
-       // Guardar.show(false);
+        MCbtn.setVisible(true);
+        btnRegistrar.setVisible(false);
         Buscardatos(id_Empelado);
+      
+        altabtn.setVisible(true);
 
     }//GEN-LAST:event_modificarbtnActionPerformed
 
     private void altabtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_altabtnActionPerformed
         // TODO add your handling code here:
-        altabtn.show(true);
-        MCbtn.show(false);
+        altabtn.setVisible(false);
+        MCbtn.setVisible(false);
+        btnRegistrar.setVisible(true);
         //  Guardar.show(true);
+        
+         //REINICIO
+            IDbtn.setText("");
+            txtAM.setText("");
+            txtAP.setText("");
+            txtAM.setText("");
+            txtCorreo.setText("");
+            txtTelefono.setText("");
+            txtDireccion.setText("");
+            txtSueldo.setText("");
+            txtTelefonoE.setText("");
+            txtCP.setText("");
+            txtRFC.setText("");
+            Perfil.setIcon(null);
+            txtCURP.setText("");
+            
+            IDbtn.setForeground(Color.BLACK);
     }//GEN-LAST:event_altabtnActionPerformed
 
     private void MCbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MCbtnActionPerformed
@@ -789,13 +825,13 @@ try {
                     + "    curp = ?, \n"
                     + "    nivelEducacion = ?, \n"
                     + "    rfc = ?, \n"
-                    + "    contrasena = ?, \n"
                     + "    foto = ? \n"
                     + "WHERE \n"
                     + "    id_Empleado = ?;";
 
             //pa la imagen
             FileInputStream fis = new FileInputStream(archivoSeleccionado);
+            System.out.println(archivoSeleccionado);
             //pa el ingreso de datos al SQL bb
             PreparedStatement ps = ObjetoConexion.prepareStatement(Modificar);
 
@@ -806,7 +842,7 @@ try {
             ps.setString(2, txtAP.getText());
             ps.setString(3, txtAM.getText());
             ps.setString(4, txtCorreo.getText());
-            ps.setString(5, txtTelefono.getText());
+            ps.setInt(5, Integer.parseInt(txtTelefono.getText()));
             ps.setString(6, txtDireccion.getText());
             ps.setDouble(7, Double.parseDouble(txtSueldo.getText()));
             ps.setDate(8, java.sql.Date.valueOf(fechaActual)); 
@@ -814,15 +850,32 @@ try {
             ps.setString(10, CBCargo.getSelectedItem().toString());
             ps.setString(11, CBSexo.getSelectedItem().toString());
             ps.setString(12, CBsm.getSelectedItem().toString());
+             ps.setInt(13, Integer.parseInt(txtTelefonoE.getText()));
+             ps.setInt(14, Integer.parseInt(txtCP.getText()));
+            ps.setString(15, txtCURP.getText());
+            ps.setString(16, CBne.getSelectedItem().toString());
+            ps.setString(17, txtRFC.getText());
             
+  
+        if (archivoSeleccionado != null) {
+         ps.setBinaryStream(18, fis, (int) archivoSeleccionado.length());
+    } else {
+        JOptionPane.showMessageDialog(null, "Debe de colocar una imagen");
+    }
             
+            ps.setString(19, IDbtn.getText());
             
-           
+            // Verificar si el archivo de imagen no es null y establecer el parámetro
+   
+            // Ejecutar la actualización
+    int rowsUpdated = ps.executeUpdate();
 
-          
-            ps.setDate(10, sqlDate);
-            ps.setBinaryStream(6, fis, (int) archivoSeleccionado.length());
-            ps.setString(11, IDbtn.getText());
+    // Verificar si la actualización fue exitosa
+    if (rowsUpdated > 0) {
+        JOptionPane.showMessageDialog(null, "Empleado actualizado exitosamente.");
+    } else {
+        JOptionPane.showMessageDialog(null, "No se encontró el empleado con el ID proporcionado.");
+    }
 
             // System.out.println("No furula el codigo");
         } catch (SQLException e) {
@@ -938,7 +991,8 @@ try {
                 } else {
                     CBsm.setSelectedIndex(1);
                 }
-
+          IDbtn.setText(ID);
+        IDbtn.setForeground(Color.GREEN);
             } else {
                 JOptionPane.showMessageDialog(null, "No se pudo encontrar al usuario");
             }

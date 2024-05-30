@@ -46,7 +46,7 @@ public class login extends javax.swing.JFrame {
                ImagenLabel("src/Image/7.png",icon,imagen,mostar);      
                ImagenLabel("src/Image/8.png",icon,imagen,NOmostar);     
                
-               NOmostar.show(false);
+               NOmostar.setVisible(false);
                           
                     
       
@@ -116,9 +116,6 @@ public class login extends javax.swing.JFrame {
                 jPanel2MousePressed(evt);
             }
         });
-
-        Plantilla.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/Plantilla_Inicio.png"))); // NOI18N
-        Plantilla.setText("jLabel1");
 
         jPanel1.setBackground(new java.awt.Color(246, 241, 241));
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -312,16 +309,16 @@ public class login extends javax.swing.JFrame {
     private void mostarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mostarMouseClicked
         // TODO add your handling code here:
         Password.setEchoChar((char)0);
-        NOmostar.show(true);
-        mostar.show(false);
+        NOmostar.setVisible(true);
+        mostar.setVisible(false);
         
     }//GEN-LAST:event_mostarMouseClicked
 
     private void NOmostarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_NOmostarMouseClicked
         // TODO add your handling code here:
         Password.setEchoChar('*');
-        NOmostar.show(false);
-        mostar.show(true);
+        NOmostar.setVisible(false);
+        mostar.setVisible(true);
     }//GEN-LAST:event_NOmostarMouseClicked
 
     /**

@@ -52,29 +52,28 @@ public class Registro_Cliente extends javax.swing.JFrame {
         fondo = new JPanelConFondo("src/Image/perfilF.png");
         Fondo.setLayout(new BorderLayout());
         Fondo.add(fondo);
-        
-         //ocultar botones
-         MCbtn.show(false);
-         altabtn.show(false);
-        
+
+        //ocultar botones
+        MCbtn.setVisible(false);
+        altabtn.setVisible(false);
 
         SetImageButton("src/Image/X.png", Salir);
-          SetImageButton("src/Image/regresar.png", Regresarbtn2);
+        SetImageButton("src/Image/regresar.png", Regresarbtn2);
 
         //fecha del dispositivo
         fecha.setText(fechaFormateada);
-        
+
         ///////////////////////////////////////////////
         java.util.Date selectedDate = Cfecha.getDate();
         java.sql.Date sqlDate = new java.sql.Date(selectedDate.getTime());
-        fecha_cumpletxt.setText(sqlDate.toString());
+      //  fecha_cumpletxt.setText(sqlDate.toString());
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        
+
         id.setText(reglas.CrearID("C", fechaFormateada));
-        
+        id1.setVisible(false);
 
     }
-    
+
     private void SetImageButton(String url, JButton boton) {
         ImageIcon image = new ImageIcon(url);
         Icon icon = new ImageIcon(image.getImage().getScaledInstance(boton.getWidth(), boton.getHeight(), Image.SCALE_SMOOTH));
@@ -110,7 +109,6 @@ public class Registro_Cliente extends javax.swing.JFrame {
         Perfil = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -133,7 +131,7 @@ public class Registro_Cliente extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         MCbtn = new javax.swing.JButton();
         Cfecha = new com.toedter.calendar.JCalendar();
-        fecha_cumpletxt = new javax.swing.JTextField();
+        id1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -295,11 +293,6 @@ public class Registro_Cliente extends javax.swing.JFrame {
         jLabel3.setText("Apellido Materno:");
         jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 70, -1, -1));
 
-        jLabel4.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel4.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel4.setText("Fecha de Cumpleanos:");
-        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 190, -1, -1));
-
         jLabel5.setBackground(new java.awt.Color(0, 0, 0));
         jLabel5.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel5.setText("Celular:");
@@ -460,14 +453,15 @@ public class Registro_Cliente extends javax.swing.JFrame {
         Cfecha.setWeekdayForeground(new java.awt.Color(255, 145, 77));
         jPanel3.add(Cfecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 220, 330, 190));
 
-        fecha_cumpletxt.setBackground(new java.awt.Color(251, 250, 248));
-        fecha_cumpletxt.setToolTipText("");
-        fecha_cumpletxt.addActionListener(new java.awt.event.ActionListener() {
+        id1.setEditable(false);
+        id1.setBackground(new java.awt.Color(251, 250, 248));
+        id1.setToolTipText("");
+        id1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fecha_cumpletxtActionPerformed(evt);
+                id1ActionPerformed(evt);
             }
         });
-        jPanel3.add(fecha_cumpletxt, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 190, 150, -1));
+        jPanel3.add(id1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 40, 140, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -534,38 +528,36 @@ public class Registro_Cliente extends javax.swing.JFrame {
     private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
         // TODO add your handling code here:
         //SE Genra Perfil
-     //   BD_Movimientos AddCl = new BD_Movimientos();
+        //   BD_Movimientos AddCl = new BD_Movimientos();
         try {
-             // Obtener la fecha del JCalendar
-     
-             if (SiE.isSelected()) {
-            //metodo para agregarlo a la BD de CLiente
-            AgregarCliente(Nombre, ApellidoP, ApellidoM, id, membresiaCb, correotxt, celulartxt,
-                    0, 0, 0, "NA", archivoSeleccionado, java.sql.Date.valueOf(fechaActual), sexoCb, "Si");
-        } else if (NoE.isSelected()) {
-            AgregarCliente(Nombre, ApellidoP, ApellidoM, id, membresiaCb, correotxt, celulartxt,
-                    0, 0, 0, "NA", archivoSeleccionado, java.sql.Date.valueOf(fechaActual), sexoCb, "No");
-        }
+            // Obtener la fecha del JCalendar
 
-        
-        //RReinicio
-        id.setText(reglas.CrearID("C", fechaFormateada));
-        Nombre.setText("");
-        ApellidoP.setText("");
-        ApellidoM.setText("");
-        celulartxt.setText("");
-        correotxt.setText("");
-        
-        SiE.setSelected(false);
-        NoE.setSelected(false);
-        Perfil.setIcon(null);
-        
-        
+            if (SiE.isSelected()) {
+                //metodo para agregarlo a la BD de CLiente
+                AgregarCliente(Nombre, ApellidoP, ApellidoM, id, membresiaCb, correotxt, celulartxt,
+                        0, 0, 0, "NA", archivoSeleccionado, java.sql.Date.valueOf(fechaActual), sexoCb, "Si");
+            } else if (NoE.isSelected()) {
+                AgregarCliente(Nombre, ApellidoP, ApellidoM, id, membresiaCb, correotxt, celulartxt,
+                        0, 0, 0, "NA", archivoSeleccionado, java.sql.Date.valueOf(fechaActual), sexoCb, "No");
+            }
+
+            //RReinicio
+            id.setText(reglas.CrearID("C", fechaFormateada));
+            Nombre.setText("");
+            ApellidoP.setText("");
+            ApellidoM.setText("");
+            celulartxt.setText("");
+            correotxt.setText("");
+
+            SiE.setSelected(false);
+            NoE.setSelected(false);
+            Perfil.setIcon(null);
+
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error: "+e.toString());
+            JOptionPane.showMessageDialog(null, "Error: " + e.toString());
             //System.out.println(e.getMessage());
         }
-       
+
     }//GEN-LAST:event_GuardarActionPerformed
 
     private void NoEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NoEActionPerformed
@@ -593,34 +585,32 @@ public class Registro_Cliente extends javax.swing.JFrame {
     }//GEN-LAST:event_fechaActionPerformed
 
     private void SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirActionPerformed
-         int R = JOptionPane.showConfirmDialog(null, "Estas seguro de salir?", "Salir", JOptionPane.YES_NO_OPTION,
-            JOptionPane.INFORMATION_MESSAGE);
+        int R = JOptionPane.showConfirmDialog(null, "Estas seguro de salir?", "Salir", JOptionPane.YES_NO_OPTION,
+                JOptionPane.INFORMATION_MESSAGE);
 
         if (R == 0) {
-        System.exit(0);}
+            System.exit(0);
+        }
     }//GEN-LAST:event_SalirActionPerformed
 
     private void FondoMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FondoMouseDragged
         // TODO add your handling code here:
-        
-        int  CX = this.getLocation().x;
-        int  CY = this.getLocation().y;
-        
-        
-        int MoveX =((CX+evt.getX()) - (CX+mPoint.x));
-        int MoveY =((CY+evt.getY()) - (CY+mPoint.y));
 
-        
-        int x = CX+MoveX;
-        int y = CY+MoveY;
-        
-        
+        int CX = this.getLocation().x;
+        int CY = this.getLocation().y;
+
+        int MoveX = ((CX + evt.getX()) - (CX + mPoint.x));
+        int MoveY = ((CY + evt.getY()) - (CY + mPoint.y));
+
+        int x = CX + MoveX;
+        int y = CY + MoveY;
+
         this.setLocation(x, y);
     }//GEN-LAST:event_FondoMouseDragged
 
     private void FondoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FondoMousePressed
         // TODO add your handling code here:
-        mPoint=evt.getPoint(); 
+        mPoint = evt.getPoint();
         getComponentAt(mPoint);
     }//GEN-LAST:event_FondoMousePressed
 
@@ -628,7 +618,7 @@ public class Registro_Cliente extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         int R = JOptionPane.showConfirmDialog(null, "Estas Seguro de regresar?", "Regresar", JOptionPane.YES_NO_OPTION,
-            JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.INFORMATION_MESSAGE);
 
         if (R == 0) {
             Perfil_Empleado Perfill = new Perfil_Empleado();
@@ -639,54 +629,80 @@ public class Registro_Cliente extends javax.swing.JFrame {
 
     private void modificarbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarbtnActionPerformed
         // TODO add your handling code here:
-       String id_Cliente= JOptionPane.showInputDialog("Ingrese el ID del Empleado: ",JOptionPane.QUESTION_MESSAGE);
-       altabtn.show(true);
-       MCbtn.show(true);
-       Guardar.show(false);
-       Buscardatos(id_Cliente);
-       
-      
+        String id_Cliente = JOptionPane.showInputDialog("Ingrese el ID del Empleado: ", JOptionPane.QUESTION_MESSAGE);
+        altabtn.setVisible(true);
+        MCbtn.setVisible(true);
+        Guardar.setVisible(false);
+        Buscardatos(id_Cliente);
+        id1.setVisible(true);
+        id1.setText(id_Cliente);
+        id.setVisible(false);
+
+
     }//GEN-LAST:event_modificarbtnActionPerformed
 
     private void MCbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MCbtnActionPerformed
         // TODO add your handling code here:
-          try {
-              
-               conectar ObjetoConexion = new conectar();
-               
-               String Modificar="UPDATE cliente SET membresia = ?, nombreC= ?, apellidoPC = ?, "
-                       + "apellidoMC= ?, correo= ?, foto= ?, sexo= ?, estudiante = ?, fecha= ?, fecha_cumple = ? WHERE  id_cliente= ?; ";
-               
-               //pa la imagen
-               FileInputStream fis = new FileInputStream(archivoSeleccionado);
-               //pa el ingreso de datos al SQL bb
-               PreparedStatement  ps = ObjetoConexion.prepareStatement(Modificar);
-               
-               java.util.Date selectedDate = Cfecha.getDate();
-        java.sql.Date sqlDate = new java.sql.Date(selectedDate.getTime());
-               
-               ps.setString(1, membresiaCb.getSelectedItem().toString());
-               ps.setString(2, Nombre.getText());
-               ps.setString(3, ApellidoP.getText());
-               ps.setString(4, ApellidoM.getText());
-               ps.setString(5, correotxt.getText());
-               ps.setBinaryStream(6,fis, (int) archivoSeleccionado.length());
-               ps.setString(7, sexoCb.getSelectedItem().toString());
-               
-               if(SiE.isSelected()){
-                   ps.setString(8, "Si");
-               }else{
-                   ps.setString(8, "No");
-               }
-               
-               ps.setDate(9,java.sql.Date.valueOf(fechaActual));
-               ps.setDate(10,sqlDate);
-               ps.setString(11, id.getText());
-               
-              // System.out.println("No furula el codigo");
-               
-               
-               
+        try {
+
+            conectar ObjetoConexion = new conectar();
+
+            String Modificar = "UPDATE cliente SET membresia = ?, nombreC= ?, apellidoPC = ?, "
+                    + "apellidoMC= ?, correoC= ?, foto= ?, sexo= ?, estudiante = ?, fecha= ?, fecha_cumple = ? WHERE  id_cliente= ?; ";
+
+            //pa la imagen
+            FileInputStream fis = new FileInputStream(archivoSeleccionado);
+            //pa el ingreso de datos al SQL bb
+            PreparedStatement ps = ObjetoConexion.prepareStatement(Modificar);
+
+            java.util.Date selectedDate = Cfecha.getDate();
+            java.sql.Date sqlDate = new java.sql.Date(selectedDate.getTime());
+
+            ps.setString(1, membresiaCb.getSelectedItem().toString());
+            ps.setString(2, Nombre.getText());
+            ps.setString(3, ApellidoP.getText());
+            ps.setString(4, ApellidoM.getText());
+            ps.setString(5, correotxt.getText());
+
+          
+                ps.setBinaryStream(6, fis, (int) archivoSeleccionado.length());
+             
+            
+
+            ps.setString(7, sexoCb.getSelectedItem().toString());
+
+            if (SiE.isSelected()) {
+                ps.setString(8, "Si");
+            } else {
+                ps.setString(8, "No");
+            }
+
+            ps.setDate(9, java.sql.Date.valueOf(fechaActual));
+            ps.setDate(10, sqlDate);
+            ps.setString(11, id1.getText());
+
+            // Ejecutar la actualización
+            int rowsUpdated = ps.executeUpdate();
+
+            // Verificar si la actualización fue exitosa
+            if (rowsUpdated > 0) {
+                JOptionPane.showMessageDialog(null, "Cliente actualizado exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró el cliente con el ID proporcionado.");
+            }
+            
+             //RReinicio
+            id.setText(reglas.CrearID("C", fechaFormateada));
+            Nombre.setText("");
+            ApellidoP.setText("");
+            ApellidoM.setText("");
+            celulartxt.setText("");
+            correotxt.setText("");
+
+            SiE.setSelected(false);
+            NoE.setSelected(false);
+            Perfil.setIcon(null);
+
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.toString());
         } catch (FileNotFoundException ex) {
@@ -694,28 +710,22 @@ public class Registro_Cliente extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_MCbtnActionPerformed
 
-    private void fecha_cumpletxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fecha_cumpletxtActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fecha_cumpletxtActionPerformed
-
     private void eliminarbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarbtnActionPerformed
         // TODO add your handling code here:
-        String id_Cliente= JOptionPane.showInputDialog("Ingrese el ID del Empleado: ",JOptionPane.QUESTION_MESSAGE);
-        
+        String id_Cliente = JOptionPane.showInputDialog("Ingrese el ID del Empleado: ", JOptionPane.QUESTION_MESSAGE);
+
         try {
-              
-               conectar ObjetoConexion = new conectar();
-               
-               String Eliminar="DELETE FROM cliente WHERE  id_cliente= ?;";
-               
-               
-               //pa la leiminacion  de datos al SQL bb
-               PreparedStatement  ps = ObjetoConexion.prepareStatement(Eliminar);
-               
-             
-               ps.setString(1, id_Cliente);
-               
-               // Ejecutar la eliminación
+
+            conectar ObjetoConexion = new conectar();
+
+            String Eliminar = "DELETE FROM cliente WHERE  id_cliente= ?;";
+
+            //pa la leiminacion  de datos al SQL bb
+            PreparedStatement ps = ObjetoConexion.prepareStatement(Eliminar);
+
+            ps.setString(1, id_Cliente);
+
+            // Ejecutar la eliminación
             int filasAfectadas = ps.executeUpdate();
 
             // Comprobar si se eliminó alguna fila
@@ -724,20 +734,48 @@ public class Registro_Cliente extends javax.swing.JFrame {
             } else {
                 JOptionPane.showMessageDialog(null, "No se encontró el cliente con ID: " + id_Cliente);
             }
-        
-               
+
+              //RReinicio
+            id.setText(reglas.CrearID("C", fechaFormateada));
+            Nombre.setText("");
+            ApellidoP.setText("");
+            ApellidoM.setText("");
+            celulartxt.setText("");
+            correotxt.setText("");
+
+            SiE.setSelected(false);
+            NoE.setSelected(false);
+            Perfil.setIcon(null);
+            
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.toString());
         }
-        
+
     }//GEN-LAST:event_eliminarbtnActionPerformed
 
     private void altabtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_altabtnActionPerformed
         // TODO add your handling code here:
-        
-        MCbtn.show(false);
-       Guardar.show(true);
+        id.setVisible(true);
+
+        MCbtn.setVisible(false);
+        Guardar.setVisible(true);
+        altabtn.setVisible(false);
+         //RReinicio
+            id.setText(reglas.CrearID("C", fechaFormateada));
+            Nombre.setText("");
+            ApellidoP.setText("");
+            ApellidoM.setText("");
+            celulartxt.setText("");
+            correotxt.setText("");
+
+            SiE.setSelected(false);
+            NoE.setSelected(false);
+            Perfil.setIcon(null);
     }//GEN-LAST:event_altabtnActionPerformed
+
+    private void id1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_id1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_id1ActionPerformed
 
     public void Buscardatos(String ID) {
         try {
@@ -758,45 +796,41 @@ public class Registro_Cliente extends javax.swing.JFrame {
                 String correo = resultado.getString("correoC");
                 int celular = resultado.getInt("celularC");
                 byte[] fotoBytes = resultado.getBytes("foto");
-              // Date fechaCum = resultado.getDate("fecha_cumple");
-              String estudiante = resultado.getString("estudiante");
-              String membresia= resultado.getString("membresia");
-              String sexo = resultado.getString("sexo");
-                
+                // Date fechaCum = resultado.getDate("fecha_cumple");
+                String estudiante = resultado.getString("estudiante");
+                String membresia = resultado.getString("membresia");
+                String sexo = resultado.getString("sexo");
 
                 // Convertir arreglo de bytes a ImageIcon
                 ImageIcon imagen = new ImageIcon(fotoBytes);
                 // Escalar la imagen si es necesario
-              
+
                 Image imagenEscalada2 = imagen.getImage().getScaledInstance(Perfil.getWidth(), Perfil.getHeight(), Image.SCALE_SMOOTH);
-                
+
                 ImageIcon imagenEscaladaIcon2 = new ImageIcon(imagenEscalada2);
 
                 // Asignar la imagen al JLabel
-             
                 Perfil.setIcon(imagenEscaladaIcon2);
 
-               
-               
                 Nombre.setText(nombre);
                 ApellidoP.setText(apellidoP);
                 ApellidoM.setText(apellidoM);
                 correotxt.setText(correo);
                 celulartxt.setText(String.valueOf(celular));
-               // fecha_cumpletxt.setText(contra);
-                
+                // fecha_cumpletxt.setText(contra);
+
                 if ("Si".equals(estudiante)) {
                     SiE.setSelected(true);
                 } else {
                     NoE.setSelected(true);
                 }
-                
+
                 if ("M".equals(sexo)) {
                     sexoCb.setSelectedIndex(0);
                 } else {
                     sexoCb.setSelectedIndex(1);
                 }
-                
+
                 if ("Normal".equals(membresia)) {
                     membresiaCb.setSelectedIndex(0);
                 } else {
@@ -812,8 +846,8 @@ public class Registro_Cliente extends javax.swing.JFrame {
         }
 
     }
-    
-      public void AgregarCliente(JTextField nombre, JTextField apellidoP, JTextField apellidoM, JTextField idCliente,
+
+    public void AgregarCliente(JTextField nombre, JTextField apellidoP, JTextField apellidoM, JTextField idCliente,
             JComboBox Membresia, JTextField correo, JTextField celular, double peso, double estatura, double imc,
             String motivo, File foto, Date fecha, JComboBox sexo, String estudiante) {
 
@@ -828,8 +862,8 @@ public class Registro_Cliente extends javax.swing.JFrame {
 
             CallableStatement cs = (CallableStatement) ObjetoConexion.getConexion().prepareCall(Alta);
 
-              java.util.Date selectedDate = Cfecha.getDate();
-        java.sql.Date sqlDate = new java.sql.Date(selectedDate.getTime());
+            java.util.Date selectedDate = Cfecha.getDate();
+            java.sql.Date sqlDate = new java.sql.Date(selectedDate.getTime());
 
             cs.setString(1, idCliente.getText());
             cs.setString(2, Membresia.getSelectedItem().toString());
@@ -858,6 +892,7 @@ public class Registro_Cliente extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error: " + e.toString());
         }
     }
+
     /**
      * @param args the command line arguments
      */
@@ -920,15 +955,14 @@ public class Registro_Cliente extends javax.swing.JFrame {
     private javax.swing.JTextField correotxt;
     private javax.swing.JButton eliminarbtn;
     private javax.swing.JTextField fecha;
-    private javax.swing.JTextField fecha_cumpletxt;
     private javax.swing.JTextField id;
+    private javax.swing.JTextField id1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;

@@ -72,21 +72,21 @@ public final class Perfil_Segi extends javax.swing.JFrame {
         SetImageButton("src/Image/Ajustes.png", Editarbtn);
            imagenBtn_EoR("src/Image/regresar.png", Regresarbtn);
 
-        Cargarbtn.show(false);
-        Guardarbtn.show(false);
+        Cargarbtn.setVisible(false);
+        Guardarbtn.setVisible(false);
         Buscardatos(ID);
         GenerarRutinas(ID);
 
         if (tblRutinas.getRowCount() > 0) {
-            BtnEntrevistaR.show(false);
+            BtnEntrevistaR.setVisible(false);
         } else {
-            BtnEntrevistaR.show(true);
+            BtnEntrevistaR.setVisible(true);
         }
         //fecha del dispositivo
         fecha.setText(fechaFormateada);
         TablaSegimineto(ID);
         GraficaSeguimiento();
-jButton1.show(false);
+jButton1.setVisible(false);
     }
 
     private void imagenBtn_EoR(String url, JButton boton) {
@@ -993,8 +993,8 @@ jButton1.show(false);
 
     private void EditarbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditarbtnActionPerformed
         // TODO add your handling code here:
-        Cargarbtn.show(true);
-        Guardarbtn.show(true);
+        Cargarbtn.setVisible(true);
+        Guardarbtn.setVisible(true);
         correotxt.setEditable(true);
         celulartxt.setEditable(true);
         contra2.setEditable(true);

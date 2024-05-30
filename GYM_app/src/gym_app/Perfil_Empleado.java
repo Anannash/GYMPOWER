@@ -489,6 +489,8 @@ public class Perfil_Empleado extends javax.swing.JFrame {
         Perfil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/perfildef.png"))); // NOI18N
         jPanel3.add(Perfil, new org.netbeans.lib.awtextra.AbsoluteConstraints(728, 17, -1, 331));
 
+        Cargarbtn.setBackground(new java.awt.Color(255, 145, 77));
+        Cargarbtn.setFont(new java.awt.Font("Eras Bold ITC", 0, 14)); // NOI18N
         Cargarbtn.setText("Cambiar Imagen");
         Cargarbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -504,6 +506,8 @@ public class Perfil_Empleado extends javax.swing.JFrame {
         });
         jPanel3.add(Editarbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 5, 73, 64));
 
+        Guardarbtn.setBackground(new java.awt.Color(255, 145, 77));
+        Guardarbtn.setFont(new java.awt.Font("Eras Bold ITC", 0, 14)); // NOI18N
         Guardarbtn.setText("Guardar");
         Guardarbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -713,8 +717,8 @@ public class Perfil_Empleado extends javax.swing.JFrame {
 
     private void EditarbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditarbtnActionPerformed
         // TODO add your handling code here:
-        Cargarbtn.show(true);
-        Guardarbtn.show(true);
+        Cargarbtn.setVisible(true);
+        Guardarbtn.setVisible(true);
         correotxt.setEditable(true);
         celulartxt.setEditable(true);
         celularEtxt.setEditable(true);
@@ -962,7 +966,7 @@ public class Perfil_Empleado extends javax.swing.JFrame {
             MenuPrincipal.removeTabAt(index);
             
         } else {
-            EvaEntrbtn.show(false);
+            EvaEntrbtn.setVisible(false);
           //  MenuPrincipal.add("Menu Principal",pestana);
            
         }
@@ -976,7 +980,7 @@ public class Perfil_Empleado extends javax.swing.JFrame {
             try {
                 conectar ObjetoConexion = new conectar();
 
-                String actualizar = "update Empleado set celularE =?, correoC = ?, contrasena = ?, foto= ?, telefonoME=?  where id_cliente= ?;";
+                String actualizar = "update Empleado set celularE =?, correoC = ?, contrasena = ?, foto= ?, telefonoME=?  where id_Empleado= ?;";
                 FileInputStream fis = new FileInputStream(foto);
                 PreparedStatement ps = ObjetoConexion.prepareStatement(actualizar);
 
