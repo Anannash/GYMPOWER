@@ -980,7 +980,7 @@ public class Perfil_Empleado extends javax.swing.JFrame {
             try {
                 conectar ObjetoConexion = new conectar();
 
-                String actualizar = "update Empleado set celularE =?, correoC = ?, contrasena = ?, foto= ?, telefonoME=?  where id_Empleado= ?;";
+                String actualizar = "update Empleado set celularE =?, correoE = ?, contrasena = ?, foto= ?, telefonoME=?  where id_Empleado= ?;";
                 FileInputStream fis = new FileInputStream(foto);
                 PreparedStatement ps = ObjetoConexion.prepareStatement(actualizar);
 

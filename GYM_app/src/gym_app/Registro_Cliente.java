@@ -524,9 +524,24 @@ public class Registro_Cliente extends javax.swing.JFrame {
     private void celulartxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_celulartxtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_celulartxtActionPerformed
-
+public boolean Llenado() {
+    if (Nombre.getText().isEmpty() ||
+        ApellidoP.getText().isEmpty() ||
+        ApellidoM.getText().isEmpty() ||
+        celulartxt.getText().isEmpty() ||
+        correotxt.getText().isEmpty() ||
+        (!SiE.isSelected() && !NoE.isSelected()) ||
+        Perfil.getIcon() == null) {
+        return false;
+    } else {
+        return true;
+    }
+}
     private void GuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GuardarActionPerformed
-        // TODO add your handling code here:
+        
+       
+        if (Llenado()==true) {
+            // TODO add your handling code here:
         //SE Genra Perfil
         //   BD_Movimientos AddCl = new BD_Movimientos();
         try {
@@ -557,6 +572,11 @@ public class Registro_Cliente extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error: " + e.toString());
             //System.out.println(e.getMessage());
         }
+        } else {
+            JOptionPane.showMessageDialog(null, "Ingrese datos");
+        }
+
+
 
     }//GEN-LAST:event_GuardarActionPerformed
 
